@@ -1,10 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="cn.edu.zucc.caviar.searchengine.core.dao.UserDao">
-    <select id="findUserByRegisterId" parameterType="String" resultType="user">
+    <resultMap id="userResultMapper" type="cn.edu.zucc.caviar.searchengine.core.pojo.User">
+        <id property="userId" column="user_id"/>
+        <result property="registerId" column="register_id"/>
+        <result property="password" column="password"/>
+        <result property="gender" column="gender"/>
+        <result property="registerTime" column="register_time"/>
+        <result property="lastLoginTime" column="last_login_time"/>
+    </resultMap>
+
+    <select id="findUserByRegisterId" parameterType="String" resultMap="userResultMapper">
         select *
         from tb_user
-        where register_id = #{register_id}
+        where register_id = #{registerId}
     </select>
 
     <select id="findUserById" parameterType="String" resultType="user">
@@ -38,7 +47,7 @@
             <if test="gender!=null">
                 gender = #{gender},
             </if>
-            <if test="registerTime!=null">
+            <if test="lastLoginTime!=null">
                 register_time = #{registerTime},
             </if>
         </set>
