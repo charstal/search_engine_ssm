@@ -65,16 +65,18 @@
 
         <div class="wrapper wrapper-content ">
             <div class="container-fluid col-lg-8">
-                <div class="row" style="height: 50px">
-                    <div class="col-lg-10 form-group" style="height: 30px">
-                        <label>
-                            <input type="text" placeholder="请输入搜索内容" class="form-control">
-                        </label>
+                <form method="get">
+                    <div class="row" style="height: 50px">
+                        <div class="col-lg-10 form-group" style="height: 30px">
+                            <label>
+                                <input type="text" placeholder="请输入搜索内容" class="form-control">
+                            </label>
+                        </div>
+                        <div>
+                            <button class="btn btn-danger">搜索</button>
+                        </div>
                     </div>
-                    <div>
-                        <button class="btn btn-danger">搜索</button>
-                    </div>
-                </div>
+                </form>
                 <div class="row">
                     <div class="col-md-2">
                         <div class="ibox float-e-margins">
