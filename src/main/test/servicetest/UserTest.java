@@ -13,7 +13,7 @@ public class UserTest {
 
         UserService service = applicationContext.getBean(UserService.class);
         User user = new User();
-        user.setRegisterId("jiangDoor");
+        user.setRegisterId("jiangDoor@zucc.edu.cn");
         user.setGender("male");
         user.setPassword("123456");
 

@@ -20,13 +20,14 @@ public class UserController {
 
     @RequestMapping(value = "/user/{id}", method = RequestMethod.GET)
     @ResponseBody
-    public User toRegister(@PathVariable("id") String id, HttpSession session) {
+    public User getUser(@PathVariable("id") Integer id, HttpSession session) {
         User user = (User) session.getAttribute("USER_SESSION");
 
         if(user == null) {
-            user = userService.findUserByRegisterId(id, null);
+            user = new User();
+            user.setUserId(id);
+            user = userService.findUserByRegisterId(user);
         }
-
         return user;
     }
 

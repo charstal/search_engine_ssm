@@ -5,7 +5,7 @@ import java.sql.Timestamp;
 public class User {
     private Integer userId;
     private String registerId;
-    private String password ;
+    private String password;
     private String gender;
     private Timestamp registerTime;
     private Timestamp lastLoginTime;
@@ -56,5 +56,12 @@ public class User {
 
     public void setLastLoginTime(Timestamp lastLoginTime) {
         this.lastLoginTime = lastLoginTime;
+    }
+
+    @Override
+    public String toString() {
+        return "User [userId=" + userId + ", registerId=" +registerId + ", password=" + password + ", gender=" + gender +
+                ", registerTime=" + registerTime + ", lastLoginTime=" + lastLoginTime + "]";
+
     }
 }

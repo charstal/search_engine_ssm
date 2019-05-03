@@ -20,33 +20,29 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private EncryptUtil encryptUtil;
 
-
     @Autowired
     private UserDao userDao;
 
 
     @Override
-    public User findUserByRegisterId(String registerId, String password) {
-        String md5Password = encryptUtil.encrypt(password);
-        User user = userDao.findUserByRegisterId(registerId);
-        if(password == null) {
-            //TODO
-            // diff between logged and no logged
-        }
-        else if(md5Password.equals(user.getPassword())){
+    public User findUserByRegisterId(User user) {
+        String md5Password = encryptUtil.encrypt(user.getPassword());
+        User searchedUser = userDao.findUserByRegisterId(user.getRegisterId());
+        if(md5Password.equals(searchedUser.getPassword())){
             Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-            user.setLastLoginTime(timestamp);
+            searchedUser.setLastLoginTime(timestamp);
 
-            int rows = userDao.updateUser(user);
+//            System.out.println(user.getUserId());
+            int rows = userDao.updateUser(searchedUser);
 
             if(rows <= 0)
-                user = null;
+                searchedUser = null;
 
         }
         else
-            user = null;
+            searchedUser = null;
 
-        return user;
+        return searchedUser;
     }
 
     @Override
