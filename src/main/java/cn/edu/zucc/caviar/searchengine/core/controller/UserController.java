@@ -4,6 +4,7 @@ import cn.edu.zucc.caviar.searchengine.core.pojo.User;
 import cn.edu.zucc.caviar.searchengine.core.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -19,16 +20,23 @@ public class UserController {
     private UserService userService;
 
     @RequestMapping(value = "/user/{id}", method = RequestMethod.GET)
-    @ResponseBody
-    public User getUser(@PathVariable("id") Integer id, HttpSession session) {
+    public String getUser(@PathVariable("id") Integer id, HttpSession session, Model model) {
         User user = (User) session.getAttribute("USER_SESSION");
 
-        if(user == null) {
+        if(user == null || !id.equals(user.getUserId())) {
             user = new User();
             user.setUserId(id);
             user = userService.findUserByRegisterId(user);
         }
-        return user;
+
+        if(user == null) {
+            model.addAttribute("msg", "can't find user");
+            return "error";
+        }
+
+        model.addAttribute("user", user);
+
+        return "user";
     }
 
     @RequestMapping(value = "/user", method = RequestMethod.POST)

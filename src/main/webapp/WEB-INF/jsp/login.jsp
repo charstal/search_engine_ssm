@@ -21,43 +21,6 @@
 </head>
 <body>
 <div class="gray-bg" id="mainView">
-    <div class="row border-bottom white-bg">
-        <nav class="navbar navbar-static-top" role="navigation">
-            <!--<div class="navbar-header">-->
-            <!--<button aria-controls="navbar" aria-expanded="false" data-target="#navbar" data-toggle="collapse" class="navbar-toggle collapsed" type="button">-->
-            <!--<i class="fa fa-reorder"></i>-->
-            <!--</button>-->
-            <!--<a href="#" class="navbar-brand">演示</a>-->
-            <!--</div>-->
-            <div class="navbar-collapse collapse" id="navbar">
-                <!--<ul class="nav navbar-nav">-->
-                <!--&lt;!&ndash;<li class="active">&ndash;&gt;-->
-                <!--&lt;!&ndash;<a aria-expanded="false" role="button" href="login.html"> 返回登录界面 </a>&ndash;&gt;-->
-                <!--&lt;!&ndash;</li>&ndash;&gt;-->
-                <!--<li class="dropdown">-->
-                <!--<a aria-expanded="false" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown"> 菜单 <span class="caret"></span></a>-->
-                <!--<ul role="menu" class="dropdown-menu">-->
-                <!--<li><a href="">菜单</a></li>-->
-                <!--<li><a href="">菜单</a></li>-->
-                <!--<li><a href="">菜单</a></li>-->
-                <!--<li><a href="">菜单</a></li>-->
-                <!--</ul>-->
-                <!--</li>-->
-
-                <!--</ul>-->
-                <ul class="nav navbar-top-links navbar-right">
-                    <li>
-                        <a href="${pageContext.request.contextPath}/session">
-                            <i class="fa fa-sign-out"></i> 登录
-                        </a>
-                        <!--<a href="login.html">-->
-                        <!--<i class="fa fa-sign-out"></i> 登录-->
-                        <!--</a>-->
-                    </li>
-                </ul>
-            </div>
-        </nav>
-    </div>
     <form class="form-horizontal container-fluid center-block"  style="height: 1500px" id="loginForm" method="post">
         <img src="${pageContext.request.contextPath}/images/p3.jpg">
         <img src="${pageContext.request.contextPath}/images/p2.jpg">
@@ -124,6 +87,8 @@
                                 $.cookie('bit', 'true', {
                                     expires: 7
                                 });
+
+                                window.location.href="${pageContext.request.contextPath}/user/" + res.userId;
                             } else {
                                 $.removeCookie('username');
                                 $.removeCookie('password');

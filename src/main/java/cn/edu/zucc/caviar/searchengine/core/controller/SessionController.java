@@ -8,15 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 @Controller
 public class SessionController {
-
-    @Autowired
-    private EncryptUtil encryptUtil;
 
     @Autowired
     private UserService userService;
@@ -43,13 +41,13 @@ public class SessionController {
     }
 
     @RequestMapping(value = "/session", method = RequestMethod.DELETE)
-    public String logout(HttpSession session, HttpServletRequest request) {
-        String[] uri = request.getRequestURI().split(".");
-        System.out.println(uri[0]);
+    public ModelAndView logout(HttpSession session, HttpServletRequest request) {
 
         session.invalidate();
+        ModelAndView mav = new ModelAndView("redirect:session");
+        return mav;
 
-        return "redirect:" + uri[0];
+
     }
 
     // update session

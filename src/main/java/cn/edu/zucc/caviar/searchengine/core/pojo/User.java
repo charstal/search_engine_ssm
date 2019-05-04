@@ -5,8 +5,11 @@ import java.sql.Timestamp;
 public class User {
     private Integer userId;
     private String registerId;
+    private String userName;
     private String password;
     private String gender;
+    private String avatar;
+    private String describe;
     private Timestamp registerTime;
     private Timestamp lastLoginTime;
 
@@ -63,5 +66,29 @@ public class User {
         return "User [userId=" + userId + ", registerId=" +registerId + ", password=" + password + ", gender=" + gender +
                 ", registerTime=" + registerTime + ", lastLoginTime=" + lastLoginTime + "]";
 
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
+    public String getDescribe() {
+        return describe;
+    }
+
+    public void setDescribe(String describe) {
+        this.describe = describe;
     }
 }

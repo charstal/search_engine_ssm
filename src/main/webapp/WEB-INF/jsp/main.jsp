@@ -1,4 +1,4 @@
-<%--
+<%@ page import="cn.edu.zucc.caviar.searchengine.core.pojo.User" %><%--
   Created by IntelliJ IDEA.
   User: shiro
   Date: 19-5-2
@@ -16,6 +16,11 @@
     <link href="${pageContext.request.contextPath}/font-awesome/css/font-awesome.css" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/css/animate.css" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet">
+
+    <!-- Mainly scripts -->
+    <script src="${pageContext.request.contextPath}/js/carousel.js"></script>
+    <script src="${pageContext.request.contextPath}/js/jquery-3.1.1.min.js"></script>
+    <script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
 </head>
 <body class="top-navigation">
 <style>
@@ -34,41 +39,95 @@
 <div id="wrapper">
     <div id="page-wrapper" class="gray-bg">
         <div class="row border-bottom white-bg">
+            <%
+                User user = (User) session.getAttribute("USER_SESSION");
+
+                if(user == null) {
+                    user = new User();
+                    user.setUserId(-1);
+                    user.setUserName("index");
+                }
+            %>
             <nav class="navbar navbar-static-top" role="navigation">
-                <div class="navbar-header">
-                    <button aria-controls="navbar" aria-expanded="false" data-target="#navbar" data-toggle="collapse" class="navbar-toggle collapsed" type="button">
-                        <i class="fa fa-reorder"></i>
-                    </button>
-                    <a href="#" class="navbar-brand">返回首页</a>
-                </div>
+                <%--                <div class="navbar-header">--%>
+                <%--                <button aria-controls="navbar" aria-expanded="false" data-target="#navbar" data-toggle="collapse" class="navbar-toggle collapsed" type="button">--%>
+                <%--                <i class="fa fa-reorder"></i>--%>
+                <%--                </button>--%>
+
+                <%--                    <a href="#" class="navbar-brand">演示</a>--%>
+                <%--                </div>--%>
                 <div class="navbar-collapse collapse" id="navbar">
-                    <!--<ul class="nav navbar-nav">-->
-                    <!--&lt;!&ndash;<li class="active">&ndash;&gt;-->
-                    <!--&lt;!&ndash;<a aria-expanded="false" role="button" href="login.html"> 返回登录界面 </a>&ndash;&gt;-->
-                    <!--&lt;!&ndash;</li>&ndash;&gt;-->
-                    <!--<li class="dropdown">-->
-                    <!--<a aria-expanded="false" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown"> 菜单 <span class="caret"></span></a>-->
-                    <!--<ul role="menu" class="dropdown-menu">-->
-                    <!--<li><a href="">菜单</a></li>-->
-                    <!--<li><a href="">菜单</a></li>-->
-                    <!--<li><a href="">菜单</a></li>-->
-                    <!--<li><a href="">菜单</a></li>-->
-                    <!--</ul>-->
-                    <!--</li>-->
-                    <!--</ul>-->
+                    <%--                    <ul class="nav navbar-nav">--%>
+                    <%--                        <li class="active">--%>
+                    <%--                            <a aria-expanded="false" role="button" href="login.html"> 返回登录界面 </a>--%>
+                    <%--                        </li>--%>
+                    <%--                        <li class="dropdown">--%>
+                    <%--                            <a aria-expanded="false" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown"> 菜单 <span class="caret"></span></a>--%>
+                    <%--                            <ul role="menu" class="dropdown-menu">--%>
+                    <%--                                <li><a href="">菜单</a></li>--%>
+                    <%--                                <li><a href="">菜单</a></li>--%>
+                    <%--                                <li><a href="">菜单</a></li>--%>
+                    <%--                                <li><a href="">菜单</a></li>--%>
+                    <%--                            </ul>--%>
+                    <%--                        </li>--%>
+
+                    <%--                    </ul>--%>
                     <ul class="nav navbar-top-links navbar-right">
                         <li>
-                            <a href="${pageContext.request.contextPath}/session">
-                                <i class="fa fa-sign-out"></i>登录
+                            <a href="${pageContext.request.contextPath}/user/<%=user.getUserId()%>" id="userHomepage">
+                                <i class="fa fa-home"></i> <%=user.getUserName()%>
                             </a>
-                            <!--<a href="login.html">-->
-                            <!--<i class="fa fa-sign-out"></i> 登录-->
-                            <!--</a>-->
+
                         </li>
+                        <li id="login">
+                            <a href="${pageContext.request.contextPath}/session">
+                                <i class="fa fa-sign-in"></i> log in
+                            </a>
+                        </li>
+
+                        <li id="logout">
+                            <a class="logout" href="${pageContext.request.contextPath}/session">
+                                <i class="fa fa-sign-out"></i> log out
+                            </a>
+
+                            <form id="formdelete" action="" method="POST" >
+                                <input type="hidden" name="_method" value="DELETE">
+                            </form>
+                        </li>
+
+                        <script>
+                            $(function () {
+                                var user = "<%=session.getAttribute("USER_SESSION")%>";
+                                if(user === "null"){
+                                    var logout=document.getElementById("logout");
+                                    logout.style.display='none';
+                                }else{
+                                    // var register=document.getElementById("register");
+                                    var login=document.getElementById("login");
+                                    // register.style.display='none';
+                                    login.style.display='none';
+                                }
+
+                            })
+                        </script>
+
+                        <script>
+
+                            $(function() {
+                                $(".logout").click(function () {
+                                    var href = $(this).attr("href");
+                                    $("#formdelete").attr("action", href).submit();
+                                    return false;
+                                });
+                            })
+
+                        </script>
                     </ul>
+
                 </div>
             </nav>
         </div>
+
 
         <div class="wrapper wrapper-content">
             <div class="container-fluid col-lg-4">
@@ -89,7 +148,7 @@
                             <img src="${pageContext.request.contextPath}/images/p3.jpg" class="img-responsive" alt="Second slide">
                         </div>
                         <div class="item">
-                            <img src="${pageContext.request.contextPath}images/p4.jpg" class="img-responsive" alt="Third slide">
+                            <img src="${pageContext.request.contextPath}/images/p4.jpg" class="img-responsive" alt="Third slide">
                         </div>
                     </div>
 
@@ -157,10 +216,6 @@
 
 
 
-<!-- Mainly scripts -->
-<script src="${pageContext.request.contextPath}/js/carousel.js"></script>
-<script src="${pageContext.request.contextPath}/js/jquery-3.1.1.min.js"></script>
-<script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
 
 
 

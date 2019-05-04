@@ -26,6 +26,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User findUserByRegisterId(User user) {
+
+        if(user.getPassword() == null || "".equals(user.getPassword())) {
+            user = userDao.findUserById(user.getUserId());
+            return user;
+        }
+
         String md5Password = encryptUtil.encrypt(user.getPassword());
         User searchedUser = userDao.findUserByRegisterId(user.getRegisterId());
         if(md5Password.equals(searchedUser.getPassword())){
