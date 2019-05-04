@@ -1,5 +1,7 @@
 package cn.edu.zucc.caviar.searchengine.common.vec;
 
+import cn.edu.zucc.caviar.searchengine.common.vec.domain.WordEntry;
+
 import java.io.*;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -12,7 +14,6 @@ import java.util.Map.Entry;
 import java.util.Set;
 import java.util.TreeSet;
 
-import com.ansj.vec.domain.WordEntry;
 
 public class Word2VEC {
 
