@@ -90,7 +90,10 @@ public class ArticleJsonParser {
 
     }
 
-
+    /***
+     * 建立索引以及存储文章
+     * @param args
+     */
     public static void main(String args[]){
         redisUtil = new RedisUtil();
         hbaseUtil = new HbaseUtil();
