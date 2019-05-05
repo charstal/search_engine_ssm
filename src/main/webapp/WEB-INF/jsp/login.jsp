@@ -1,4 +1,5 @@
-<%--
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ page import="cn.edu.zucc.caviar.searchengine.core.pojo.User" %><%--
   Created by IntelliJ IDEA.
   User: shiro
   Date: 19-4-29
@@ -21,43 +22,7 @@
 </head>
 <body>
 <div class="gray-bg" id="mainView">
-    <div class="row border-bottom white-bg">
-        <nav class="navbar navbar-static-top" role="navigation">
-            <!--<div class="navbar-header">-->
-            <!--<button aria-controls="navbar" aria-expanded="false" data-target="#navbar" data-toggle="collapse" class="navbar-toggle collapsed" type="button">-->
-            <!--<i class="fa fa-reorder"></i>-->
-            <!--</button>-->
-            <!--<a href="#" class="navbar-brand">演示</a>-->
-            <!--</div>-->
-            <div class="navbar-collapse collapse" id="navbar">
-                <!--<ul class="nav navbar-nav">-->
-                <!--&lt;!&ndash;<li class="active">&ndash;&gt;-->
-                <!--&lt;!&ndash;<a aria-expanded="false" role="button" href="login.html"> 返回登录界面 </a>&ndash;&gt;-->
-                <!--&lt;!&ndash;</li>&ndash;&gt;-->
-                <!--<li class="dropdown">-->
-                <!--<a aria-expanded="false" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown"> 菜单 <span class="caret"></span></a>-->
-                <!--<ul role="menu" class="dropdown-menu">-->
-                <!--<li><a href="">菜单</a></li>-->
-                <!--<li><a href="">菜单</a></li>-->
-                <!--<li><a href="">菜单</a></li>-->
-                <!--<li><a href="">菜单</a></li>-->
-                <!--</ul>-->
-                <!--</li>-->
-
-                <!--</ul>-->
-                <ul class="nav navbar-top-links navbar-right">
-                    <li>
-                        <a href="${pageContext.request.contextPath}/session">
-                            <i class="fa fa-sign-out"></i> 登录
-                        </a>
-                        <!--<a href="login.html">-->
-                        <!--<i class="fa fa-sign-out"></i> 登录-->
-                        <!--</a>-->
-                    </li>
-                </ul>
-            </div>
-        </nav>
-    </div>
+    <div style="height: 30px"></div>
     <form class="form-horizontal container-fluid center-block"  style="height: 1500px" id="loginForm" method="post">
         <img src="${pageContext.request.contextPath}/images/p3.jpg">
         <img src="${pageContext.request.contextPath}/images/p2.jpg">
@@ -88,10 +53,106 @@
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
                 <button type="submit" class="btn btn-default" id="btn-signin">Sign in</button>
+                <button type="button" class="btn btn-default" data-toggle="modal" data-target="#registerModal">
+                    Sign up
+                </button>
+            </div>
+
+        </div>
+
+        <div class="modal fade" id="registerModal" tabindex="-1" role="dialog"
+             aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel">Register user</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form class="form-horizontal" id="register_user_form">
+                            <div class="form-group">
+                                <label for="register_id" class="col-sm-2 control-label">email</label>
+                                <div class="col-sm-10">
+                                    <input type="email" class="form-control" id="register_id" placeholder="email" required/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="user_name" class="col-sm-2 control-label">user name</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="user_name" placeholder="user name" required/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="gender" class="col-sm-2 control-label">gender</label>
+                                <div class="col-sm-10">
+                                    <select id="gender" class="form-control">
+                                        <option>male</option>
+                                        <option>female</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="password" class="col-sm-2 control-label">password</label>
+                                <div class="col-sm-10">
+                                    <input type="password" class="form-control" id="password" required />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="rePassword" class="col-sm-2 control-label">repeat password</label>
+                                <div class="col-sm-10">
+                                    <input type="password" class="form-control" id="rePassword"/>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                        <button type="button" class="btn btn-primary" onclick="registerUser()">commit</button>
+                    </div>
+
+                    <script>
+                        function registerUser() {
+                            var email = $('#register_id').val();
+                            var username = $('#user_name').val();
+                            var gender = $('#gender').val();
+                            var password1 = $('#password').val();
+                            var password2 = $('#rePassword').val();
+
+                            if(password1 === null || password2 === null || password1 !== password2) {
+                                alert("password not same");
+                                return false;
+                            }
+
+                            if(password1.length < 6) {
+                                alert("password too short");
+                                return false;
+                            }
+
+
+                            $.ajax({
+                                url: "${pageContext.request.contextPath}/user",
+                                type: "post",
+                                data: JSON.stringify({registerId: email, password: password1, gender: gender, userName: username}),
+                                contentType: "application/json; charset=UTF-8",
+                                dataType: "json",
+                                success: function(res) {
+                                    alert("success");
+                                    window.location.href = "${pageContext.request.contextPath}/user/" + res.userId;
+                                }
+                            });
+                            return false;
+                        }
+                    </script>
+                </div>
             </div>
         </div>
 
     </form>
+
+
+
 
     <script type="text/javascript">
         // 初始化登录窗口
@@ -124,6 +185,8 @@
                                 $.cookie('bit', 'true', {
                                     expires: 7
                                 });
+
+                                window.location.href="${pageContext.request.contextPath}/user/" + res.userId;
                             } else {
                                 $.removeCookie('username');
                                 $.removeCookie('password');
@@ -140,38 +203,6 @@
                 return false;
             })
         })()
-
-    </script>
-
-    <script type="text/javascript">
-<%--        function login() {--%>
-<%--            var userEmail = document.getElementById("inputEmail").value;--%>
-<%--            var password = document.getElementById("inputPassword").value;--%>
-<%--            // console.log(userEmail);--%>
-<%--            if(userEmail === undefined || userEmail === null || password === undefined || password === null || password.length < 5) {--%>
-
-<%--                alert("enter password");--%>
-<%--                return false;--%>
-
-<%--            }--%>
-<%--            $.ajax({--%>
-<%--                async:false,--%>
-<%--                url: "${pageContext.request.contextPath}/session",--%>
-<%--                type: "post",--%>
-<%--                data: JSON.stringify({registerId: userEmail, password: password}),--%>
-<%--                contentType: "application/json; charset=UTF-8",--%>
-<%--                dataType: "json",--%>
-<%--                success: function(data) {--%>
-<%--                    console.log(data);--%>
-<%--                    if(data != null) {--%>
-<%--                        alert("你输入的用户名为：" + data.registerId + "密码为：" + data.gender);--%>
-<%--                        reRenderView();--%>
-<%--                    }--%>
-
-<%--                }--%>
-<%--            });--%>
-<%--            return false;--%>
-<%--        }--%>
 
     </script>
 
