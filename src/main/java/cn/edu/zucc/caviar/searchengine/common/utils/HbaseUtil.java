@@ -141,6 +141,7 @@ public class HbaseUtil {
         return "error";
     }
     public static void main(String args[]){
+//        new HbaseUtil().createTable();
         System.out.println(new HbaseUtil().getCellData("5c7d187f000000000f007b11","content"));
     }
 

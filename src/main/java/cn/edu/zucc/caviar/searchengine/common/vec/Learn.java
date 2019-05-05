@@ -1,5 +1,11 @@
 package cn.edu.zucc.caviar.searchengine.common.vec;
 
+import cn.edu.zucc.caviar.searchengine.common.vec.domain.HiddenNeuron;
+import cn.edu.zucc.caviar.searchengine.common.vec.domain.Neuron;
+import cn.edu.zucc.caviar.searchengine.common.vec.domain.WordNeuron;
+import cn.edu.zucc.caviar.searchengine.common.vec.util.Haffman;
+import cn.edu.zucc.caviar.searchengine.common.vec.util.MapCount;
+
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -15,11 +21,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import com.ansj.vec.util.MapCount;
-import com.ansj.vec.domain.HiddenNeuron;
-import com.ansj.vec.domain.Neuron;
-import com.ansj.vec.domain.WordNeuron;
-import com.ansj.vec.util.Haffman;
+
 
 public class Learn {
 
