@@ -2,13 +2,11 @@ package cn.edu.zucc.caviar.searchengine.core.controller;
 
 import cn.edu.zucc.caviar.searchengine.core.pojo.User;
 import cn.edu.zucc.caviar.searchengine.core.service.UserService;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.sql.Timestamp;
@@ -40,7 +38,8 @@ public class UserController {
     }
 
     @RequestMapping(value = "/user", method = RequestMethod.POST)
-    public String register(User user) {
+    @ResponseBody
+    public User register(@RequestBody User user, HttpSession session) {
 
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
         user.setRegisterTime(timestamp);
@@ -48,11 +47,12 @@ public class UserController {
 
         user = userService.registerUser(user);
 
-        if(user != null){
-            return "success";
-        }else{
-            return "error";
+        if(user != null) {
+            session.setAttribute("USER_SESSION", user);
         }
+
+
+        return user;
     }
 
     // delete user
@@ -60,8 +60,28 @@ public class UserController {
 
     @RequestMapping(value = "/user/{id}", method = RequestMethod.PUT)
     @ResponseBody
-    public User updateUser(@PathVariable("id") Integer id, User user, HttpSession session) {
+    public User updateUser(@PathVariable("id") Integer id,@RequestBody User user, HttpSession session) {
+
         user.setUserId(id);
+
+        if("".equals(user.getPassword())) {
+            user.setPassword(null);
+        }
+        if("".equals(user.getDescribe())) {
+            user.setDescribe(null);
+        }
+        if("".equals(user.getAvatar())) {
+            user.setAvatar(null);
+        }
+        if("".equals(user.getUserName())) {
+            user.setUserName(null);
+        }
+        if("".equals(user.getGender())) {
+            user.setGender(null);
+        }
+
+        System.out.println(user);
+
         user = userService.updateUser(user);
         session.setAttribute("USER_SESSION", user);
 

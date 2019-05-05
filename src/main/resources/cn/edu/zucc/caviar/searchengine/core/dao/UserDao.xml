@@ -25,7 +25,7 @@
         where user_id = #{id}
     </select>
 
-    <insert id="createUser" parameterType="user" >
+    <insert id="createUser" parameterType="user"  keyProperty="userId" useGeneratedKeys="true">
         insert into tb_user(
                             register_id,
                             user_name,
@@ -51,7 +51,7 @@
         update tb_user
         <set>
             <if test="password!=null">
-                password = #{password},
+                `password` = #{password},
             </if>
             <if test="userName!=null">
                 user_name = #{userName},
