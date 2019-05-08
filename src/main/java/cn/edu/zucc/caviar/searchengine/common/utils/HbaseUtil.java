@@ -1,6 +1,6 @@
 package cn.edu.zucc.caviar.searchengine.common.utils;
 
-import cn.edu.zucc.caviar.searchengine.common.bean.BeanDoc;
+import cn.edu.zucc.caviar.searchengine.core.pojo.Document;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hbase.*;
 import org.apache.hadoop.hbase.client.*;
@@ -92,11 +92,11 @@ public class HbaseUtil {
      * @return
      * @throws IOException
      */
-    public BeanDoc getDataByRowKey(String rowKey) throws IOException {
+    public Document getDataByRowKey(String rowKey) throws IOException {
 
         Table table = conn.getTable(TableName.valueOf(TABLE_NAME));
         Get get = new Get(rowKey.getBytes());
-        BeanDoc doc = new BeanDoc();
+        Document doc = new Document();
         doc.setDocId(rowKey);
         //先判断是否有此条数据
         if(!get.isCheckExistenceOnly()){
