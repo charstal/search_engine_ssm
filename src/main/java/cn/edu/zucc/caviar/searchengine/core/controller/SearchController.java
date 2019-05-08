@@ -12,6 +12,7 @@ public class SearchController {
     @RequestMapping(value = "/search/{keyword}", method = RequestMethod.GET)
     public String keywordSearch(@PathVariable("keyword") String keyword) {
 
+
         return "main";
     }
 

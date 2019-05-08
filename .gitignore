@@ -1,2 +1,29 @@
+<<<<<<< HEAD
 .idea/*
 caviar.iml
+=======
+/.idea/*
+caviar.iml
+### Example user template template
+### Example user template
+
+# IntelliJ project files
+.idea
+*.iml
+out
+gen
+
+target/
+src/main/resources/Google_word2vec_zhwiki1710_300d.bin
+src/main/webapp/css/
+src/main/webapp/font-awesome/
+src/main/webapp/fonts/
+src/main/webapp/googleapis-fonts/
+src/main/webapp/images/p2.jpg
+src/main/webapp/images/p3.jpg
+src/main/webapp/images/p4.jpg
+src/main/webapp/js/
+src/main/webapp/upload/
+log/tibet.log.1
+src/main/resources/search_data/
+>>>>>>> da5d856880006eaee761630d32fa8a73628edcaf

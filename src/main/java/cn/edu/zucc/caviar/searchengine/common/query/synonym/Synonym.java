@@ -18,7 +18,11 @@ public class Synonym {
         w2 = new Word2VEC();
         //加载模型
         try {
-            w2.loadGoogleModel("/home/easybritney/idea-IU-191.6183.87/IdeaProjects/src/main/java/com/carviar/searchEngines/query/synonym/Google_word2vec_zhwiki1710_300d.bin") ;
+
+            String root = System.getProperty("user.dir");
+            String filePath = root + "/src/main/resources/search_data/" + "Google_word2vec_zhwiki1710_300d.bin";
+//            System.out.println(filePath);
+            w2.loadGoogleModel(filePath) ;
         } catch (IOException e) {
             e.printStackTrace();
         }
