@@ -1,8 +1,8 @@
-package cn.edu.zucc.caviar.searchengine.common.bean;
+package cn.edu.zucc.caviar.searchengine.core.pojo;
 
 import java.util.List;
 
-public class BeanDoc {
+public class Document {
     private String docId;
     private String content;
     private String author;

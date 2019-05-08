@@ -31,6 +31,9 @@ public class ArticleJsonParser {
         JsonObject object;
 
         try {
+            String root = System.getProperty("user.dir");
+            filePath = root + "/src/main/resources/" + filePath;
+
             BufferedReader bfReader = new BufferedReader(new FileReader(filePath));
             String line ;
             while((line = bfReader.readLine())!=null){
@@ -108,7 +111,8 @@ public class ArticleJsonParser {
     public static void main(String args[]){
         redisUtil = new RedisUtil();
         hbaseUtil = new HbaseUtil();
-        readContentJSON("/home/easybritney/keywords(1).json",CREATE_INDEX);
-        readContentJSON("/home/easybritney/xhs-4-13(1).json",SAVE_CONTENT);
+
+        readContentJSON("search_data/keywords(1).json",CREATE_INDEX);
+        readContentJSON("search_data/xhs_note_item_final.json",SAVE_CONTENT);
     }
 }

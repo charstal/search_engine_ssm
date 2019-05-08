@@ -75,20 +75,19 @@
                                 </div>
                             </div>
 
-                            <form id="searchFrom" action="" method="GET">
-                                    <%--                        <input type="hidden" name="_method" value="GET">--%>
-                            </form>
-
-
                             <script>
-                                $(function () {
-                                    $("#search").click(function () {
-                                        var keyword = $('#searchContext').val();
-                                        var href = "${pageContext.request.contextPath}/search/" + keyword;
-                                        $("#searchFrom").attr("action", href).submit();
-                                        return false;
+                                $('#search').on("click", function () {
+                                    var keyword = $('#searchContext').val();
+                                    $.ajax({
+                                        url: "${pageContext.request.contextPath}/search/" + keyword,
+                                        type: "get",
+                                        contentType: "application/json; charset=UTF-8",
+                                        // dataType: "json",
+                                        success: function(res) {
+                                            alert(res);
+                                        }
                                     });
-                                })
+                                });
                             </script>
 
 
