@@ -7,6 +7,10 @@ import org.apache.hadoop.hbase.client.*;
 import org.apache.hadoop.hbase.util.Bytes;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
 
 public class HbaseUtil {
     /**
@@ -114,6 +118,56 @@ public class HbaseUtil {
         }
         return doc;
     }
+
+
+    /***
+     *
+     * @param rowkeyList
+     * @return
+     * @throws IOException
+     */
+    public List<BeanDoc> getDocsBatchByRowKey(List<String> rowkeyList) throws IOException {
+        List<Get> getList = new ArrayList();
+        List<BeanDoc> docs = new ArrayList<>();
+        Table table = conn.getTable(TableName.valueOf(TABLE_NAME));
+
+        for (String rowkey : rowkeyList){//把rowkey加到get里，再把get装到list中
+            Get get = new Get(Bytes.toBytes(rowkey));
+            getList.add(get);
+        }
+
+        Result[] results = table.get(getList);
+
+
+        for(Result result:results){
+            BeanDoc doc = new BeanDoc();
+            for (Cell cell : result.rawCells()){
+                String colName = Bytes.toString(cell.getQualifierArray(),cell.getQualifierOffset(),cell.getQualifierLength());
+
+                String value = Bytes.toString(cell.getValueArray(), cell.getValueOffset(), cell.getValueLength());
+                if(colName.equals("content"))
+                    doc.setContent(value);
+                if(colName.equals("author"))
+                    doc.setAuthor(value);
+                if(colName.equals("likeCount"))
+                    doc.setLikeCount(Integer.parseInt(value));
+                if(colName.equals("shareCount"))
+                    doc.setShareCount(Integer.parseInt(value));
+                if(colName.equals("favoriteCount"))
+                    doc.setFavoriteCount(Integer.parseInt(value));
+                if(colName.equals("imageUrls")){
+                    String urls[] = value.split(",");
+                    List<String > images = Arrays.asList(urls);
+                    doc.setImageUrls(images);
+                }
+                docs.add(doc);
+
+            }
+        }
+        return docs;
+    }
+
+
 
     /***
      * 获取制定文章的制定内容

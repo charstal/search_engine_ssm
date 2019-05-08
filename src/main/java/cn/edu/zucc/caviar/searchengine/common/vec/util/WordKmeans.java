@@ -1,5 +1,7 @@
 package cn.edu.zucc.caviar.searchengine.common.vec.util;
 
+import cn.edu.zucc.caviar.searchengine.common.vec.Word2VEC;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -9,8 +11,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-
-import com.ansj.vec.Word2VEC;
 
 /**
  * keanmeans聚类

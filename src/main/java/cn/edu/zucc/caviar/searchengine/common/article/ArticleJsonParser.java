@@ -4,6 +4,7 @@ import cn.edu.zucc.caviar.searchengine.common.query.spell.PinyinUtil;
 import cn.edu.zucc.caviar.searchengine.common.query.spell.SoundexCoder;
 import cn.edu.zucc.caviar.searchengine.common.utils.HbaseUtil;
 import cn.edu.zucc.caviar.searchengine.common.utils.RedisUtil;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.hankcs.hanlp.HanLP;
@@ -65,7 +66,17 @@ public class ArticleJsonParser {
         String likeCount = docData.get("likeCount").getAsJsonObject().get("$numberInt").getAsString();
         String commentCount = docData.get("commentCount").getAsJsonObject().get("$numberInt").getAsString();
         String shareCount = docData.get("shareCount").getAsJsonObject().get("$numberInt").getAsString();
+        JsonArray images = docData.get("imageUrls").getAsJsonArray();
 
+        String imageUrls="";
+
+        for(int i=0;i<images.size();i++){
+            if(i==0)
+                imageUrls.concat(images.get(i).getAsString());
+            else
+                imageUrls.concat(","+images.get(i).getAsString());
+        }
+        hbaseUtil.put(docId,"imageUrls",imageUrls);
         hbaseUtil.put(docId,"docId",docId);
         hbaseUtil.put(docId,"author",author);
         hbaseUtil.put(docId,"content",content);

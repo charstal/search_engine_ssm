@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.edu.zucc.caviar.searchengine.core.dao.UserDao">
+    <resultMap id="userResultMapper" type="cn.edu.zucc.caviar.searchengine.core.pojo.User">
+        <id property="userId" column="user_id"/>
+        <result property="registerId" column="register_id"/>
+        <result property="password" column="password"/>
+        <result property="gender" column="gender"/>
+        <result property="registerTime" column="register_time"/>
+        <result property="lastLoginTime" column="last_login_time"/>
+        <result property="userName" column="user_name"/>
+        <result property="avatar" column="avatar_url"/>
+        <result property="describe" column="describe"/>
+    </resultMap>
+
+    <select id="findUserByRegisterId" parameterType="String" resultMap="userResultMapper">
+        select *
+        from tb_user
+        where register_id = #{registerId}
+    </select>
+
+    <select id="findUserById" parameterType="Integer" resultMap="userResultMapper">
+        select *
+        from tb_user
+        where user_id = #{id}
+    </select>
+
+    <insert id="createUser" parameterType="user"  keyProperty="userId" useGeneratedKeys="true">
+        insert into tb_user(
+                            register_id,
+                            user_name,
+                            password,
+                            gender,
+                            register_time,
+                            last_login_time,
+                            `describe`,
+                            avatar_url)
+        values(
+               #{registerId},
+               #{userName},
+               #{password},
+               #{gender},
+               #{registerTime},
+               #{lastLoginTime},
+               #{describe},
+               #{avatar}
+              )
+    </insert>
+
+    <update id="updateUser" parameterType="user">
+        update tb_user
+        <set>
+            <if test="password!=null">
+                `password` = #{password},
+            </if>
+            <if test="userName!=null">
+                user_name = #{userName},
+            </if>
+            <if test="gender!=null">
+                gender = #{gender},
+            </if>
+            <if test="avatar!=null">
+                avatar_url = #{avatar},
+            </if>
+            <if test="lastLoginTime!=null">
+                register_time = #{registerTime},
+            </if>
+            <if test="describe!=null">
+                `describe` = #{describe},
+            </if>
+        </set>
+        where user_id = #{userId}
+    </update>
+
+
+</mapper>

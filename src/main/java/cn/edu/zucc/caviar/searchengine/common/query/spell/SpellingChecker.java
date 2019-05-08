@@ -5,22 +5,50 @@ import com.hankcs.hanlp.HanLP;
 import com.hankcs.hanlp.dictionary.py.Pinyin;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class SpellingChecker {
     private static RedisUtil redisUtil = new RedisUtil();
 
+
+    public SpellingChecker(RedisUtil redisUtil){
+        this.redisUtil = redisUtil;
+    }
+
     /***
      * 查询相同SoundexCode的字符串
      * @param token 要检查的内容
+     * @param isPinyin 检查内容是否为拼音
      * @return
      */
-    public List<String> checkSpell(String token){
-        List<Pinyin> pinyin = HanLP.convertToPinyinList(token);
+
+
+    public Map<String, Double> checkSpell(String token,boolean isPinyin){
+
+
         List<String> similarSpellTokens = new ArrayList<String>();
-        String pinyinString = PinyinUtil.getPinyin(pinyin);
-        String initial = pinyin.get(0).getShengmu().toString();
-        String soundexCode = SoundexCoder.soundex(pinyin);
+        Map<String ,Double> checkMap = new HashMap<>();
+        String pinyinString="";
+
+        String soundexCode= "";
+        String initial = "";
+
+        if(isPinyin)
+        {
+            pinyinString = token;
+            soundexCode = SoundexCoder.soudex(token);
+            initial = token.substring(0,1);
+        }
+        else
+        {
+            List<Pinyin> pinyin = HanLP.convertToPinyinList(token);
+            pinyinString = PinyinUtil.getPinyin(pinyin);
+            initial = pinyin.get(0).getShengmu().toString();
+            soundexCode = SoundexCoder.soundex(pinyin);
+        }
+
 
         if(initial.equals("n")||initial.equals("l")||initial.equals("r")){
             similarSpellTokens.addAll(redisUtil.searchByScore("n",pinyinString,pinyinString));
@@ -51,14 +79,17 @@ public class SpellingChecker {
         {
             similarSpellTokens.addAll(redisUtil.searchByScore(initial,soundexCode,soundexCode));
         }
+        for(String checkToken:similarSpellTokens){
+            checkMap.put(checkToken,0.6);
+        }
 
-        return similarSpellTokens;
+        return checkMap;
     }
 
     public static void main(String args[]){
-        List<String> rs = new SpellingChecker().checkSpell("天平");
-        for(String s :rs){
-            System.out.println(s);
-        }
+//        List<String> rs = new SpellingChecker().checkSpell("tianpin");
+//        for(String s :rs){
+//            System.out.println(s);
+//        }
     }
 }

@@ -2,9 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e67ee334-6bd8-4af7-9580-a2fcafa1051f" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/cn/edu/zucc/caviar/searchengine/common/utils/QueryUtil.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/cn/edu/zucc/caviar/searchengine/common/article/ArticleJsonParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/edu/zucc/caviar/searchengine/common/article/ArticleJsonParser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cn/edu/zucc/caviar/searchengine/common/query/segment/ChineseSegmentation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/edu/zucc/caviar/searchengine/common/query/segment/ChineseSegmentation.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cn/edu/zucc/caviar/searchengine/common/query/spell/SoundexCoder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/edu/zucc/caviar/searchengine/common/query/spell/SoundexCoder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cn/edu/zucc/caviar/searchengine/common/query/spell/SpellingChecker.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/edu/zucc/caviar/searchengine/common/query/spell/SpellingChecker.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cn/edu/zucc/caviar/searchengine/common/utils/HbaseUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/edu/zucc/caviar/searchengine/common/utils/HbaseUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cn/edu/zucc/caviar/searchengine/common/utils/QueryUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/edu/zucc/caviar/searchengine/common/utils/QueryUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cn/edu/zucc/caviar/searchengine/common/vec/Learn.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/edu/zucc/caviar/searchengine/common/vec/Learn.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cn/edu/zucc/caviar/searchengine/common/vec/util/WordKmeans.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/edu/zucc/caviar/searchengine/common/vec/util/WordKmeans.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/classes/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -20,10 +26,25 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/.gitignore">
+        <entry file="file://$PROJECT_DIR$/src/main/java/cn/edu/zucc/caviar/searchengine/common/utils/QueryUtil.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="15">
-              <caret line="1" column="10" lean-forward="true" selection-start-line="1" selection-start-column="10" selection-end-line="1" selection-end-column="10" />
+            <state relative-caret-position="587">
+              <caret line="47" column="35" lean-forward="true" selection-start-line="47" selection-start-column="35" selection-end-line="47" selection-end-column="35" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/cn/edu/zucc/caviar/searchengine/common/utils/HbaseUtil.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="152">
+              <caret line="161" column="17" selection-start-line="161" selection-start-column="17" selection-end-line="161" selection-end-column="17" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -31,8 +52,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/cn/edu/zucc/caviar/searchengine/common/bean/BeanDoc.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="60">
-              <caret line="4" column="22" lean-forward="true" selection-start-line="4" selection-start-column="22" selection-end-line="4" selection-end-column="22" />
+            <state relative-caret-position="47">
+              <caret line="9" column="29" selection-start-line="9" selection-start-column="16" selection-end-line="9" selection-end-column="29" />
               <folding>
                 <element signature="e#612#613#0" expanded="true" />
                 <element signature="e#650#651#0" expanded="true" />
@@ -45,23 +66,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/java/cn/edu/zucc/caviar/searchengine/common/utils/HbaseUtil.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="173">
-              <caret line="94" column="49" lean-forward="true" selection-start-line="94" selection-start-column="11" selection-end-line="94" selection-end-column="49" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/cn/edu/zucc/caviar/searchengine/common/article/ArticleJsonParser.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="35" column="57" lean-forward="true" selection-start-line="35" selection-start-column="57" selection-end-line="35" selection-end-column="57" />
+            <state relative-caret-position="601">
+              <caret line="78" column="51" selection-start-line="78" selection-start-column="51" selection-end-line="78" selection-end-column="51" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -70,34 +79,13 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/cn/edu/zucc/caviar/searchengine/common/query/synonym/Synonym.java">
+        <entry file="file://$PROJECT_DIR$/src/main/java/cn/edu/zucc/caviar/searchengine/common/vec/Learn.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="180">
-              <caret line="23" column="9" lean-forward="true" selection-start-line="23" selection-start-column="9" selection-end-line="23" selection-end-column="9" />
+            <state relative-caret-position="857">
+              <caret line="139" column="13" selection-start-line="139" selection-start-column="13" selection-end-line="139" selection-end-column="13" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/cn/edu/zucc/caviar/searchengine/common/utils/QueryUtil.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="180">
-              <caret line="21" column="49" selection-start-line="21" selection-start-column="11" selection-end-line="21" selection-end-column="49" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/cn/edu/zucc/caviar/searchengine/common/query/spell/PinyinUtil.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="270">
-              <caret line="21" column="22" selection-start-line="21" selection-start-column="22" selection-end-line="21" selection-end-column="22" />
             </state>
           </provider>
         </entry>
@@ -105,8 +93,32 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/cn/edu/zucc/caviar/searchengine/common/utils/RedisUtil.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="390">
-              <caret line="162" column="43" selection-start-line="162" selection-start-column="33" selection-end-line="162" selection-end-column="43" />
+            <state relative-caret-position="2145">
+              <caret line="151" lean-forward="true" selection-start-line="151" selection-end-line="151" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/cn/edu/zucc/caviar/searchengine/core/controller/UserController.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="585">
+              <caret line="48" selection-start-line="48" selection-end-line="48" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/cn/edu/zucc/caviar/searchengine/common/query/segment/ChineseSegmentation.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="105">
+              <caret line="7" column="13" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -117,8 +129,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/cn/edu/zucc/caviar/searchengine/common/query/spell/SoundexCoder.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-315">
-              <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
+            <state relative-caret-position="617">
+              <caret line="66" column="38" lean-forward="true" selection-start-line="66" selection-start-column="38" selection-end-line="66" selection-end-column="38" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -129,10 +141,13 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/cn/edu/zucc/caviar/searchengine/common/query/spell/SpellingChecker.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="120">
-              <caret line="17" column="48" lean-forward="true" selection-start-line="17" selection-start-column="11" selection-end-line="17" selection-end-column="48" />
+            <state relative-caret-position="330">
+              <caret line="22" column="32" selection-start-line="22" selection-start-column="32" selection-end-line="22" selection-end-column="32" />
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="e#482#483#0" expanded="true" />
+                <element signature="e#513#514#0" expanded="true" />
+                <element signature="e#693#701#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -154,26 +169,28 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/src/main/java/cn/edu/zucc/caviar/searchengine/common/bean/BeanDoc.java" />
-        <option value="$PROJECT_DIR$/src/main/java/cn/edu/zucc/caviar/searchengine/common/utils/HbaseUtil.java" />
         <option value="$PROJECT_DIR$/src/main/java/cn/edu/zucc/caviar/searchengine/common/vec/util/Haffman.java" />
         <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/.gitignore" />
-        <option value="$PROJECT_DIR$/src/main/java/cn/edu/zucc/caviar/searchengine/common/query/segment/ChineseSegmentation.java" />
         <option value="$PROJECT_DIR$/src/main/java/cn/edu/zucc/caviar/searchengine/common/query/spell/PinyinUtil.java" />
-        <option value="$PROJECT_DIR$/src/main/java/cn/edu/zucc/caviar/searchengine/common/query/spell/SpellingChecker.java" />
         <option value="$PROJECT_DIR$/src/main/java/cn/edu/zucc/caviar/searchengine/common/vec/Word2VEC.java" />
-        <option value="$PROJECT_DIR$/src/main/java/cn/edu/zucc/caviar/searchengine/common/article/ArticleJsonParser.java" />
         <option value="$PROJECT_DIR$/src/main/java/cn/edu/zucc/caviar/searchengine/common/query/synonym/Synonym.java" />
-        <option value="$PROJECT_DIR$/src/main/java/cn/edu/zucc/caviar/searchengine/common/utils/QueryUtil.java" />
         <option value="$PROJECT_DIR$/src/main/java/cn/edu/zucc/caviar/searchengine/common/utils/RedisUtil.java" />
+        <option value="$PROJECT_DIR$/src/main/java/cn/edu/zucc/caviar/searchengine/common/vec/util/WordKmeans.java" />
+        <option value="$PROJECT_DIR$/src/main/java/cn/edu/zucc/caviar/searchengine/common/vec/Learn.java" />
+        <option value="$PROJECT_DIR$/src/main/java/cn/edu/zucc/caviar/searchengine/common/query/segment/ChineseSegmentation.java" />
+        <option value="$PROJECT_DIR$/src/main/java/cn/edu/zucc/caviar/searchengine/common/query/spell/SoundexCoder.java" />
+        <option value="$PROJECT_DIR$/src/main/java/cn/edu/zucc/caviar/searchengine/common/query/spell/SpellingChecker.java" />
+        <option value="$PROJECT_DIR$/src/main/java/cn/edu/zucc/caviar/searchengine/common/utils/QueryUtil.java" />
+        <option value="$PROJECT_DIR$/src/main/java/cn/edu/zucc/caviar/searchengine/common/article/ArticleJsonParser.java" />
+        <option value="$PROJECT_DIR$/src/main/java/cn/edu/zucc/caviar/searchengine/common/utils/HbaseUtil.java" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds">
-    <option name="x" value="496" />
-    <option name="y" value="227" />
-    <option name="width" value="1923" />
-    <option name="height" value="764" />
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="y" value="28" />
+    <option name="width" value="790" />
+    <option name="height" value="545" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -181,6 +198,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="ProjectPane" />
       <pane id="PackagesPane" />
       <pane id="Scope">
         <subPane subId="Scope 'Project Files'; set:Project Files; class com.intellij.psi.search.scope.ProjectFilesScope">
@@ -188,11 +206,6 @@
             <path>
               <item name="caviar" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
               <item name="caviar" type="2674bda8:ScopeViewTreeModel$GroupNode" />
-            </path>
-            <path>
-              <item name="caviar" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
-              <item name="caviar" type="2674bda8:ScopeViewTreeModel$GroupNode" />
-              <item name="log" type="9f88c78c:ScopeViewTreeModel$FileNode" />
             </path>
             <path>
               <item name="caviar" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
@@ -376,11 +389,75 @@
               <item name="common" type="9f88c78c:ScopeViewTreeModel$FileNode" />
               <item name="utils" type="9f88c78c:ScopeViewTreeModel$FileNode" />
             </path>
+            <path>
+              <item name="caviar" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="caviar" type="2674bda8:ScopeViewTreeModel$GroupNode" />
+              <item name="src" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="main" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="java" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="cn" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="edu" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="zucc" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="caviar" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="searchengine" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="core" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+            </path>
+            <path>
+              <item name="caviar" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="caviar" type="2674bda8:ScopeViewTreeModel$GroupNode" />
+              <item name="src" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="main" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="java" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="cn" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="edu" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="zucc" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="caviar" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="searchengine" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="core" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="controller" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+            </path>
+            <path>
+              <item name="caviar" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="caviar" type="2674bda8:ScopeViewTreeModel$GroupNode" />
+              <item name="src" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="main" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="resources" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+            </path>
+            <path>
+              <item name="caviar" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="caviar" type="2674bda8:ScopeViewTreeModel$GroupNode" />
+              <item name="src" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="main" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="resources" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="spring" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+            </path>
+            <path>
+              <item name="caviar" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="caviar" type="2674bda8:ScopeViewTreeModel$GroupNode" />
+              <item name="src" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="main" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="webapp" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+            </path>
+            <path>
+              <item name="caviar" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="caviar" type="2674bda8:ScopeViewTreeModel$GroupNode" />
+              <item name="src" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="main" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="webapp" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="images" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+            </path>
+            <path>
+              <item name="caviar" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="caviar" type="2674bda8:ScopeViewTreeModel$GroupNode" />
+              <item name="src" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="main" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="webapp" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="web" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+            </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="ProjectPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -416,6 +493,82 @@
       </list>
     </option>
   </component>
+  <component name="RunManager" selected="Application.QueryUtil">
+    <configuration name="ChineseSegmentation" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="cn.edu.zucc.caviar.searchengine.common.query.segment.ChineseSegmentation" />
+      <module name="caviar" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="cn.edu.zucc.caviar.searchengine.common.query.segment.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="QueryUtil" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="cn.edu.zucc.caviar.searchengine.common.utils.QueryUtil" />
+      <module name="caviar" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="cn.edu.zucc.caviar.searchengine.common.utils.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="RedisUtil" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="cn.edu.zucc.caviar.searchengine.common.utils.RedisUtil" />
+      <module name="caviar" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="cn.edu.zucc.caviar.searchengine.common.utils.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="SoundexCoder" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="cn.edu.zucc.caviar.searchengine.common.query.spell.SoundexCoder" />
+      <module name="caviar" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="cn.edu.zucc.caviar.searchengine.common.query.spell.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="SpellingChecker" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="cn.edu.zucc.caviar.searchengine.common.query.spell.SpellingChecker" />
+      <module name="caviar" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="cn.edu.zucc.caviar.searchengine.common.query.spell.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.QueryUtil" />
+        <item itemvalue="Application.SoundexCoder" />
+        <item itemvalue="Application.SpellingChecker" />
+        <item itemvalue="Application.ChineseSegmentation" />
+        <item itemvalue="Application.RedisUtil" />
+      </list>
+    </recent_temporary>
+  </component>
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -429,18 +582,22 @@
       <workItem from="1556895276517" duration="749000" />
       <workItem from="1556952503884" duration="796000" />
       <workItem from="1556953560548" duration="4782000" />
-      <workItem from="1556962028518" duration="4496000" />
+      <workItem from="1556962028518" duration="4869000" />
+      <workItem from="1557036659481" duration="1325000" />
+      <workItem from="1557150145159" duration="2564000" />
+      <workItem from="1557155014744" duration="5733000" />
+      <workItem from="1557317786800" duration="6207000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="10823000" />
+    <option name="totallyTimeSpent" value="27025000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="496" y="227" width="1923" height="764" extended-state="0" />
+    <frame x="0" y="28" width="1920" height="1018" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.25815073" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.22698073" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Designer" order="2" />
       <window_info id="Image Layers" order="3" />
@@ -450,7 +607,7 @@
       <window_info id="Web" order="7" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.3284553" />
-      <window_info anchor="bottom" id="Run" order="2" />
+      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.32451093" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -462,6 +619,7 @@
       <window_info anchor="bottom" id="Java Enterprise" order="11" />
       <window_info anchor="bottom" id="Database Changes" order="12" />
       <window_info anchor="bottom" id="Version Control" order="13" />
+      <window_info anchor="bottom" id="Messages" order="14" weight="0.3295362" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -578,13 +736,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/caviar.iml" />
-    <entry file="file://$PROJECT_DIR$/src/main/java/cn/edu/zucc/caviar/searchengine/core/controller/SessionController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="195">
-          <caret line="23" selection-start-line="23" selection-end-line="23" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/cn/edu/zucc/caviar/searchengine/common/vec/util/Haffman.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="120">
@@ -599,13 +750,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="210">
           <caret line="23" column="31" selection-start-line="23" selection-start-column="31" selection-end-line="23" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cn/edu/zucc/caviar/searchengine/core/controller/UserController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="15" column="13" selection-start-line="15" selection-start-column="13" selection-end-line="15" selection-end-column="13" />
         </state>
       </provider>
     </entry>
@@ -626,16 +770,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cn/edu/zucc/caviar/searchengine/common/query/segment/ChineseSegmentation.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="18" column="27" selection-start-line="18" selection-start-column="27" selection-end-line="18" selection-end-column="27" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/cn/edu/zucc/caviar/searchengine/common/vec/domain/WordEntry.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="45">
@@ -643,67 +777,40 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cn/edu/zucc/caviar/searchengine/common/vec/Word2VEC.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1995">
-          <caret line="142" column="26" selection-start-line="142" selection-start-column="26" selection-end-line="142" selection-end-column="26" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#3692#3703#0" expanded="true" />
-            <element signature="e#4936#4947#0" expanded="true" />
-            <element signature="e#5749#5760#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="15">
-          <caret line="1" column="10" lean-forward="true" selection-start-line="1" selection-start-column="10" selection-end-line="1" selection-end-column="10" />
+          <caret line="1" column="10" selection-start-line="1" selection-start-column="10" selection-end-line="1" selection-end-column="10" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cn/edu/zucc/caviar/searchengine/common/article/ArticleJsonParser.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/cn/edu/zucc/caviar/searchengine/core/controller/FileUploadController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="35" column="57" lean-forward="true" selection-start-line="35" selection-start-column="57" selection-end-line="35" selection-end-column="57" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state relative-caret-position="90">
+          <caret line="19" column="13" selection-start-line="19" selection-start-column="13" selection-end-line="19" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cn/edu/zucc/caviar/searchengine/core/controller/SearchController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cn/edu/zucc/caviar/searchengine/core/controller/SessionController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="390">
+          <caret line="39" column="20" selection-start-line="39" selection-start-column="20" selection-end-line="39" selection-end-column="20" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/cn/edu/zucc/caviar/searchengine/common/query/synonym/Synonym.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="23" column="9" lean-forward="true" selection-start-line="23" selection-start-column="9" selection-end-line="23" selection-end-column="9" />
+        <state relative-caret-position="75">
+          <caret line="10" selection-start-line="10" selection-end-line="10" />
           <folding>
             <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cn/edu/zucc/caviar/searchengine/common/utils/QueryUtil.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="21" column="49" selection-start-line="21" selection-start-column="11" selection-end-line="21" selection-end-column="49" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cn/edu/zucc/caviar/searchengine/common/bean/BeanDoc.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="4" column="22" lean-forward="true" selection-start-line="4" selection-start-column="22" selection-end-line="4" selection-end-column="22" />
-          <folding>
-            <element signature="e#612#613#0" expanded="true" />
-            <element signature="e#650#651#0" expanded="true" />
-            <element signature="e#1248#1249#0" expanded="true" />
-            <element signature="e#1296#1297#0" expanded="true" />
-            <element signature="e#1754#1755#0" expanded="true" />
-            <element signature="e#1800#1801#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -715,10 +822,77 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cn/edu/zucc/caviar/searchengine/common/vec/Word2VEC.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1335">
+          <caret line="101" column="16" selection-start-line="101" selection-start-column="16" selection-end-line="101" selection-end-column="16" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cn/edu/zucc/caviar/searchengine/common/vec/util/WordKmeans.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="195">
+          <caret line="23" column="12" selection-start-line="23" selection-start-column="12" selection-end-line="23" selection-end-column="12" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cn/edu/zucc/caviar/searchengine/common/vec/Learn.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="857">
+          <caret line="139" column="13" selection-start-line="139" selection-start-column="13" selection-end-line="139" selection-end-column="13" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cn/edu/zucc/caviar/searchengine/core/controller/UserController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="585">
+          <caret line="48" selection-start-line="48" selection-end-line="48" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/cn/edu/zucc/caviar/searchengine/common/query/spell/SoundexCoder.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-315">
-          <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
+        <state relative-caret-position="617">
+          <caret line="66" column="38" lean-forward="true" selection-start-line="66" selection-start-column="38" selection-end-line="66" selection-end-column="38" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar:///usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-11.b12.el7.x86_64/jre/lib/rt.jar!/sun/misc/FloatingDecimal.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2441">
+          <caret line="238" lean-forward="true" selection-start-line="238" selection-end-line="238" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cn/edu/zucc/caviar/searchengine/common/utils/RedisUtil.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2145">
+          <caret line="151" lean-forward="true" selection-start-line="151" selection-end-line="151" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cn/edu/zucc/caviar/searchengine/common/query/segment/ChineseSegmentation.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="7" column="13" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -727,28 +901,56 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/cn/edu/zucc/caviar/searchengine/common/query/spell/SpellingChecker.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="17" column="48" lean-forward="true" selection-start-line="17" selection-start-column="11" selection-end-line="17" selection-end-column="48" />
+        <state relative-caret-position="330">
+          <caret line="22" column="32" selection-start-line="22" selection-start-column="32" selection-end-line="22" selection-end-column="32" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#482#483#0" expanded="true" />
+            <element signature="e#513#514#0" expanded="true" />
+            <element signature="e#693#701#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cn/edu/zucc/caviar/searchengine/common/utils/QueryUtil.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="587">
+          <caret line="47" column="35" lean-forward="true" selection-start-line="47" selection-start-column="35" selection-end-line="47" selection-end-column="35" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cn/edu/zucc/caviar/searchengine/common/utils/RedisUtil.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/cn/edu/zucc/caviar/searchengine/common/article/ArticleJsonParser.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="390">
-          <caret line="162" column="43" selection-start-line="162" selection-start-column="33" selection-end-line="162" selection-end-column="43" />
+        <state relative-caret-position="601">
+          <caret line="78" column="51" selection-start-line="78" selection-start-column="51" selection-end-line="78" selection-end-column="51" />
           <folding>
             <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cn/edu/zucc/caviar/searchengine/common/bean/BeanDoc.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="47">
+          <caret line="9" column="29" selection-start-line="9" selection-start-column="16" selection-end-line="9" selection-end-column="29" />
+          <folding>
+            <element signature="e#612#613#0" expanded="true" />
+            <element signature="e#650#651#0" expanded="true" />
+            <element signature="e#1248#1249#0" expanded="true" />
+            <element signature="e#1296#1297#0" expanded="true" />
+            <element signature="e#1754#1755#0" expanded="true" />
+            <element signature="e#1800#1801#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/cn/edu/zucc/caviar/searchengine/common/utils/HbaseUtil.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="173">
-          <caret line="94" column="49" lean-forward="true" selection-start-line="94" selection-start-column="11" selection-end-line="94" selection-end-column="49" />
+        <state relative-caret-position="152">
+          <caret line="161" column="17" selection-start-line="161" selection-start-column="17" selection-end-line="161" selection-end-column="17" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
