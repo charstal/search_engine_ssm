@@ -1,9 +1,12 @@
 package cn.edu.zucc.caviar.searchengine.common.utils;
 
+import org.springframework.stereotype.Component;
 import redis.clients.jedis.*;
 
 import java.util.*;
 
+
+@Component
 public class RedisUtil {
 
     public final static String SEARCH_RESULT = "SEARCH_RESULT";

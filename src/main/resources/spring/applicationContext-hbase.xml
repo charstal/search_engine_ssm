@@ -7,9 +7,10 @@
     http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
     http://www.springframework.org/schema/hadoop http://www.springframework.org/schema/hadoop/spring-hadoop.xsd">
     <!-- 配置zookeeper的信息，远程连接hbase时使用 -->
-    <hdp:configuration resources="classpath:/hbase-site.xml" />
 
-    <hdp:hbase-configuration configuration-ref="hadoopConfiguration" />
+    <hdp:configuration id="hadoopConfiguration" resources="classpath:hbase-site.xml"/>
+    <hdp:hbase-configuration id="hbaseConfiguration" configuration-ref="hadoopConfiguration" />
+
     <!-- 配置HbaseTemplate -->
     <bean id="htemplate" class="org.springframework.data.hadoop.hbase.HbaseTemplate">
         <property name="configuration" ref="hbaseConfiguration"/>

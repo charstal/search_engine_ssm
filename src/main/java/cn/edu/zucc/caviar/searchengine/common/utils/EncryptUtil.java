@@ -1,10 +1,13 @@
 package cn.edu.zucc.caviar.searchengine.common.utils;
 
+import org.springframework.stereotype.Component;
+
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+@Component
 public class EncryptUtil {
 
 

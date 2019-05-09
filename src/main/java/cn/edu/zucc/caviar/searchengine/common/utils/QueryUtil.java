@@ -4,9 +4,12 @@ package cn.edu.zucc.caviar.searchengine.common.utils;
 
 import cn.edu.zucc.caviar.searchengine.common.query.segment.ChineseSegmentation;
 import cn.edu.zucc.caviar.searchengine.common.query.synonym.Synonym;
+import org.springframework.stereotype.Component;
 
 import java.util.*;
 
+
+@Component
 public class QueryUtil {
 
     private Synonym synonymControl;
