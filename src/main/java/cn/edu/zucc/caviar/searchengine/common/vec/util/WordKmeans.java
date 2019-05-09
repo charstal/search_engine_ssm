@@ -12,10 +12,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-<<<<<<< HEAD
-=======
 
->>>>>>> da5d856880006eaee761630d32fa8a73628edcaf
 /**
  * keanmeans聚类
  * 

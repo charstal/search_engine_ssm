@@ -126,9 +126,9 @@ public class HbaseUtil {
      * @return
      * @throws IOException
      */
-    public List<BeanDoc> getDocsBatchByRowKey(List<String> rowkeyList) throws IOException {
+    public List<Document> getDocsBatchByRowKey(List<String> rowkeyList) throws IOException {
         List<Get> getList = new ArrayList();
-        List<BeanDoc> docs = new ArrayList<>();
+        List<Document> docs = new ArrayList<>();
         Table table = conn.getTable(TableName.valueOf(TABLE_NAME));
 
         for (String rowkey : rowkeyList){//把rowkey加到get里，再把get装到list中
@@ -140,7 +140,7 @@ public class HbaseUtil {
 
 
         for(Result result:results){
-            BeanDoc doc = new BeanDoc();
+            Document doc = new Document();
             for (Cell cell : result.rawCells()){
                 String colName = Bytes.toString(cell.getQualifierArray(),cell.getQualifierOffset(),cell.getQualifierLength());
 

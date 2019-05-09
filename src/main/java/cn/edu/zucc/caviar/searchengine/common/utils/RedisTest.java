@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ZSetOperations;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
@@ -22,31 +23,7 @@ public class RedisTest {
 
 
     public final static String SEARCH_RESULT = "SEARCH_RESULT";
-//    public static Jedis getJedis() {
-//        return jedis;
-//    }
-//
-//    public static void setJedis(Jedis jedis) {
-//        RedisUtil.jedis = jedis;
-//    }
-//
-//    public static void setShardedJedis(ShardedJedis shardedJedis) {
-//        RedisUtil.shardedJedis = shardedJedis;
-//    }
-//
-//    private static Jedis jedis;
-//    private static ShardedJedis shardedJedis;
-//    private static ShardedJedisPipeline pipeline;
-//
-//    public RedisUtil(){
-//        jedis = new Jedis("127.0.0.1", 6379);
-//        jedis.select(0);
-//        shardedJedis = getShardedJedis();
-//        pipeline = shardedJedis.pipelined();
-//    }
 
-
-    //=============================common============================
     /**
      * 指定缓存失效时间
      * @param key 键
@@ -515,45 +492,25 @@ public class RedisTest {
             return false;
         }
     }
-    //
-//    /**
-//     * 根据索引修改list中的某条数据
-//     * @param key 键
-//     * @param index 索引
-//     * @param value 值
-//     * @return
-//     */
-//    public boolean lUpdateIndex(String key, long index,Object value) {
-//        try {
-//            redisTemplate.opsForList().set(key, index, value);
-//            return true;
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            return false;
-//        }
-//    }
-//
-//    /**
-//     * 移除N个值为value
-//     * @param key 键
-//     * @param count 移除多少个
-//     * @param value 值
-//     * @return 移除的个数
-//     */
-//    public long lRemove(String key,long count,Object value) {
-//        try {
-//            Long remove = redisTemplate.opsForList().remove(key, count, value);
-//            return remove;
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            return 0;
-//        }
-//    }
-//
+
+
+    //============================index===========================================
+    /***
+     *
+     * @param token
+     * @param low
+     * @param high
+     * @return
+     */
+    public  List<Object> searchByScore(String token,String low,String high){
+        List<Object> spellCheckSets = new ArrayList<Object>();
+        spellCheckSets.addAll(redisTemplate.opsForZSet().rangeByScore(token,Double.valueOf(low),Double.valueOf(high)));
+        return spellCheckSets;
+    }
+
     public boolean zadd(String token, String docId, double score) {
         try {
             redisTemplate.opsForZSet().add(token, docId, score);
-
             return true;
         } catch (Exception e) {
             e.printStackTrace();
@@ -561,168 +518,53 @@ public class RedisTest {
         }
     }
 
-    public Set<Object> zrangebyscore() {
-        return redisTemplate.opsForZSet().rangeByScore("杭州", 0, -1);
+    /***
+     * 分页
+     * @param currentPage 当前第几页
+     * @param count 每页的内容数量
+     * @return 返回元组遍历通过getElement 获取文章ID
+     */
+    public Set<ZSetOperations.TypedTuple<Object>> resultPaging(int currentPage, int  count){
+        return redisTemplate.opsForZSet().reverseRangeByScoreWithScores(SEARCH_RESULT,10,0,currentPage*(count-1),count);
     }
-//
-//
-//    public Long zunionstore(String src, String dest, String token) {
-//        return redisTemplate.opsForZSet().unionAndStore(src, dest, token);
-//
-//    }
-//
-//    public Long zinterstore(String src, String dest, String token) {
-//        return redisTemplate.opsForZSet().intersectAndStore(src, dest, token);
-//
-//    }
-//
-//    public Collection<? extends String> zrangeByScore(String src, double low, double high) {
-//        return redisTemplate.opsForZSet().rangeByScore(src, low, high);
-//
-//    }
-//
-//
-//    public Long zremrangeByScore(String src, double low, double high) {
-//        return redisTemplate.opsForZSet().removeRangeByScore(src, low, high);
-//
-//    }
-//
-//    public Set<ZSetOperations.TypedTuple<Object>> zrevrangeByScoreWithScores(String src, double low, double high) {
-//        return redisTemplate.opsForZSet().reverseRangeByScoreWithScores(src, low, high);
-//
-//    }
-//
-//
-//
-//
-//
-//
-//
-//    /***
-//     * 建立索引
-//     * @param token 关键字
-//     * @param docId Hbase 二级索引
-//     * @param score 关键字在 Doc 中的特征分
-//     */
-//    public void insertIndex(String token,String docId,double score){
-//
-//        this.zadd(token, docId, score);
-//    }
-//
-//
-//    /***
-//     * 搜索
-//     * @param queryMap
-//     * @return
-//     */
-//    public Collection<String> searchTokens(Map<String,Double> queryMap){
-//
-//        Collection<String> docSets = new TreeSet<String>();
-//        boolean empty = true;
-//        for(String token:queryMap.keySet()){
-//            if(empty)
-//            {
-//                this.zunionstore(SEARCH_RESULT,SEARCH_RESULT,token);
-//                empty = false;
-//            }
-//            else{
-//                this.zinterstore(SEARCH_RESULT,SEARCH_RESULT,token);
-//            }
-//        }
-//        docSets.addAll(this.zrangeByScore(SEARCH_RESULT,0,1000)) ;
-//        this.zremrangeByScore(SEARCH_RESULT,0,100);
-//
-//        return docSets;
-//    }
-//
-//
-//    /***
-//     * 分页
-//     * @param currentPage 当前第几页
-//     * @param count 每页的内容数量
-//     * @return 返回元组遍历通过getElement 获取文章ID
-//     */
-//    public Set<Tuple> resultPaging(int currentPage,int  count){
-//        return this.zrevrangeByScoreWithScores(SEARCH_RESULT,10,0,currentPage*(count-1),count);
-//    }
-//    /***
-//     * 包含同义词处理的搜索
-//     * @param queryMap <token:<synoym:score>>
-//     * @return
-//     */
-//    public Collection<String> searchTokensWithSynonym(Map<String,Map<String,Double>> queryMap){
-//
-//        Collection<String> docSets = new TreeSet<String>();
-//        jedis.zremrangeByScore("searchResult",0,100);
-//        jedis.zremrangeByScore("synonymResult",0,100);
-//
-//        boolean empty = true;
-//        for(String token:queryMap.keySet()){
-//            for(String synonym:queryMap.get(token).keySet())
-//            {
-//                jedis.zunionstore("synonymResult","synonymResult",synonym);
-//            }
-//            if(empty)
-//            {
-//                jedis.zunionstore("searchResult","searchResult","synonymResult");
-//                empty = false;
-//            }
-//            else {
-//                jedis.zinterstore("searchResult", "searchResult", "synonymResult");
-//            }
-//        }
-//        docSets.addAll(jedis.zrangeByScore("searchResult",0,1000)) ;
-//
-//        return docSets;
-//    }
-//
-//    /***
-//     * redis 连接池
-//     * @return
-//     */
-//    public static ShardedJedis getShardedJedis(){
-//        JedisPoolConfig poolConfig = new JedisPoolConfig();
-//        poolConfig.setMaxTotal(2);
-//        poolConfig.setMaxIdle(1);
-//        poolConfig.setMaxWaitMillis(2000);
-//        poolConfig.setTestOnBorrow(false);
-//        poolConfig.setTestOnReturn(false);
-//        JedisShardInfo info1 = new JedisShardInfo("127.0.0.1",6379);
-//        JedisShardInfo info2 = new JedisShardInfo("127.0.0.1",6379);
-//        ShardedJedisPool pool = new ShardedJedisPool(poolConfig, Arrays.asList(info1,info2));
-//        return pool.getResource();
-//    }
-//
-//    /***
-//     *
-//     * @param token
-//     * @param low
-//     * @param high
-//     * @return
-//     */
-//    public  List<String> searchByScore(String token,String low,String high){
-//        List<String> spellCheckSets = new ArrayList<String>();
-//        spellCheckSets.addAll(jedis.zrangeByScore(token,Double.valueOf(low),Double.valueOf(high)));
-//        return spellCheckSets;
-//    }
-//    /***
-//     * 批量写
-//     */
-//    public static void pipeLineSync(){
-//        pipeline.sync();
-//        shardedJedis.close();
-//    }
-//
-//
-//    public void test(){
-//
-//        Collection<Tuple> rs = jedis.zrangeByScoreWithScores("world",0,20);
-//
-//
-//        for(Tuple title:rs){
-//            System.out.println(title.getElement());
-//        }
-//    }
+
+    /***
+     * 包含同义词处理的搜索
+     * @param queryMap <token:<synoym:score>>
+     * @return
+     */
+    public Collection<Object> searchTokensWithSynonym(Map<String,Map<String,Double>> queryMap){
+
+        Collection<Object> docSets = new TreeSet<Object>();
+        redisTemplate.opsForZSet().removeRangeByScore("searchResult",0,100);
+        redisTemplate.opsForZSet().removeRangeByScore("synonymResult",0,100);
+
+        boolean empty = true;
+        for(String token:queryMap.keySet()){
+            for(String synonym:queryMap.get(token).keySet())
+            {
+                redisTemplate.opsForZSet().unionAndStore("synonymResult","synonymResult",synonym);
+            }
+            if(empty)
+            {
+                redisTemplate.opsForZSet().unionAndStore("searchResult","searchResult","synonymResult");
+                empty = false;
+            }
+            else {
+                redisTemplate.opsForZSet().unionAndStore("searchResult", "searchResult", "synonymResult"); //intersectAndStore()
+            }
+        }
+        docSets.addAll(redisTemplate.opsForZSet().rangeByScore("searchResult",0,1000)) ;
+
+        return docSets;
+    }
+
+
+    public Set<Object> zrangebyscore() {
+
+        return redisTemplate.opsForZSet().rangeByScore("杭州", 0, 100);
+    }
+
 
     public static void main(String args[]){
 //        RedisUtil util = new RedisUtil();
@@ -735,7 +577,10 @@ public class RedisTest {
         ApplicationContext applicationContext = new ClassPathXmlApplicationContext("spring/applicationContext.xml");
 
         RedisTest redisTest = applicationContext.getBean(RedisTest.class);
-        System.out.println(redisTest.zrangebyscore());
+        Set<Object> set = redisTest.zrangebyscore();
+        for(Object o:set){
+            System.out.println(o.toString());
+        }
 
     }
 
