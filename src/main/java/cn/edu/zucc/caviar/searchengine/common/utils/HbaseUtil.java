@@ -5,9 +5,15 @@ import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hbase.*;
 import org.apache.hadoop.hbase.client.*;
 import org.apache.hadoop.hbase.util.Bytes;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.hadoop.hbase.HbaseTemplate;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
 
 @Component
 public class HbaseUtil {
@@ -23,6 +29,9 @@ public class HbaseUtil {
      * 列簇1中的列
      */
 
+    @Autowired
+    private HbaseTemplate template;
+
     public  final static String COLUMNFAMILY_1_AUTHOR = "author";
     public  final static String COLUMNFAMILY_1_CONTENT = "content";
     public  final static String COLUMNFAMILY_1_DESCRIBE = "describe";
@@ -33,17 +42,17 @@ public class HbaseUtil {
     public static Connection conn = null;
 
 
-    public HbaseUtil() {
-        conf = HBaseConfiguration.create();
-        conf.set("hbase.zookeeper.quorum", "localhost:2181");
-        conf.set("hbase.rootdir", "hdfs://localhost:9000/hbase");
-        try {
-            conn = ConnectionFactory.createConnection(conf);
-            admin = conn.getAdmin();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+//    public HbaseUtil() {
+//        conf = HBaseConfiguration.create();
+//        conf.set("hbase.zookeeper.quorum", "localhost:2181");
+//        conf.set("hbase.rootdir", "hdfs://localhost:9000/hbase");
+//        try {
+//            conn = ConnectionFactory.createConnection(conf);
+//            admin = conn.getAdmin();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
 
 
     /***
@@ -55,6 +64,7 @@ public class HbaseUtil {
     public void put(String row,String column,String data){
         Table table = null;
         try{
+
             table = conn.getTable(TableName.valueOf(TABLE_NAME));
             Put putData = new Put(Bytes.toBytes(row));
             putData.addColumn(COLUMNFAMILY_1.getBytes(),column.getBytes(),data.getBytes());
@@ -116,6 +126,56 @@ public class HbaseUtil {
         }
         return doc;
     }
+
+
+    /***
+     *
+     * @param rowkeyList
+     * @return
+     * @throws IOException
+     */
+    public List<Document> getDocsBatchByRowKey(List<String> rowkeyList) throws IOException {
+        List<Get> getList = new ArrayList();
+        List<Document> docs = new ArrayList<>();
+        Table table = conn.getTable(TableName.valueOf(TABLE_NAME));
+
+        for (String rowkey : rowkeyList){//把rowkey加到get里，再把get装到list中
+            Get get = new Get(Bytes.toBytes(rowkey));
+            getList.add(get);
+        }
+
+        Result[] results = table.get(getList);
+
+
+        for(Result result:results){
+            Document doc = new Document();
+            for (Cell cell : result.rawCells()){
+                String colName = Bytes.toString(cell.getQualifierArray(),cell.getQualifierOffset(),cell.getQualifierLength());
+
+                String value = Bytes.toString(cell.getValueArray(), cell.getValueOffset(), cell.getValueLength());
+                if(colName.equals("content"))
+                    doc.setContent(value);
+                if(colName.equals("author"))
+                    doc.setAuthor(value);
+                if(colName.equals("likeCount"))
+                    doc.setLikeCount(Integer.parseInt(value));
+                if(colName.equals("shareCount"))
+                    doc.setShareCount(Integer.parseInt(value));
+                if(colName.equals("favoriteCount"))
+                    doc.setFavoriteCount(Integer.parseInt(value));
+                if(colName.equals("imageUrls")){
+                    String urls[] = value.split(",");
+                    List<String > images = Arrays.asList(urls);
+                    doc.setImageUrls(images);
+                }
+                docs.add(doc);
+
+            }
+        }
+        return docs;
+    }
+
+
 
     /***
      * 获取制定文章的制定内容

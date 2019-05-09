@@ -137,7 +137,7 @@ public class Learn {
    * skip gram 模型训练
    * 
    * @param sentence
-   * @param neu1
+   * @param b
    */
   private void skipGram(int index, List<WordNeuron> sentence, int b) {
     // TODO Auto-generated method stub

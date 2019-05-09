@@ -3,23 +3,26 @@ package cn.edu.zucc.caviar.searchengine.common.utils;
 
 
 import cn.edu.zucc.caviar.searchengine.common.query.segment.ChineseSegmentation;
+import cn.edu.zucc.caviar.searchengine.common.query.spell.SpellingChecker;
 import cn.edu.zucc.caviar.searchengine.common.query.synonym.Synonym;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
 
 
-@Component
+
 public class QueryUtil {
 
     private Synonym synonymControl;
     private RedisUtil redisUtil ;
     private HbaseUtil hbaseUtil ;
+    private SpellingChecker spellingChecker;
 
     public QueryUtil(){
         synonymControl = new Synonym();
         redisUtil      = new RedisUtil();
         hbaseUtil      = new HbaseUtil();
+        spellingChecker= new SpellingChecker();
     }
 
     public List<String> query(String queryString){
@@ -29,7 +32,10 @@ public class QueryUtil {
         Map<String, Map<String,Double>> searchMap = new HashMap<>();
         for(String keyword : keywords)
         {
-            searchMap.put(keyword,synonymControl.getSynonym(keyword));
+            if(keyword.matches("[a-zA-Z]+"))
+                searchMap.put(keyword,spellingChecker.checkSpell(keyword,true));
+            else
+                searchMap.put(keyword,synonymControl.getSynonym(keyword));
         }
 
         docs.addAll(redisUtil.searchTokensWithSynonym(searchMap));

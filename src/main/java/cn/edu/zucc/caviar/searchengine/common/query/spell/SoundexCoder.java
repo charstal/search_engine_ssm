@@ -6,6 +6,8 @@ import com.hankcs.hanlp.dictionary.py.Pinyin;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class SoundexCoder {
     /***
@@ -51,11 +53,26 @@ public class SoundexCoder {
         return soundexCode.toString();
     }
 
+    public static String soudex(String pinyin){
+        String pattern = "([bpmfdtnlqkhjqxzcsyw]|zh|ch|sh|)?[uiv]?(ai|ei|ui|ao|ou|iu|ie|ve|er|an|en|in|un|ven|ang|eng|ing|ong|[aoeiuv])";
+
+        StringBuffer soundexCode = new StringBuffer();
+        Pattern p =  Pattern.compile(pattern);
+        Matcher matcher = p.matcher(pinyin);
+        while(matcher.find()){
+            soundexCode.append(Initials.get(matcher.group(1))==null?"":Initials.get(matcher.group(1)));
+            soundexCode.append(Finals.get(matcher.group(2)));
+
+        }
+        return soundexCode.toString();
+    }
+
 
 
     public static void main(String args[]){
 //        System.out.println(SoundexCoder.soundex("没组"));
 //        System.out.println(SoundexCoder.soundex("魅族"));
 //        System.out.println(SoundexCoder.soundex("买组"));
+        System.out.println(SoundexCoder.soudex("ixhu"));
     }
 }
