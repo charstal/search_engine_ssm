@@ -561,7 +561,6 @@ public class RedisTest {
 
 
     public Set<Object> zrangebyscore() {
-
         return redisTemplate.opsForZSet().rangeByScore("杭州", 0, 100);
     }
 
