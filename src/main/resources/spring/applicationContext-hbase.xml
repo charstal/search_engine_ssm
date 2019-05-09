@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:hdp="http://www.springframework.org/schema/hadoop"
+       xmlns:beans="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="
+    http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/hadoop http://www.springframework.org/schema/hadoop/spring-hadoop.xsd">
+    <!-- 配置zookeeper的信息，远程连接hbase时使用 -->
+    <hdp:configuration resources="classpath:/hbase-site.xml" />
+
+    <hdp:hbase-configuration configuration-ref="hadoopConfiguration" />
+    <!-- 配置HbaseTemplate -->
+    <bean id="htemplate" class="org.springframework.data.hadoop.hbase.HbaseTemplate">
+        <property name="configuration" ref="hbaseConfiguration"/>
+        <property name="encoding" value="UTF-8"/>
+    </bean>
+
+    <bean id="hBaseTest" class="cn.edu.zucc.caviar.searchengine.common.utils.HBaseTest" />
+</beans>
