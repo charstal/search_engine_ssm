@@ -10,12 +10,12 @@ import java.util.List;
 import java.util.Map;
 
 public class SpellingChecker {
-    private static RedisUtil redisUtil = new RedisUtil();
-
-
-    public SpellingChecker(RedisUtil redisUtil){
-        this.redisUtil = redisUtil;
-    }
+//    private static RedisUtil redisUtil = new RedisUtil();
+//
+//
+//    public SpellingChecker(RedisUtil redisUtil){
+//        this.redisUtil = redisUtil;
+//    }
 
     /***
      * 查询相同SoundexCode的字符串

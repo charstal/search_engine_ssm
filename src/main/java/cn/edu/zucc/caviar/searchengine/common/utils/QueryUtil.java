@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 import java.util.*;
 
 
-@Component
+
 public class QueryUtil {
 
     private Synonym synonymControl;
@@ -22,7 +22,7 @@ public class QueryUtil {
         synonymControl = new Synonym();
         redisUtil      = new RedisUtil();
         hbaseUtil      = new HbaseUtil();
-        spellingChecker= new SpellingChecker(redisUtil);
+        spellingChecker= new SpellingChecker();
     }
 
     public List<String> query(String queryString){

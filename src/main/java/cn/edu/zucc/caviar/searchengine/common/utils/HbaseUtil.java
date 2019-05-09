@@ -5,6 +5,8 @@ import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hbase.*;
 import org.apache.hadoop.hbase.client.*;
 import org.apache.hadoop.hbase.util.Bytes;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.hadoop.hbase.HbaseTemplate;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -27,6 +29,9 @@ public class HbaseUtil {
      * 列簇1中的列
      */
 
+    @Autowired
+    private HbaseTemplate template;
+
     public  final static String COLUMNFAMILY_1_AUTHOR = "author";
     public  final static String COLUMNFAMILY_1_CONTENT = "content";
     public  final static String COLUMNFAMILY_1_DESCRIBE = "describe";
@@ -37,17 +42,17 @@ public class HbaseUtil {
     public static Connection conn = null;
 
 
-    public HbaseUtil() {
-        conf = HBaseConfiguration.create();
-        conf.set("hbase.zookeeper.quorum", "localhost:2181");
-        conf.set("hbase.rootdir", "hdfs://localhost:9000/hbase");
-        try {
-            conn = ConnectionFactory.createConnection(conf);
-            admin = conn.getAdmin();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+//    public HbaseUtil() {
+//        conf = HBaseConfiguration.create();
+//        conf.set("hbase.zookeeper.quorum", "localhost:2181");
+//        conf.set("hbase.rootdir", "hdfs://localhost:9000/hbase");
+//        try {
+//            conn = ConnectionFactory.createConnection(conf);
+//            admin = conn.getAdmin();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
 
 
     /***
@@ -59,6 +64,7 @@ public class HbaseUtil {
     public void put(String row,String column,String data){
         Table table = null;
         try{
+
             table = conn.getTable(TableName.valueOf(TABLE_NAME));
             Put putData = new Put(Bytes.toBytes(row));
             putData.addColumn(COLUMNFAMILY_1.getBytes(),column.getBytes(),data.getBytes());

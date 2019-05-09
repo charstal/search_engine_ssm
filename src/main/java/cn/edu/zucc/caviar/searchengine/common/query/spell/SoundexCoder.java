@@ -73,6 +73,6 @@ public class SoundexCoder {
 //        System.out.println(SoundexCoder.soundex("没组"));
 //        System.out.println(SoundexCoder.soundex("魅族"));
 //        System.out.println(SoundexCoder.soundex("买组"));
-        System.out.println(SoundexCoder.soudex("xihu"));
+        System.out.println(SoundexCoder.soudex("ixhu"));
     }
 }
