@@ -559,9 +559,6 @@ public class RedisTest {
         return docSets;
     }
 
-    public static Set<String> searchByScore(String key,String a,String b){
-        return redisTemplate.opsForZSet();
-    }
 
     public Set<Object> zrangebyscore() {
         return redisTemplate.opsForZSet().rangeByScore("杭州", 0, 100);
