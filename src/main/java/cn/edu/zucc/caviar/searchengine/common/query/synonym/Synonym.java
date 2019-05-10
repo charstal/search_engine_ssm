@@ -2,23 +2,26 @@ package cn.edu.zucc.caviar.searchengine.common.query.synonym;
 
 import cn.edu.zucc.caviar.searchengine.common.vec.Word2VEC;
 import cn.edu.zucc.caviar.searchengine.common.vec.domain.WordEntry;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+@Component
 public class Synonym {
 
+    @Autowired
     public Word2VEC w2;
 
     /***
      * 模型所在地址
      */
     public Synonym(){
-        w2 = new Word2VEC();
+
         //加载模型
         try {
-
             String root = System.getProperty("user.dir");
             String filePath = root + "/src/main/resources/search_data/" + "Google_word2vec_zhwiki1710_300d.bin";
 //            System.out.println(filePath);
