@@ -42,17 +42,17 @@ public class HbaseUtil {
     public static Connection conn = null;
 
 
-//    public HbaseUtil() {
-//        conf = HBaseConfiguration.create();
-//        conf.set("hbase.zookeeper.quorum", "localhost:2181");
-//        conf.set("hbase.rootdir", "hdfs://localhost:9000/hbase");
-//        try {
-//            conn = ConnectionFactory.createConnection(conf);
-//            admin = conn.getAdmin();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//    }
+    public HbaseUtil() {
+        conf = HBaseConfiguration.create();
+        conf.set("hbase.zookeeper.quorum", "localhost:2181");
+        conf.set("hbase.rootdir", "hdfs://localhost:9000/hbase");
+        try {
+            conn = ConnectionFactory.createConnection(conf);
+            admin = conn.getAdmin();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
 
     /***

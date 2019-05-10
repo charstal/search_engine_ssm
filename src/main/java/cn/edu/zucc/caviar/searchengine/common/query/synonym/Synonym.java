@@ -13,7 +13,7 @@ import java.util.Map;
 public class Synonym {
 
     @Autowired
-    public Word2VEC w2;
+    public Word2VEC w2 = new Word2VEC();
 
     /***
      * 模型所在地址
@@ -23,6 +23,7 @@ public class Synonym {
         //加载模型
         try {
             String root = System.getProperty("user.dir");
+
             String filePath = root + "/src/main/resources/search_data/" + "Google_word2vec_zhwiki1710_300d.bin";
 //            System.out.println(filePath);
             w2.loadGoogleModel(filePath) ;

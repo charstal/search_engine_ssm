@@ -7,7 +7,7 @@
 
     <!--    redis-->
     <!-- 连接池基本参数配置，类似数据库连接池 -->
-    <context:property-placeholder location="classpath:redis.properties" ignore-unresolvable="true" />
+    <context:property-placeholder location="classpath:properties/redis.properties" ignore-unresolvable="true" />
 
     <!-- redis连接池 -->
     <bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig">
