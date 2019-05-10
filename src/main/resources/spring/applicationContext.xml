@@ -11,6 +11,7 @@
     <import resource="applicationContext-utils.xml"/>
     <import resource="classpath:/kafka/consumer-kafka.xml"/>
     <import resource="classpath:/kafka/producer-kafka.xml"/>
+    <import resource="applicationContext-searchModel.xml"/>
 
 
 <!--    mysql-->

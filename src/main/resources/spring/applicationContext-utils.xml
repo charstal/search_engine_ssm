@@ -6,4 +6,5 @@
 
     <context:component-scan base-package="cn.edu.zucc.caviar.searchengine.common.utils"/>
 
+
 </beans>
