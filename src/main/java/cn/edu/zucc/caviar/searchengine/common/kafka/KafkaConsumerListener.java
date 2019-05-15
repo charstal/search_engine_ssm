@@ -5,7 +5,6 @@ import org.springframework.kafka.listener.MessageListener;
 
 public class KafkaConsumerListener implements MessageListener<Integer, String> {
 
-
     public void onMessage(ConsumerRecord<Integer, String> consumerRecord) {
 
         Object o = consumerRecord.value();
