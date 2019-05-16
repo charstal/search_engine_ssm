@@ -22,6 +22,7 @@ public class SearchController {
     @ResponseBody
     public List<Document> keywordSearch(@PathVariable("keyword") String keyword) {
 
+        System.out.println(keyword);
         List<Document> list = service.keywordSearch(keyword);
 
         return list;
