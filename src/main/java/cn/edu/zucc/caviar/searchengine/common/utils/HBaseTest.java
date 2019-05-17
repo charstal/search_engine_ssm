@@ -28,7 +28,7 @@ public class HBaseTest {
     private HbaseTemplate template;
 
     @Test
-    public Document get(String docId){
+    public Document get(String docId) {
         Document doc = template.get("doc", docId, new RowMapper<Document>() {
             @Override
             public Document mapRow(Result result, int rowNum) throws Exception {
@@ -37,22 +37,22 @@ public class HBaseTest {
 
                 if (listCell != null && listCell.size() > 0) {
                     for (Cell cell : listCell) {
-                        String colName = Bytes.toString(cell.getQualifierArray(),cell.getQualifierOffset(),cell.getQualifierLength());
+                        String colName = Bytes.toString(cell.getQualifierArray(), cell.getQualifierOffset(), cell.getQualifierLength());
 
                         String value = Bytes.toString(cell.getValueArray(), cell.getValueOffset(), cell.getValueLength());
-                        if(colName.equals("content"))
+                        if (colName.equals("content"))
                             doc.setContent(value);
-                        else if(colName.equals("author"))
+                        else if (colName.equals("author"))
                             doc.setAuthor(value);
-                        else if(colName.equals("likeCount"))
+                        else if (colName.equals("likeCount"))
                             doc.setLikeCount(Integer.parseInt(value));
-                        else if(colName.equals("shareCount"))
+                        else if (colName.equals("shareCount"))
                             doc.setShareCount(Integer.parseInt(value));
-                        else if(colName.equals("favoriteCount"))
+                        else if (colName.equals("favoriteCount"))
                             doc.setFavoriteCount(Integer.parseInt(value));
-                        else if(colName.equals("imageUrls")){
+                        else if (colName.equals("imageUrls")) {
                             String urls[] = value.split(",");
-                            List<String > images = Arrays.asList(urls);
+                            List<String> images = Arrays.asList(urls);
                             doc.setImageUrls(images);
                         }
                     }
@@ -123,12 +123,12 @@ public class HBaseTest {
 
         HBaseTest hBaseTest = applicationContext.getBean(HBaseTest.class);
         long t = System.currentTimeMillis();
-        for(int i = 0;i<10;i++){
-            Document doc =hBaseTest.get("5c7d187f000000000f007b11");
+        for (int i = 0; i < 10; i++) {
+            Document doc = hBaseTest.get("5c7d187f000000000f007b11");
             System.out.println(doc.getContent());
-            if(i==0)
+            if (i == 0)
                 t = System.currentTimeMillis();
         }
-        System.out.println(System.currentTimeMillis()-t);
+        System.out.println(System.currentTimeMillis() - t);
     }
 }

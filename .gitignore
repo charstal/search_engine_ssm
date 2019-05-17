@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-.idea/*
-caviar.iml
-=======
 /.idea/*
 caviar.iml
 ### Example user template template
@@ -26,4 +22,6 @@ src/main/webapp/js/
 src/main/webapp/upload/
 log/tibet.log.1
 src/main/resources/search_data/
->>>>>>> da5d856880006eaee761630d32fa8a73628edcaf
+
+hs_err_pid30348.log
+src/main/webapp/images/test/
