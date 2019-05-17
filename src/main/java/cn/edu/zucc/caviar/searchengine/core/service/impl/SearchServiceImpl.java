@@ -15,10 +15,7 @@ import com.hankcs.hanlp.dictionary.py.Pinyin;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class SearchServiceImpl implements SearchService {
@@ -36,14 +33,16 @@ public class SearchServiceImpl implements SearchService {
     private Synonym synonymUtil;
 
 
-
-
+    /***
+     * 查询，返回文章数
+     * @param queryString
+     * @return
+     */
     @Override
-    public List<Document> keywordSearch(String queryString) {
+    public long keywordSearch(String queryString) {
 
-        List<Object> docs = new ArrayList<>();
-        List<Document> documents = new ArrayList<>();
         List<String> keywords = ChineseSegmentation.keywordsSegmentaion(queryString);
+        Set<Document> documents = new HashSet<>();
 
         Map<String, Map<String,Double>> searchMap = new HashMap<>();
         for(String keyword : keywords)
@@ -54,14 +53,27 @@ public class SearchServiceImpl implements SearchService {
                 searchMap.put(keyword,synonymUtil.getSynonym(keyword));
         }
 
-        docs.addAll(redisUtil.searchTokensWithSynonym(searchMap));
-        for(Object doc :docs){
-            documents.add(hbaseUtil.get((String)doc));
-        }
-        return documents;
+        redisUtil.searchTokensWithSynonym(searchMap);
+        return redisUtil.zsetSize();
     }
 
 
+
+    /***
+     * 分页支持
+     * @param currentPage 当前第几页(从第一页开始)
+     * @param eachPageDocumentsCount 每页的内容数量
+     * @return
+     */
+    public Set<Document> documentsInPage(long currentPage,long eachPageDocumentsCount){
+        Set<Document> documents = new HashSet<>();
+
+        Set<Object> docIds = redisUtil.resultPagingWithScores(currentPage,eachPageDocumentsCount);
+        for(Object docId:docIds){
+            documents.add(hbaseUtil.get((String)docId));
+        }
+        return documents;
+    }
 
     /***
      * 查询相同SoundexCode的字符串
@@ -69,8 +81,6 @@ public class SearchServiceImpl implements SearchService {
      * @param isPinyin 检查内容是否为拼音
      * @return
      */
-
-
     public Map<String, Double> checkSpell(String token,boolean isPinyin){
 
 
@@ -97,29 +107,29 @@ public class SearchServiceImpl implements SearchService {
 
 
         if(initial.equals("n")||initial.equals("l")||initial.equals("r")){
-            similarSpellTokens.addAll(redisUtil.searchByScore("n",pinyinString,pinyinString));
-            similarSpellTokens.addAll(redisUtil.searchByScore("l",pinyinString,pinyinString));
+            similarSpellTokens.addAll(redisUtil.searchByScore("n",soundexCode,soundexCode));
+            similarSpellTokens.addAll(redisUtil.searchByScore("l",soundexCode,soundexCode));
         }
         else if(initial.equals("zh")||initial.equals("z")){
-            similarSpellTokens.addAll(redisUtil.searchByScore("zh",pinyinString,pinyinString));
-            similarSpellTokens.addAll(redisUtil.searchByScore("z",pinyinString,pinyinString));
+            similarSpellTokens.addAll(redisUtil.searchByScore("zh",soundexCode,soundexCode));
+            similarSpellTokens.addAll(redisUtil.searchByScore("z",soundexCode,soundexCode));
         }
         else if(initial.equals("j")||initial.equals("q")){
-            similarSpellTokens.addAll(redisUtil.searchByScore("j",pinyinString,pinyinString));
-            similarSpellTokens.addAll(redisUtil.searchByScore("q",pinyinString,pinyinString));
+            similarSpellTokens.addAll(redisUtil.searchByScore("j",soundexCode,soundexCode));
+            similarSpellTokens.addAll(redisUtil.searchByScore("q",soundexCode,soundexCode));
         }
 
         else if(initial.equals("s")||initial.equals("sh")){
-            similarSpellTokens.addAll(redisUtil.searchByScore("j",pinyinString,pinyinString));
-            similarSpellTokens.addAll(redisUtil.searchByScore("q",pinyinString,pinyinString));
+            similarSpellTokens.addAll(redisUtil.searchByScore("j",soundexCode,soundexCode));
+            similarSpellTokens.addAll(redisUtil.searchByScore("q",soundexCode,soundexCode));
         }
         else if(initial.equals("c")||initial.equals("ch")){
-            similarSpellTokens.addAll(redisUtil.searchByScore("j",pinyinString,pinyinString));
-            similarSpellTokens.addAll(redisUtil.searchByScore("q",pinyinString,pinyinString));
+            similarSpellTokens.addAll(redisUtil.searchByScore("j",soundexCode,soundexCode));
+            similarSpellTokens.addAll(redisUtil.searchByScore("q",soundexCode,soundexCode));
         }
         else if(initial.equals("g")||initial.equals("k")){
-            similarSpellTokens.addAll(redisUtil.searchByScore("j",pinyinString,pinyinString));
-            similarSpellTokens.addAll(redisUtil.searchByScore("q",pinyinString,pinyinString));
+            similarSpellTokens.addAll(redisUtil.searchByScore("j",soundexCode,soundexCode));
+            similarSpellTokens.addAll(redisUtil.searchByScore("q",soundexCode,soundexCode));
         }
         else
         {

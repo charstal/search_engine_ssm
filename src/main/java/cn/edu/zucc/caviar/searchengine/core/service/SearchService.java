@@ -4,8 +4,10 @@ import cn.edu.zucc.caviar.searchengine.core.pojo.Document;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public interface SearchService {
-    public List<Document> keywordSearch(String keyword);
+    public long keywordSearch(String keyword);
+    public Set<Document> documentsInPage(long currentPage,long count);
     public Map<String, Double> checkSpell(String token, boolean isPinyin);
 }

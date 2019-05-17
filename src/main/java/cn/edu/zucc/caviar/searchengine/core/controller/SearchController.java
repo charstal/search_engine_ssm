@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
+import java.util.Set;
 
 @Controller
 public class SearchController {
@@ -20,12 +21,12 @@ public class SearchController {
 
     @RequestMapping(value = "/search/{keyword}", method = RequestMethod.GET)
     @ResponseBody
-    public List<Document> keywordSearch(@PathVariable("keyword") String keyword) {
+    public Set<Document> keywordSearch(@PathVariable("keyword") String keyword) {
 
         System.out.println(keyword);
-        List<Document> list = service.keywordSearch(keyword);
+        service.keywordSearch(keyword);
 
-        return list;
+        return service.documentsInPage(1,10);
     }
 
 }
