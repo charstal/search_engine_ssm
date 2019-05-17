@@ -38,37 +38,15 @@
                 }
             %>
             <nav class="navbar navbar-static-top" role="navigation">
-                <%--                <div class="navbar-header">--%>
-                <%--                <button aria-controls="navbar" aria-expanded="false" data-target="#navbar" data-toggle="collapse" class="navbar-toggle collapsed" type="button">--%>
-                <%--                <i class="fa fa-reorder"></i>--%>
-                <%--                </button>--%>
-
-                <%--                    <a href="#" class="navbar-brand">演示</a>--%>
-                <%--                </div>--%>
-
 
                 <div class="navbar-collapse collapse" id="navbar">
-                    <%--                    <ul class="nav navbar-nav">--%>
-                    <%--                        <li class="active">--%>
-                    <%--                            <a aria-expanded="false" role="button" href="login.html"> 返回登录界面 </a>--%>
-                    <%--                        </li>--%>
-                    <%--                        <li class="dropdown">--%>
-                    <%--                            <a aria-expanded="false" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown"> 菜单 <span class="caret"></span></a>--%>
-                    <%--                            <ul role="menu" class="dropdown-menu">--%>
-                    <%--                                <li><a href="">菜单</a></li>--%>
-                    <%--                                <li><a href="">菜单</a></li>--%>
-                    <%--                                <li><a href="">菜单</a></li>--%>
-                    <%--                                <li><a href="">菜单</a></li>--%>
-                    <%--                            </ul>--%>
-                    <%--                        </li>--%>
 
-                    <%--                    </ul>--%>
                     <ul class="nav navbar-top-links navbar-left">
                         <li>
                             <div class="row" style="height: 20px;"></div>
                             <div class="row col-lg-offset-0" style="height: 50px ;width: 1500px">
                                 <div class="col-lg-10 form-group" style="height: 40px">
-                                    <input type="text"  placeholder="请输入搜索内容" class="form-control" id="searchContext">
+                                    <input type="text" placeholder="请输入搜索内容" class="form-control" id="searchContext">
                                 </div>
                                 <div>
                                     <button class="btn btn-danger" id="search">搜索</button>
@@ -83,7 +61,7 @@
                                         type: "get",
                                         contentType: "application/json; charset=UTF-8",
                                         // dataType: "json",
-                                        success: function(res) {
+                                        success: function (res) {
                                             alert(res);
                                         }
                                     });
@@ -155,41 +133,47 @@
 
         <div class="wrapper wrapper-content ">
             <div class="container-fluid col-lg-8">
-
-
-                <%--                <script>--%>
-                <%--                    function search() {--%>
-                <%--                        var searchContext = document.getElementById("searchContext").value;--%>
-                <%--                        // console.log(userEmail);--%>
-                <%--                        var url = "${pageContext.request.contextPath}/search/" + searchContext;--%>
-                <%--                        $.ajax({--%>
-                <%--                            url: url,--%>
-                <%--                            type: "get",--%>
-                <%--                            success: function (data) {--%>
-                <%--                                window.location.href=url;--%>
-                <%--                            }--%>
-
-                <%--                        });--%>
-
-                <%--                    }--%>
-                <%--                </script>--%>
-
                 <div class="row">
-                    <div class="col-md-2">
-                        <div class="ibox float-e-margins">
-                            <img src="${pageContext.request.contextPath}/images/p2.jpg" class="img-preview">
+                    <div class="row">
+                        <div class="col-md-2">
+                            <div class="ibox float-e-margins">
+                                <a href="#">
+                                    <img src="${pageContext.request.contextPath}/images/avatar/p2.jpg" class="img-preview">
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="ibox float-e-margins">
+                                <h3><a href="#">西湖</a></h3>
+                                <span style="color:grey">2019年5月15日 - </span>
+                                西湖，位于浙江省杭州市西湖区龙井路1号，杭州市区西部，景区总面积49平方千米，汇水面积为21.22平方千米，湖面面积为6.38平方千米。
+                                西湖南、西、北三面环山，湖中白堤、苏堤、杨公堤、赵公堤将湖面分割成若干水面。西湖的湖体轮廓呈近椭圆形，湖底部较为平坦。湖泊天然地表水源是金沙涧、龙泓涧、赤山涧（慧因涧）、长桥溪四条溪流。西湖地处中国东南丘陵边缘和亚热带北缘
+                                ...
+                                <div>
+                                    <a href="#">收藏</a>
+                                    <a href="#">点赞</a>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="col-md-8">
-                        <div class="ibox float-e-margins">
-                            <div class="ibox-title">
-                                <h5>一只狐狸呀</h5>
+                    <div class="row">
+                        <div class="col-md-2">
+                            <div class="ibox float-e-margins">
+                                <a href="#">
+                                    <img src="${pageContext.request.contextPath}/images/avatar/p2.jpg" class="img-preview">
+                                </a>
                             </div>
-                            <div class="ibox-content">
-                                <div class="row">
-                                    <p>
-                                        一只狐狸呀，它坐在沙丘上
-                                    </p>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="ibox float-e-margins">
+                                <h3><a href="#">西湖</a></h3>
+                                <span style="color:grey">2019年5月15日 - </span>
+                                西湖，位于浙江省杭州市西湖区龙井路1号，杭州市区西部，景区总面积49平方千米，汇水面积为21.22平方千米，湖面面积为6.38平方千米。
+                                西湖南、西、北三面环山，湖中白堤、苏堤、杨公堤、赵公堤将湖面分割成若干水面。西湖的湖体轮廓呈近椭圆形，湖底部较为平坦。湖泊天然地表水源是金沙涧、龙泓涧、赤山涧（慧因涧）、长桥溪四条溪流。西湖地处中国东南丘陵边缘和亚热带北缘
+                                ...
+                                <div>
+                                    <a href="#">收藏</a>
+                                    <a href="#">点赞</a>
                                 </div>
                             </div>
                         </div>
@@ -200,21 +184,30 @@
             </div>
             <div class="container-fluid col-lg-4">
                 <div class="row">
-                    <div class="col-md-2">
+                    <div class="col-md-8">
                         <div class="ibox float-e-margins">
-                            <!--<img src="img/p2.jpg" class="img-preview">-->
+                            <div class="ibox-title">
+                                <h5>西湖</h5>
+                            </div>
+                            <div class="ibox-content">
+                                <div class="row">
+                                    <a href="#">
+                                        <img src="${pageContext.request.contextPath}/images/avatar/p3.jpg" class="img-preview">
+                                    </a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="col-md-8">
                         <div class="ibox float-e-margins">
                             <div class="ibox-title">
-                                <h5>一只狐狸呀</h5>
+                                <h5>西湖</h5>
                             </div>
                             <div class="ibox-content">
                                 <div class="row">
-                                    <p>
-                                        一只狐狸呀，它坐在沙丘上
-                                    </p>
+                                    <a href="#">
+                                        <img src="${pageContext.request.contextPath}/images/avatar/p3.jpg" class="img-preview">
+                                    </a>
                                 </div>
                             </div>
                         </div>
@@ -226,8 +219,6 @@
     </div>
 </div>
 
-
-<!-- Mainly scripts -->
 
 
 </body>

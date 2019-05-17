@@ -32,7 +32,7 @@ public class SearchServiceImpl implements SearchService {
     @Autowired
     private HBaseTest hbaseUtil;
 
-
+    @Autowired
     private Synonym synonymUtil;
 
 

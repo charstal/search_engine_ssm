@@ -86,7 +86,7 @@ public class SpellingChecker {
 //        return checkMap;
 //    }
 
-    public static void main(String args[]){
+    public static void main(String args[]) {
 //        List<String> rs = new SpellingChecker().checkSpell("tianpin");
 //        for(String s :rs){
 //            System.out.println(s);

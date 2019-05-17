@@ -4,13 +4,11 @@ import cn.edu.zucc.caviar.searchengine.common.utils.EncryptUtil;
 import cn.edu.zucc.caviar.searchengine.core.dao.UserDao;
 import cn.edu.zucc.caviar.searchengine.core.pojo.User;
 import cn.edu.zucc.caviar.searchengine.core.service.UserService;
-import com.sun.xml.internal.bind.v2.TODO;
-import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.annotation.Resource;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -22,7 +20,6 @@ public class UserServiceImpl implements UserService {
 
 
     @Autowired
-
     private EncryptUtil encryptUtil;
 
     @Autowired

@@ -1,7 +1,6 @@
 package cn.edu.zucc.caviar.searchengine.common.utils;
 
 
-
 import cn.edu.zucc.caviar.searchengine.common.query.segment.ChineseSegmentation;
 import cn.edu.zucc.caviar.searchengine.common.query.spell.SpellingChecker;
 import cn.edu.zucc.caviar.searchengine.common.query.synonym.Synonym;
@@ -10,19 +9,18 @@ import org.springframework.stereotype.Component;
 import java.util.*;
 
 
-
 public class QueryUtil {
 
     private Synonym synonymControl;
-    private RedisUtil redisUtil ;
-    private HbaseUtil hbaseUtil ;
+    private RedisUtil redisUtil;
+    private HbaseUtil hbaseUtil;
     private SpellingChecker spellingChecker;
 
-    public QueryUtil(){
+    public QueryUtil() {
         synonymControl = new Synonym();
-        redisUtil      = new RedisUtil();
-        hbaseUtil      = new HbaseUtil();
-        spellingChecker= new SpellingChecker();
+        redisUtil = new RedisUtil();
+        hbaseUtil = new HbaseUtil();
+        spellingChecker = new SpellingChecker();
     }
 
 //    public List<String> query(String queryString){

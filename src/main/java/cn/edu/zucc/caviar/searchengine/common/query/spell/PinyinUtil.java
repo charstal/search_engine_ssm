@@ -11,17 +11,18 @@ public class PinyinUtil {
      * @param pinyinList
      * @return
      */
-    public static String getPinyin(List<Pinyin > pinyinList){
+    public static String getPinyin(List<Pinyin> pinyinList) {
         StringBuffer pinyinString = new StringBuffer();
-        for(Pinyin pinyin:pinyinList){
+        for (Pinyin pinyin : pinyinList) {
             pinyinString.append(pinyin.getPinyinWithoutTone());
         }
-        return  pinyinString.toString();
+        return pinyinString.toString();
     }
-    public static void main(String args[]){
+
+    public static void main(String args[]) {
         List<Pinyin> pinyinList = HanLP.convertToPinyinList("芋头");
 
-            System.out.println(SoundexCoder.soundex(pinyinList));
+        System.out.println(SoundexCoder.soundex(pinyinList));
 
     }
 }
