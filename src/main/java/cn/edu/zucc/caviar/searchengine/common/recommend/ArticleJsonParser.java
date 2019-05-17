@@ -51,6 +51,6 @@ public class ArticleJsonParser {
 
     public static void main(String args[]){
         redisUtil=new RedisJava();
-        readContentJSON("Similar.json");
+        readContentJSON("search_data/Similar.json");
     }
 }
