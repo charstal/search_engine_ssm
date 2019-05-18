@@ -113,10 +113,6 @@ public class HBaseTest {
         });
     }
 
-    @Test
-    public void testPut() {
-        template.put("user", "1", "cf", "name", Bytes.toBytes("Alice"));
-    }
 
     public static void main(String[] args) {
         ApplicationContext applicationContext = new ClassPathXmlApplicationContext("spring/applicationContext.xml");

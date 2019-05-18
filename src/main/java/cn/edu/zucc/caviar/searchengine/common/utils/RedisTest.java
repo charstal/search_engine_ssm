@@ -1,10 +1,14 @@
 package cn.edu.zucc.caviar.searchengine.common.utils;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.PropertyAccessor;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ZSetOperations;
+import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
@@ -18,7 +22,7 @@ public class RedisTest {
         this.redisTemplate = redisTemplate;
     }
 
-    @Autowired // (自动注入redisTemplet)
+    @Autowired
     private RedisTemplate<String, Object> redisTemplate;
 
 
@@ -540,6 +544,8 @@ public class RedisTest {
      */
     public List<Object> searchByScore(String token, String low, String high) {
         List<Object> spellCheckSets = new ArrayList<Object>();
+        redisTemplate.opsForZSet().rangeByScore(token,Double.valueOf(low),Double.valueOf(high));
+
         spellCheckSets.addAll(redisTemplate.opsForZSet().rangeByScore(token, Double.valueOf(low), Double.valueOf(high)));
         return spellCheckSets;
     }
@@ -556,12 +562,13 @@ public class RedisTest {
 
     /***
      * 分页
-     * @param currentPage 当前第几页
-     * @param count 每页的内容数量
+     * @param currentPage 当前第几页(从第一页开始)
+     * @param eachPageDocumentsCount 每页的内容数量
      * @return 返回元组遍历通过getElement 获取文章ID
      */
-    public Set<ZSetOperations.TypedTuple<Object>> resultPaging(int currentPage, int count) {
-        return redisTemplate.opsForZSet().reverseRangeByScoreWithScores(SEARCH_RESULT, 10, 0, currentPage * (count - 1), count);
+    public Set<Object> resultPagingWithScores(long currentPage, long eachPageDocumentsCount) {
+        return redisTemplate.opsForZSet().reverseRangeByScore(SEARCH_RESULT, 0, 100,(currentPage -1)* eachPageDocumentsCount, eachPageDocumentsCount);
+
     }
 
     /***
@@ -572,40 +579,40 @@ public class RedisTest {
     public Collection<Object> searchTokensWithSynonym(Map<String, Map<String, Double>> queryMap) {
 
         Collection<Object> docSets = new TreeSet<Object>();
-        redisTemplate.opsForZSet().removeRangeByScore("searchResult", 0, 100);
+        redisTemplate.opsForZSet().removeRangeByScore(SEARCH_RESULT, 0, 100);
         redisTemplate.opsForZSet().removeRangeByScore("synonymResult", 0, 100);
 
         boolean empty = true;
         for (String token : queryMap.keySet()) {
             for (String synonym : queryMap.get(token).keySet()) {
-                redisTemplate.opsForZSet().unionAndStore("synonymResult", "synonymResult", synonym);
+                redisTemplate.opsForZSet().unionAndStore("synonymResult",  synonym,"synonymResult");
             }
+            redisTemplate.opsForZSet().unionAndStore("synonymResult",  token , "synonymResult");
             if (empty) {
-                redisTemplate.opsForZSet().unionAndStore("searchResult", "searchResult", "synonymResult");
+                redisTemplate.opsForZSet().unionAndStore(SEARCH_RESULT, "synonymResult", SEARCH_RESULT);
                 empty = false;
             } else {
-                redisTemplate.opsForZSet().unionAndStore("searchResult", "searchResult", "synonymResult"); //intersectAndStore()
+                redisTemplate.opsForZSet().unionAndStore(SEARCH_RESULT, "synonymResult", SEARCH_RESULT); //intersectAndStore()
             }
         }
-        docSets.addAll(redisTemplate.opsForZSet().rangeByScore("searchResult", 0, 1000));
 
         return docSets;
     }
 
+    public void zunion(String key,String r1,String r2){
+        redisTemplate.opsForZSet().unionAndStore(key, r1, r2);
+    }
 
     public Set<Object> zrangebyscore() {
         return redisTemplate.opsForZSet().rangeByScore("杭州", 0, 100);
     }
 
+    public long zsetSize(){
+        return redisTemplate.opsForZSet().size(SEARCH_RESULT);
+    }
+
 
     public static void main(String args[]) {
-//        RedisUtil util = new RedisUtil();
-//
-//        Set<Tuple> list = util.zrevrangeByScoreWithScores("杭州",10,0,20,10);
-//        for(Tuple t:list){
-//            System.out.println(t.getElement());
-//        }
-
         ApplicationContext applicationContext = new ClassPathXmlApplicationContext("spring/applicationContext.xml");
 
         RedisTest redisTest = applicationContext.getBean(RedisTest.class);

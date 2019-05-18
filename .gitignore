@@ -10,7 +10,10 @@ out
 gen
 
 target/
+
 src/main/resources/Google_word2vec_zhwiki1710_300d.bin
+
+src/main/resources/search_data/Google_word2vec_zhwiki1710_300d.bin
 src/main/webapp/css/
 src/main/webapp/font-awesome/
 src/main/webapp/fonts/
@@ -25,3 +28,5 @@ src/main/resources/search_data/
 
 hs_err_pid30348.log
 src/main/webapp/images/test/
+src/main/resource/Similar.json
+
