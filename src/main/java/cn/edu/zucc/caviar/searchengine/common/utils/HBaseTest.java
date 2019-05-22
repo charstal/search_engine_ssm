@@ -50,6 +50,8 @@ public class HBaseTest {
                             doc.setShareCount(Integer.parseInt(value));
                         else if (colName.equals("favoriteCount"))
                             doc.setFavoriteCount(Integer.parseInt(value));
+                        else if (colName.equals("publishDate"))
+                            doc.setPublishDate(value);
                         else if (colName.equals("imageUrls")) {
                             String urls[] = value.split(",");
                             List<String> images = Arrays.asList(urls);

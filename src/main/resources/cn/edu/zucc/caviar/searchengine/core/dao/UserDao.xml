@@ -72,5 +72,13 @@
         where user_id = #{userId}
     </update>
 
+    <insert id="insertLikeNote" useGeneratedKeys="true">
+        insert into tb_like(user_id, note_id) VALUES (#{userId}, #{noteId})
+    </insert>
+
+    <insert id="insertCollectNote" useGeneratedKeys="true">
+        insert into tb_collection(user_id, note_id) VALUES (#{userId}, #{noteId})
+    </insert>
+
 
 </mapper>

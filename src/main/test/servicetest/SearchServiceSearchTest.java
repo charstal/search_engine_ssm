@@ -11,7 +11,7 @@ import javax.print.Doc;
 import java.util.List;
 import java.util.Set;
 
-public class SearchServiceSearch {
+public class SearchServiceSearchTest {
 
 
 
@@ -25,7 +25,7 @@ public class SearchServiceSearch {
         Set<Document> documents = searchService.documentsInPage(1,10);
 
         for(Document doc : documents){
-            System.out.println(doc.getContent());
+            System.out.println(doc.getPublishDate());
         }
     }
 

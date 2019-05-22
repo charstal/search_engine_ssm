@@ -3,6 +3,7 @@ package cn.edu.zucc.caviar.searchengine.core.controller;
 import cn.edu.zucc.caviar.searchengine.core.pojo.User;
 import cn.edu.zucc.caviar.searchengine.core.service.UserService;
 import org.apache.ibatis.annotations.Param;
+import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -88,6 +89,26 @@ public class UserController {
         return user;
     }
 
+    @RequestMapping(value = "/collect/{noteId}", method = RequestMethod.GET)
+    @ResponseBody
+    public String collectNote(HttpSession session, @PathVariable("noteId") String noteId) {
+        User user = (User) session.getAttribute("USER_SESSION");
 
+        System.out.println("UserId:" + user.getUserId());
+        System.out.println("noteId:"  + noteId);
+
+        return "success";
+    }
+
+    @RequestMapping(value = "/like/{noteId}", method = RequestMethod.GET)
+    @ResponseBody
+    public String likeNote(HttpSession session, @PathVariable("noteId") String noteId) {
+        User user = (User) session.getAttribute("USER_SESSION");
+
+        System.out.println("UserId:" + user.getUserId());
+        System.out.println("noteId:"  + noteId);
+
+        return "success";
+    }
 
 }

@@ -69,14 +69,16 @@ public class ArticleJsonParser {
         String commentCount = docData.get("commentCount").getAsJsonObject().get("$numberInt").getAsString();
         String shareCount = docData.get("shareCount").getAsJsonObject().get("$numberInt").getAsString();
         JsonArray images = docData.get("imageUrls").getAsJsonArray();
+        String publishDate = docData.get("publishDateStr").getAsString();
+//        System.out.println(publishDate);
 
         String imageUrls = "";
 
         for (int i = 0; i < images.size(); i++) {
             if (i == 0)
-                imageUrls.concat(images.get(i).getAsString());
+                imageUrls += images.get(i).getAsString();
             else
-                imageUrls.concat("," + images.get(i).getAsString());
+                imageUrls += ("," + images.get(i).getAsString());
         }
         hbaseUtil.put(docId, "imageUrls", imageUrls);
         hbaseUtil.put(docId, "docId", docId);
@@ -86,6 +88,7 @@ public class ArticleJsonParser {
         hbaseUtil.put(docId, "likeCount", likeCount);
         hbaseUtil.put(docId, "commentCount", commentCount);
         hbaseUtil.put(docId, "shareCount", shareCount);
+        hbaseUtil.put(docId, "publishDate", publishDate);
     }
 
     public static void createIndex(JsonObject keyWords) {

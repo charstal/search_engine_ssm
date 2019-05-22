@@ -19,4 +19,20 @@ public class UserTest {
 
         service.registerUser(user);
     }
+
+    @Test
+    public void insertLikeNote() {
+        ApplicationContext applicationContext = new ClassPathXmlApplicationContext("spring/applicationContext.xml");
+
+        UserService service = applicationContext.getBean(UserService.class);
+
+        User user = new User();
+        user.setUserId(1);
+
+        service.insertLikeNote(user, "5c9cee85000000000f01f16d");
+
+
+    }
+
+
 }

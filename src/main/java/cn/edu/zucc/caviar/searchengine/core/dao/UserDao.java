@@ -8,4 +8,6 @@ public interface UserDao {
     public User findUserById(@Param("id") Integer id);
     public int createUser(User user);
     public int updateUser(User user);
+    public int insertLikeNote(@Param("userId") Integer userId,@Param("noteId") String noteId);
+    public int insertCollectNote(Integer userId, String noteId);
 }

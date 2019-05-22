@@ -18,7 +18,6 @@ public class LoginInterceptor implements HandlerInterceptor {
 
         HttpSession session = httpServletRequest.getSession();
         User user = (User) session.getAttribute("USER_SESSION");
-
         if(user != null) {
             return true;
         }
@@ -26,7 +25,14 @@ public class LoginInterceptor implements HandlerInterceptor {
 //        httpServletRequest.setAttribute("msg", "您还没登录，请先登录");
 //        httpServletRequest.getRequestDispatcher("/WEB-INF/jsp/login.jsp").forward(httpServletRequest, httpServletResponse);
 
-        httpServletResponse.sendRedirect("/session");
+        String XRequested =httpServletRequest.getHeader("X-Requested-With");
+
+        if("XMLHttpRequest".equals(XRequested)){
+            httpServletResponse.getWriter().write("login first");
+        }else{
+            httpServletResponse.sendRedirect("/session");
+        }
+
 
         return false;
     }

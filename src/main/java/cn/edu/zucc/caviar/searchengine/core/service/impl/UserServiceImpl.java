@@ -5,6 +5,8 @@ import cn.edu.zucc.caviar.searchengine.core.dao.UserDao;
 import cn.edu.zucc.caviar.searchengine.core.pojo.User;
 import cn.edu.zucc.caviar.searchengine.core.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -90,6 +92,34 @@ public class UserServiceImpl implements UserService {
         return user;
     }
 
+    @Override
+    public User insertLikeNote(User user, String noteId) {
+
+        Integer userId = user.getUserId();
+
+        int rows = userDao.insertLikeNote(userId, noteId);
+
+        if (rows <= 0) {
+            user = null;
+        } else {
+            user = userDao.findUserById(user.getUserId());
+        }
+        return null;
+    }
+
+    @Override
+    public User insertCollectNote(User user, String noteId) {
+
+        int rows = userDao.insertCollectNote(user.getUserId(), noteId);
+
+        if (rows <= 0) {
+            user = null;
+        } else {
+            user = userDao.findUserById(user.getUserId());
+        }
+        return null;
+    }
+
 
     private static String copy(String srcPathStr, String desPathStr) {
         //获取源文件的名称
@@ -125,7 +155,8 @@ public class UserServiceImpl implements UserService {
 
 
     public static void main(String[] args) {
-        System.out.println(copy("/opt/tomcat/webapps/ROOT/upload/4_6f247bcf-ff01-4b4a-b34e-e8f6b87ebb5d_u=1558689061,1840908152&fm=11&gp=0.jpg", "images/avatar"));
+        ApplicationContext applicationContext = new ClassPathXmlApplicationContext("spring/applicationContext.xml");
+
     }
 
 }

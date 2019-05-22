@@ -21,12 +21,16 @@ public class SearchController {
 
     @RequestMapping(value = "/search/{keyword}", method = RequestMethod.GET)
     @ResponseBody
-    public Set<Document> keywordSearch(@PathVariable("keyword") String keyword) {
+    public Set<Document> keywordSearch(@PathVariable("keyword") String keyword, Integer page) {
 
-        System.out.println(keyword);
-        service.keywordSearch(keyword);
 
-        return service.documentsInPage(1,10);
+        if(page == null) {
+            System.out.println(keyword);
+            service.keywordSearch(keyword);
+            page = 1;
+        }
+
+        return service.documentsInPage(page,10);
     }
 
 }

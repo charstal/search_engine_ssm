@@ -38,58 +38,31 @@
                 }
             %>
             <nav class="navbar navbar-static-top" role="navigation">
-                <%--                <div class="navbar-header">--%>
-                <%--                <button aria-controls="navbar" aria-expanded="false" data-target="#navbar" data-toggle="collapse" class="navbar-toggle collapsed" type="button">--%>
-                <%--                <i class="fa fa-reorder"></i>--%>
-                <%--                </button>--%>
-
-                <%--                    <a href="#" class="navbar-brand">演示</a>--%>
-                <%--                </div>--%>
-
 
                 <div class="navbar-collapse collapse" id="navbar">
-                    <%--                    <ul class="nav navbar-nav">--%>
-                    <%--                        <li class="active">--%>
-                    <%--                            <a aria-expanded="false" role="button" href="login.html"> 返回登录界面 </a>--%>
-                    <%--                        </li>--%>
-                    <%--                        <li class="dropdown">--%>
-                    <%--                            <a aria-expanded="false" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown"> 菜单 <span class="caret"></span></a>--%>
-                    <%--                            <ul role="menu" class="dropdown-menu">--%>
-                    <%--                                <li><a href="">菜单</a></li>--%>
-                    <%--                                <li><a href="">菜单</a></li>--%>
-                    <%--                                <li><a href="">菜单</a></li>--%>
-                    <%--                                <li><a href="">菜单</a></li>--%>
-                    <%--                            </ul>--%>
-                    <%--                        </li>--%>
 
-                    <%--                    </ul>--%>
                     <ul class="nav navbar-top-links navbar-left">
                         <li>
                             <div class="row" style="height: 20px;"></div>
-                            <div class="row col-lg-offset-0" style="height: 50px ;width: 1500px">
-                                <div class="col-lg-10 form-group" style="height: 40px">
-                                    <input type="text" placeholder="请输入搜索内容" class="form-control" id="searchContext">
-                                </div>
-                                <div>
-                                    <button class="btn btn-danger" id="search">搜索</button>
-                                </div>
-                            </div>
+<%--                            <div class="row col-lg-offset-0" style="height: 50px ;width: 1500px">--%>
+<%--                                <div class="col-lg-10 form-group" style="height: 40px">--%>
+<%--                                    <input type="text" placeholder="请输入搜索内容" class="form-control" id="searchContext">--%>
+<%--                                </div>--%>
+<%--                                <div>--%>
+<%--                                    <button class="btn btn-danger" id="search">搜索</button>--%>
+<%--                                </div>--%>
+<%--                            </div>--%>
 
-                            <form id="searchFrom" action="" method="GET">
-                                <%--                        <input type="hidden" name="_method" value="GET">--%>
-                            </form>
-
-
-                            <script>
-                                $(function () {
-                                    $("#search").click(function () {
-                                        var keyword = $('#searchContext').val();
-                                        var href = "${pageContext.request.contextPath}/search/" + keyword;
-                                        $("#searchFrom").attr("action", href).submit();
-                                        return false;
-                                    });
-                                })
-                            </script>
+<%--                            <script>--%>
+<%--                                $(function () {--%>
+<%--                                    $("#search").click(function () {--%>
+<%--                                        var keyword = $('#searchContext').val();--%>
+<%--                                        var href = "${pageContext.request.contextPath}/search/" + keyword;--%>
+<%--                                        $("#searchFrom").attr("action", href).submit();--%>
+<%--                                        return false;--%>
+<%--                                    });--%>
+<%--                                })--%>
+<%--                            </script>--%>
 
 
                         </li>
@@ -98,6 +71,11 @@
 
 
                     <ul class="nav navbar-top-links navbar-right">
+                        <li>
+                            <a href="/index">
+                                <i class="fa fa-search"></i> search index
+                            </a>
+                        </li>
                         <li>
                             <a href="${pageContext.request.contextPath}/user/<%=user.getUserId()%>" id="userHomepage">
                                 <i class="fa fa-home"></i> <%=user.getUserName()%>
