@@ -16,6 +16,8 @@ public class Document {
     private List<String> imageUrls;
     private String publishDate;
 
+
+
     public String getDocId() {
         return docId;
     }
@@ -95,4 +97,5 @@ public class Document {
     public void setTitle(String title) {
         this.title = title;
     }
+
 }

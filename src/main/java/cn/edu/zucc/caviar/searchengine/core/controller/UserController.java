@@ -1,6 +1,10 @@
 package cn.edu.zucc.caviar.searchengine.core.controller;
 
+import cn.edu.zucc.caviar.searchengine.common.pagination.Page;
+import cn.edu.zucc.caviar.searchengine.core.pojo.Document;
 import cn.edu.zucc.caviar.searchengine.core.pojo.User;
+import cn.edu.zucc.caviar.searchengine.core.pojo.UserDocumentRecord;
+import cn.edu.zucc.caviar.searchengine.core.service.NoteService;
 import cn.edu.zucc.caviar.searchengine.core.service.UserService;
 import org.apache.ibatis.annotations.Param;
 import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
@@ -18,8 +22,15 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private NoteService noteService;
+
     @RequestMapping(value = "/user/{id}", method = RequestMethod.GET)
-    public String getUser(@PathVariable("id") Integer id, HttpSession session, Model model) {
+    public String getUser(@PathVariable("id") Integer id,
+                          HttpSession session,
+                          @RequestParam(defaultValue="1")Integer page,
+                          @RequestParam(defaultValue="10")Integer rows,
+                          Model model) {
         User user = (User) session.getAttribute("USER_SESSION");
 
         if(user == null || !id.equals(user.getUserId())) {
@@ -34,6 +45,13 @@ public class UserController {
         }
 
         model.addAttribute("user", user);
+
+        Page<UserDocumentRecord> documentPages = noteService.findNoteList(id, page, rows);
+
+        System.out.println(documentPages.getRows().size());
+        System.out.println(documentPages.getRows().get(0).getDescribe());
+        model.addAttribute("page", documentPages);
+
 
         return "user";
     }
@@ -91,24 +109,56 @@ public class UserController {
 
     @RequestMapping(value = "/collect/{noteId}", method = RequestMethod.GET)
     @ResponseBody
-    public String collectNote(HttpSession session, @PathVariable("noteId") String noteId) {
+    public String addCollectNote(HttpSession session, @PathVariable("noteId") String noteId) {
         User user = (User) session.getAttribute("USER_SESSION");
 
-        System.out.println("UserId:" + user.getUserId());
-        System.out.println("noteId:"  + noteId);
+        Integer userId = user.getUserId();
+        boolean finished = noteService.insertCollectionNoteForUser(userId, noteId);
 
-        return "success";
+//        System.out.println("UserId:" + user.getUserId());
+//        System.out.println("noteId:"  + noteId);
+
+        if(finished) {
+            return "success";
+        } else {
+            return noteId + "Insert Collection Fail";
+        }
     }
 
     @RequestMapping(value = "/like/{noteId}", method = RequestMethod.GET)
     @ResponseBody
-    public String likeNote(HttpSession session, @PathVariable("noteId") String noteId) {
+    public String addLikeNote(HttpSession session, @PathVariable("noteId") String noteId) {
         User user = (User) session.getAttribute("USER_SESSION");
+
+        boolean finished = noteService.insertLikeNoteForUser(user.getUserId(), noteId);
+
+//        System.out.println("UserId:" + user.getUserId());
+//        System.out.println("noteId:"  + noteId);
+
+        if(finished) {
+            return "success";
+        } else {
+            return noteId + "Insert Like Fail";
+        }
+    }
+
+
+    @RequestMapping(value = "/collect/{noteId}", method = RequestMethod.DELETE)
+    @ResponseBody
+    public String deleteCollectNote(HttpSession session, @PathVariable("noteId") String noteId) {
+        User user = (User) session.getAttribute("USER_SESSION");
+
+        Integer userId = user.getUserId();
+        boolean finished = noteService.deleteCollectionNoteForUser(userId, noteId);
 
         System.out.println("UserId:" + user.getUserId());
         System.out.println("noteId:"  + noteId);
 
-        return "success";
+        if(finished) {
+            return "success";
+        } else {
+            return noteId + "delete Collection Fail";
+        }
     }
 
 }

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.edu.zucc.caviar.searchengine.core.dao.NoteDao">
+
+    <resultMap id="userDocumentRecord" type="cn.edu.zucc.caviar.searchengine.core.pojo.UserDocumentRecord">
+        <result property="userId" column="user_id"/>
+        <result property="noteId" column="note_id"/>
+        <result property="date" column="date"/>
+    </resultMap>
+
+    <!-- 查询客户列表  -->
+    <select id="selectNoteList" parameterType="userDocumentRecord"
+            resultMap="userDocumentRecord">
+        SELECT user_id, note_id
+        FROM tb_collection
+        where user_id=#{userId}
+        order by date
+        <!-- 执行分页查询 -->
+        <if test="start !=null and rows != null">
+            limit #{start},#{rows}
+        </if>
+    </select>
+    <!-- 查询客户总数 -->
+    <select id="selectNoteListCount" parameterType="userDocumentRecord"
+            resultType="Integer">
+        select count(*) from tb_collection
+        where user_id = #{userId}
+    </select>
+
+    <insert id="insertToCollection"  useGeneratedKeys="true">
+        insert into tb_collection(user_id, note_id, date) VALUES (#{userId}, #{noteId}, #{date})
+    </insert>
+
+    <insert id="insertToLike" useGeneratedKeys="true">
+        insert into tb_like(user_id, note_id, date) VALUES (#{userId}, #{noteId}, #{date})
+    </insert>
+
+    <delete id="deleteToCollection">
+        delete from tb_collection
+        where note_id = #{noteId}
+    </delete>
+
+    <delete id="deleteToLike">
+        delete from tb_like
+        where note_id = #{noteId}
+    </delete>
+
+</mapper>

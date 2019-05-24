@@ -25,7 +25,7 @@
 
     <script>
         $(function () {
-            pushHistory();
+            // pushHistory();
             window.addEventListener("popstate", function (e) {
                 // alert("监听到返回按钮事件啦");
                 //根据自己的需求实现自己的功能

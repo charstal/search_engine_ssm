@@ -26,7 +26,7 @@
 
     <script>
         $(function () {
-            pushHistory();
+            // pushHistory();
             window.addEventListener("popstate", function (e) {
                 // alert("监听到返回按钮事件啦");
                 //根据自己的需求实现自己的功能
@@ -86,7 +86,7 @@
                                             addEventForLikeAndCollect();
                                             sessionStorage.setItem("lastJson", JSON.stringify(res));
                                             sessionStorage.setItem("lastUrl", search);
-                                            history.pushState(null, null,search);
+                                            history.replaceState(null, null, search);
 
                                         }
                                     });
@@ -193,12 +193,7 @@
 
                     <ul class="nav navbar-top-links navbar-right">
                         <li>
-                            <a href="${pageContext.request.contextPath}">
-                                <i class="fa fa-search"></i> search index
-                            </a>
-                        </li>
-                        <li>
-                            <a href="${pageContext.request.contextPath}">
+                            <a href="/">
                                 <i class="fa fa-search"></i> search index
                             </a>
                         </li>
@@ -290,7 +285,6 @@
                             liNums: 7, //分页的数字按钮数(建议取奇数)
                             activeClass: 'activP', //active 类样式定义
                             callBack: function (page) {
-
                                 var oldUrl = new URL(window.location.href);
                                 var origin = oldUrl.origin;
                                 var oldPage = oldUrl.searchParams.get("page");
@@ -306,7 +300,10 @@
                                         dataType: "json",
                                         success: function (res) {
                                             render(res);
-                                            history.pushState(null, null, path);
+                                            addEventForLikeAndCollect();
+                                            sessionStorage.setItem("lastJson", JSON.stringify(res));
+                                            sessionStorage.setItem("lastUrl", path);
+                                            history.replaceState(null, null, path)
                                         }
                                     });
                                 }
@@ -359,9 +356,11 @@
         var url = sessionStorage.getItem("lastUrl");
         var data = JSON.parse(sessionStorage.getItem("lastJson"));
         if(url !== null && data !== null) {
-            render(data);
-            addEventForLikeAndCollect();
-            history.pushState(null, null, url);
+            if (url !== window.location.href)
+                render(data);
+                addEventForLikeAndCollect();
+                history.pushState(null, null, url);
+                // $("#page").Page.
         }
     });
 
