@@ -4,6 +4,7 @@ import java.util.List;
 
 public class Document {
     private String docId;
+    private String title;
     private String content;
     private String author;
 
@@ -85,5 +86,13 @@ public class Document {
 
     public void setPublishDate(String publishDate) {
         this.publishDate = publishDate;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 }

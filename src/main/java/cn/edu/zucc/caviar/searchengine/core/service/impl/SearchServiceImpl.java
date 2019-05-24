@@ -68,7 +68,7 @@ public class SearchServiceImpl implements SearchService {
     public Set<Document> documentsInPage(long currentPage,long eachPageDocumentsCount){
         Set<Document> documents = new HashSet<>();
 
-        Set<Object> docIds = redisUtil.resultPagingWithScores(currentPage,eachPageDocumentsCount);
+        Set<Object> docIds = redisUtil.resultPagingWithScores(currentPage, eachPageDocumentsCount);
         for(Object docId:docIds){
             documents.add(hbaseUtil.get((String)docId));
         }

@@ -44,6 +44,8 @@ public class HBaseTest {
                             doc.setContent(value);
                         else if (colName.equals("author"))
                             doc.setAuthor(value);
+                        else if (colName.equals("title"))
+                            doc.setTitle(value);
                         else if (colName.equals("likeCount"))
                             doc.setLikeCount(Integer.parseInt(value));
                         else if (colName.equals("shareCount"))

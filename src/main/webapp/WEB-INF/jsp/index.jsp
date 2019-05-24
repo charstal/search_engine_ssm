@@ -23,7 +23,27 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/jquery-page.css">
     <script src="${pageContext.request.contextPath}/js/jquery-3.1.1.min.js"></script>
     <script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
+
+    <script>
+        $(function () {
+            pushHistory();
+            window.addEventListener("popstate", function (e) {
+                // alert("监听到返回按钮事件啦");
+                //根据自己的需求实现自己的功能
+                window.location.href = '/'
+            }, false);
+            function pushHistory() {
+                var state = {
+                    title: "title",
+                    url: "#"
+                };
+                window.history.pushState(state, "title", "/");
+            }
+        });
+
+    </script>
 </head>
+
 <body class="top-navigation">
 
 <div id="wrapper">
@@ -53,22 +73,30 @@
                             </div>
 
                             <script>
-                                $('#search').on("click", function () {
+                                var searchEvent = function () {
                                     var keyword = $('#searchContext').val();
                                     var search = "search/" + keyword;
                                     $.ajax({
-                                        url: "${pageContext.request.contextPath}/" + search,
+                                        url: "/" + search,
                                         type: "get",
                                         contentType: "application/json; charset=UTF-8",
                                         dataType: "json",
                                         success: function (res) {
                                             render(res);
                                             addEventForLikeAndCollect();
+                                            sessionStorage.setItem("lastJson", JSON.stringify(res));
+                                            sessionStorage.setItem("lastUrl", search);
                                             history.pushState(null, null,search);
 
                                         }
                                     });
-                                });
+                                };
+                                $('#search').on("click", searchEvent);
+                                $(document).keydown(function (event) {
+                                    if(event.keyCode === 13) {
+                                        searchEvent();
+                                    }
+                                })
                             </script>
 
                             <script>
@@ -89,8 +117,8 @@
                                         page += "<div class=\"col-md-8\">";
                                         page += "<div class=\"ibox float-e-margins\">";
                                         // title
-                                        var contentSplit = res[item].content.split(/[\s\n]/);
-                                        page += "<h3><a href=\"" + "${pageContext.request.contextPath}/note/" + res[item].docId + "\">" + contentSplit[0] + "</a></h3>";
+                                        // var contentSplit = res[item].content.split(/[\s\n]/);
+                                        page += "<h3><a href=\"" + "${pageContext.request.contextPath}/note/" + res[item].docId + "\">" + res[item].title + "</a></h3>";
 
                                         var date = res[item].publishDate.split("T");
                                         page += "<span style=\"color:grey\">" + date[0] + " - </span>";
@@ -326,5 +354,17 @@
 
 
 
+<script>
+    $(function() {
+        var url = sessionStorage.getItem("lastUrl");
+        var data = JSON.parse(sessionStorage.getItem("lastJson"));
+        if(url !== null && data !== null) {
+            render(data);
+            addEventForLikeAndCollect();
+            history.pushState(null, null, url);
+        }
+    });
+
+</script>
 </body>
 </html>
