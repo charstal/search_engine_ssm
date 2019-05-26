@@ -24,24 +24,6 @@
     <script src="${pageContext.request.contextPath}/js/jquery-3.1.1.min.js"></script>
     <script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
 
-    <script>
-        $(function () {
-            // pushHistory();
-            window.addEventListener("popstate", function (e) {
-                // alert("监听到返回按钮事件啦");
-                //根据自己的需求实现自己的功能
-                window.location.href = '/'
-            }, false);
-            function pushHistory() {
-                var state = {
-                    title: "title",
-                    url: "#"
-                };
-                window.history.pushState(state, "title", "/");
-            }
-        });
-
-    </script>
 </head>
 
 <body class="top-navigation">
@@ -86,8 +68,7 @@
                                             addEventForLikeAndCollect();
                                             sessionStorage.setItem("lastJson", JSON.stringify(res));
                                             sessionStorage.setItem("lastUrl", search);
-                                            history.replaceState(null, null, search);
-
+                                            sessionStorage.setItem("keyword", keyword);
                                         }
                                     });
                                 };
@@ -281,20 +262,18 @@
                 <script type="text/javascript">
                     $(function () {
                         $("#page").Page({
-                            totalPages: 9, //分页总数
+                            totalPages: 1, //分页总数
                             liNums: 7, //分页的数字按钮数(建议取奇数)
                             activeClass: 'activP', //active 类样式定义
                             callBack: function (page) {
-                                var oldUrl = new URL(window.location.href);
-                                var origin = oldUrl.origin;
-                                var oldPage = oldUrl.searchParams.get("page");
-                                var oldPath = oldUrl.pathname;
+                                var oldPage = sessionStorage.getItem("page");
+                                var oldPath = "/search/" + sessionStorage.getItem("keyword");
                                 var path = oldPath + "?page=" + page;
-                                console.log(origin + path);
+                                console.log(path);
                                 if(oldPage === null || oldPage !== page) {
                                     $.ajax({
                                         async:false,
-                                        url: origin + path,
+                                        url: path,
                                         type: "get",
                                         contentType: "application/json; charset=UTF-8",
                                         dataType: "json",
@@ -303,7 +282,10 @@
                                             addEventForLikeAndCollect();
                                             sessionStorage.setItem("lastJson", JSON.stringify(res));
                                             sessionStorage.setItem("lastUrl", path);
-                                            history.replaceState(null, null, path)
+                                            sessionStorage.setItem("page", page);
+                                            $(document).scrollTop(0);
+                                            this.totalPages = res.length / 10;
+
                                         }
                                     });
                                 }
@@ -352,15 +334,23 @@
 
 
 <script>
+
+    //滚动时保存滚动位置
+    $(window).scroll(function(){
+        if($(document).scrollTop()!==0){
+            sessionStorage.setItem("offsetTop", $(window).scrollTop());
+        }
+    });
     $(function() {
         var url = sessionStorage.getItem("lastUrl");
         var data = JSON.parse(sessionStorage.getItem("lastJson"));
+        var keyWord = sessionStorage.getItem("keyword");
+        var offset = sessionStorage.getItem("offsetTop");
         if(url !== null && data !== null) {
-            if (url !== window.location.href)
-                render(data);
-                addEventForLikeAndCollect();
-                history.pushState(null, null, url);
-                // $("#page").Page.
+            render(data);
+            addEventForLikeAndCollect();
+            $('#searchContext').val(keyWord);
+            $(document).scrollTop(offset);
         }
     });
 

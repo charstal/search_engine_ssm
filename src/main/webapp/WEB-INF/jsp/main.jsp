@@ -9,10 +9,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>main</title>
+    <title>${note.title}</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>sample</title>
     <link href="${pageContext.request.contextPath}/css/bootstrap.min.css" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/font-awesome/css/font-awesome.css" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/css/animate.css" rel="stylesheet">
@@ -23,24 +22,7 @@
     <script src="${pageContext.request.contextPath}/js/jquery-3.1.1.min.js"></script>
     <script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
 
-    <script>
-        $(function () {
-            // pushHistory();
-            window.addEventListener("popstate", function (e) {
-                // alert("监听到返回按钮事件啦");
-                //根据自己的需求实现自己的功能
-                window.location.href = '/'
-            }, false);
-            function pushHistory() {
-                var state = {
-                    title: "title",
-                    url: "#"
-                };
-                window.history.pushState(state, "title", "/");
-            }
-        });
 
-    </script>
 </head>
 <body class="top-navigation">
 <style>

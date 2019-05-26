@@ -12,6 +12,7 @@
 <!--    <import resource="classpath:/kafka/consumer-kafka.xml"/>-->
 <!--    <import resource="classpath:/kafka/producer-kafka.xml"/>-->
     <import resource="applicationContext-searchModel.xml"/>
+    <import resource="classpath:/rabbitMQ/ApplicationContext-rabbitMQ.xml"/>
 
 
 <!--    mysql-->
@@ -71,7 +72,7 @@
     <context:component-scan base-package="cn.edu.zucc.caviar.searchengine.core.service"/>
 
 <!--    EncryptUtl-->
-    <bean id="encryptUtil" class="cn.edu.zucc.caviar.searchengine.common.utils.EncryptUtil"/>
+<!--    <bean id="encryptUtil" class="cn.edu.zucc.caviar.searchengine.common.utils.EncryptUtil"/>-->
 
 
 
