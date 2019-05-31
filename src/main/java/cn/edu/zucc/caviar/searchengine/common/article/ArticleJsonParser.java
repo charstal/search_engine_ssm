@@ -80,15 +80,15 @@ public class ArticleJsonParser {
             else
                 imageUrls += ("," + images.get(i).getAsString());
         }
-        hbaseUtil.put(docId, "imageUrls", imageUrls);
-        hbaseUtil.put(docId, "docId", docId);
-        hbaseUtil.put(docId, "author", author);
-        hbaseUtil.put(docId, "content", content);
-        hbaseUtil.put(docId, "favoriteCount", favoriteCount);
-        hbaseUtil.put(docId, "likeCount", likeCount);
-        hbaseUtil.put(docId, "commentCount", commentCount);
-        hbaseUtil.put(docId, "shareCount", shareCount);
-        hbaseUtil.put(docId, "publishDate", publishDate);
+        hbaseUtil.putIntoList(docId, "imageUrls", imageUrls);
+        hbaseUtil.putIntoList(docId, "docId", docId);
+        hbaseUtil.putIntoList(docId, "author", author);
+        hbaseUtil.putIntoList(docId, "content", content);
+        hbaseUtil.putIntoList(docId, "favoriteCount", favoriteCount);
+        hbaseUtil.putIntoList(docId, "likeCount", likeCount);
+        hbaseUtil.putIntoList(docId, "commentCount", commentCount);
+        hbaseUtil.putIntoList(docId, "shareCount", shareCount);
+        hbaseUtil.putIntoList(docId, "publishDate", publishDate);
     }
 
     public static void createIndex(JsonObject keyWords) {
@@ -110,11 +110,12 @@ public class ArticleJsonParser {
      * 建立索引以及存储文章
      * @param args
      */
-    public static void main(String args[]) {
+    public static void main(String args[]) throws Exception {
         redisUtil = new RedisUtil();
         hbaseUtil = new HbaseUtil();
 
         readContentJSON("search_data/keywords(1).json", CREATE_INDEX);
         readContentJSON("search_data/xhs_note_item_final.json", SAVE_CONTENT);
+        HbaseUtil.flushPutList(hbaseUtil.puts);
     }
 }
