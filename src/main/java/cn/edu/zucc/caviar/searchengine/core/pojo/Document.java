@@ -4,6 +4,7 @@ import java.util.List;
 
 public class Document {
     private String docId;
+    private String title;
     private String content;
     private String author;
 
@@ -14,6 +15,8 @@ public class Document {
 
     private List<String> imageUrls;
     private String publishDate;
+
+
 
     public String getDocId() {
         return docId;
@@ -86,4 +89,13 @@ public class Document {
     public void setPublishDate(String publishDate) {
         this.publishDate = publishDate;
     }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
 }

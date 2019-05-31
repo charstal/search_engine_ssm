@@ -13,6 +13,7 @@ public class User {
     private Timestamp registerTime;
     private Timestamp lastLoginTime;
 
+
     public Integer getUserId() {
         return userId;
     }
@@ -61,13 +62,6 @@ public class User {
         this.lastLoginTime = lastLoginTime;
     }
 
-    @Override
-    public String toString() {
-        return "User [userId=" + userId + ", registerId=" +registerId + ", password=" + password + ", gender=" + gender +
-                ", registerTime=" + registerTime + ", lastLoginTime=" + lastLoginTime + "]";
-
-    }
-
     public String getUserName() {
         return userName;
     }
@@ -90,5 +84,12 @@ public class User {
 
     public void setDescribe(String describe) {
         this.describe = describe;
+    }
+
+    @Override
+    public String toString() {
+        return "User [userId=" + userId + ", registerId=" +registerId + ", password=" + password + ", gender=" + gender +
+                ", registerTime=" + registerTime + ", lastLoginTime=" + lastLoginTime + "]";
+
     }
 }

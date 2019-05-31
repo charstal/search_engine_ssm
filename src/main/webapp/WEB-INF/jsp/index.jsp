@@ -23,7 +23,9 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/jquery-page.css">
     <script src="${pageContext.request.contextPath}/js/jquery-3.1.1.min.js"></script>
     <script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
+
 </head>
+
 <body class="top-navigation">
 
 <div id="wrapper">
@@ -53,22 +55,29 @@
                             </div>
 
                             <script>
-                                $('#search').on("click", function () {
+                                var searchEvent = function () {
                                     var keyword = $('#searchContext').val();
                                     var search = "search/" + keyword;
                                     $.ajax({
-                                        url: "${pageContext.request.contextPath}/" + search,
+                                        url: "/" + search,
                                         type: "get",
                                         contentType: "application/json; charset=UTF-8",
                                         dataType: "json",
                                         success: function (res) {
                                             render(res);
                                             addEventForLikeAndCollect();
-                                            history.pushState(null, null,search);
-
+                                            sessionStorage.setItem("lastJson", JSON.stringify(res));
+                                            sessionStorage.setItem("lastUrl", search);
+                                            sessionStorage.setItem("keyword", keyword);
                                         }
                                     });
-                                });
+                                };
+                                $('#search').on("click", searchEvent);
+                                $(document).keydown(function (event) {
+                                    if(event.keyCode === 13) {
+                                        searchEvent();
+                                    }
+                                })
                             </script>
 
                             <script>
@@ -89,8 +98,8 @@
                                         page += "<div class=\"col-md-8\">";
                                         page += "<div class=\"ibox float-e-margins\">";
                                         // title
-                                        var contentSplit = res[item].content.split(/[\s\n]/);
-                                        page += "<h3><a href=\"" + "${pageContext.request.contextPath}/note/" + res[item].docId + "\">" + contentSplit[0] + "</a></h3>";
+                                        // var contentSplit = res[item].content.split(/[\s\n]/);
+                                        page += "<h3><a href=\"" + "${pageContext.request.contextPath}/note/" + res[item].docId + "\">" + res[item].title + "</a></h3>";
 
                                         var date = res[item].publishDate.split("T");
                                         page += "<span style=\"color:grey\">" + date[0] + " - </span>";
@@ -165,12 +174,7 @@
 
                     <ul class="nav navbar-top-links navbar-right">
                         <li>
-                            <a href="${pageContext.request.contextPath}">
-                                <i class="fa fa-search"></i> search index
-                            </a>
-                        </li>
-                        <li>
-                            <a href="${pageContext.request.contextPath}">
+                            <a href="/">
                                 <i class="fa fa-search"></i> search index
                             </a>
                         </li>
@@ -258,27 +262,30 @@
                 <script type="text/javascript">
                     $(function () {
                         $("#page").Page({
-                            totalPages: 9, //分页总数
+                            totalPages: 1, //分页总数
                             liNums: 7, //分页的数字按钮数(建议取奇数)
                             activeClass: 'activP', //active 类样式定义
                             callBack: function (page) {
-
-                                var oldUrl = new URL(window.location.href);
-                                var origin = oldUrl.origin;
-                                var oldPage = oldUrl.searchParams.get("page");
-                                var oldPath = oldUrl.pathname;
+                                var oldPage = sessionStorage.getItem("page");
+                                var oldPath = "/search/" + sessionStorage.getItem("keyword");
                                 var path = oldPath + "?page=" + page;
-                                console.log(origin + path);
+                                console.log(path);
                                 if(oldPage === null || oldPage !== page) {
                                     $.ajax({
                                         async:false,
-                                        url: origin + path,
+                                        url: path,
                                         type: "get",
                                         contentType: "application/json; charset=UTF-8",
                                         dataType: "json",
                                         success: function (res) {
                                             render(res);
-                                            history.pushState(null, null, path);
+                                            addEventForLikeAndCollect();
+                                            sessionStorage.setItem("lastJson", JSON.stringify(res));
+                                            sessionStorage.setItem("lastUrl", path);
+                                            sessionStorage.setItem("page", page);
+                                            $(document).scrollTop(0);
+                                            this.totalPages = res.length / 10;
+
                                         }
                                     });
                                 }
@@ -326,5 +333,27 @@
 
 
 
+<script>
+
+    //滚动时保存滚动位置
+    $(window).scroll(function(){
+        if($(document).scrollTop()!==0){
+            sessionStorage.setItem("offsetTop", $(window).scrollTop());
+        }
+    });
+    $(function() {
+        var url = sessionStorage.getItem("lastUrl");
+        var data = JSON.parse(sessionStorage.getItem("lastJson"));
+        var keyWord = sessionStorage.getItem("keyword");
+        var offset = sessionStorage.getItem("offsetTop");
+        if(url !== null && data !== null) {
+            render(data);
+            addEventForLikeAndCollect();
+            $('#searchContext').val(keyWord);
+            $(document).scrollTop(offset);
+        }
+    });
+
+</script>
 </body>
 </html>

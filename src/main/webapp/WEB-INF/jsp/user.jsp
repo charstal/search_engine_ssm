@@ -1,3 +1,5 @@
+<%@ taglib prefix="itheima" uri="http://itheima.com/common/" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core_1_1" %>
 <%@ page import="cn.edu.zucc.caviar.searchengine.core.pojo.User" %><%--
   Created by IntelliJ IDEA.
   User: shiro
@@ -20,6 +22,12 @@
     <!-- Mainly scripts -->
     <script src="${pageContext.request.contextPath}/js/jquery-3.1.1.min.js"></script>
     <script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
+
+    <%
+        String path = request.getContextPath();
+        String basePath = request.getScheme() + "://" + request.getServerName()
+                + ":" + request.getServerPort() + path + "/";
+    %>
 
 
 </head>
@@ -44,26 +52,6 @@
                     <ul class="nav navbar-top-links navbar-left">
                         <li>
                             <div class="row" style="height: 20px;"></div>
-<%--                            <div class="row col-lg-offset-0" style="height: 50px ;width: 1500px">--%>
-<%--                                <div class="col-lg-10 form-group" style="height: 40px">--%>
-<%--                                    <input type="text" placeholder="请输入搜索内容" class="form-control" id="searchContext">--%>
-<%--                                </div>--%>
-<%--                                <div>--%>
-<%--                                    <button class="btn btn-danger" id="search">搜索</button>--%>
-<%--                                </div>--%>
-<%--                            </div>--%>
-
-<%--                            <script>--%>
-<%--                                $(function () {--%>
-<%--                                    $("#search").click(function () {--%>
-<%--                                        var keyword = $('#searchContext').val();--%>
-<%--                                        var href = "${pageContext.request.contextPath}/search/" + keyword;--%>
-<%--                                        $("#searchFrom").attr("action", href).submit();--%>
-<%--                                        return false;--%>
-<%--                                    });--%>
-<%--                                })--%>
-<%--                            </script>--%>
-
 
                         </li>
 
@@ -72,7 +60,7 @@
 
                     <ul class="nav navbar-top-links navbar-right">
                         <li>
-                            <a href="/index">
+                            <a href="/">
                                 <i class="fa fa-search"></i> search index
                             </a>
                         </li>
@@ -171,9 +159,21 @@
                             </div>
                         </div>
                     </div>
-                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#userModal">
+                    <button id="modifyButton" type="button" class="btn btn-danger" data-toggle="modal" data-target="#userModal" style="display: none">
                         modify
                     </button>
+
+                    <script>
+                        var button = document.getElementById("modifyButton");
+                        var list = window.location.href.split("/");
+                        var user = list[list.length - 1];
+                        console.log(user);
+                        console.log(<%=user.getUserId()%>);
+
+                        if (user == <%=user.getUserId()%>) {
+                            button.style.display = "block";
+                        }
+                    </script>
                 </div>
                 <div class="row">
                     <h2>收藏文章</h2>
@@ -197,6 +197,61 @@
                     </tbody>
 
                 </table>
+
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">note collection</div>
+                            <!-- /.panel-heading -->
+                            <table class="table table-bordered table-striped">
+                                <thead>
+                                <tr>
+                                    <th>title</th>
+                                    <th>content.describe</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <c:forEach items="${page.rows}" var="row">
+                                    <tr>
+                                        <td><a href="/note/${row.noteId}"> ${row.title}</a></td>
+                                        <td>${row.describe}</td>
+                                        <td>
+                                            <a href="#" id="deleteCollection" class="btn btn-danger btn-xs" onclick="deleteCustomer('${row.noteId}')" >删除</a>
+                                        </td>
+                                    </tr>
+                                </c:forEach>
+                                </tbody>
+                            </table>
+                            <div class="col-md-12 text-right">
+                                <itheima:page url="${pageContext.request.contextPath}/user/${user.userId}" />
+                            </div>
+
+                            <script>
+                                function deleteCustomer(id) {
+                                    if(confirm('delele this note?')) {
+                                        $.ajax({
+                                            url: "<%=basePath%>collect/" + id,
+                                            type: "delete",
+                                            success: function (data) {
+                                                if(data =="success"){
+                                                    alert("success！");
+                                                    window.location.reload();
+                                                }else{
+                                                    alert("fail！");
+                                                    window.location.reload();
+                                                }
+                                            }
+                                        });
+                                        return false;
+                                    }
+                                }
+                            </script>
+                            <!-- /.panel-body -->
+                        </div>
+                        <!-- /.panel -->
+                    </div>
+                    <!-- /.col-lg-12 -->
+                </div>
 
 
                 <div class="modal fade" id="userModal" tabindex="-1" role="dialog"
@@ -260,7 +315,6 @@
 
                                         function uploadFile() {
                                             var formData = new FormData($("#fileForm")[0]);
-
 
                                             $.ajax({
                                                 url: "${pageContext.request.contextPath}/fileUpload",

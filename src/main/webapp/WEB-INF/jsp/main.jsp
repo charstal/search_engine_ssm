@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="cn.edu.zucc.caviar.searchengine.core.pojo.User" %><%--
   Created by IntelliJ IDEA.
   User: shiro
@@ -8,10 +9,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>main</title>
+    <title>${note.title}</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>sample</title>
     <link href="${pageContext.request.contextPath}/css/bootstrap.min.css" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/font-awesome/css/font-awesome.css" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/css/animate.css" rel="stylesheet">
@@ -21,6 +21,8 @@
     <script src="${pageContext.request.contextPath}/js/carousel.js"></script>
     <script src="${pageContext.request.contextPath}/js/jquery-3.1.1.min.js"></script>
     <script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
+
+
 </head>
 <body class="top-navigation">
 <style>
@@ -62,7 +64,7 @@
 
                     <ul class="nav navbar-top-links navbar-right">
                         <li>
-                            <a href="${pageContext.request.contextPath}">
+                            <a href="/index">
                                 <i class="fa fa-search"></i> search index
                             </a>
                         </li>
@@ -128,21 +130,30 @@
                     <!-- Indicators -->
                     <ol class="carousel-indicators">
                         <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
-                        <li data-target="#carousel-example-generic" data-slide-to="1"></li>
-                        <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+                        <c:forEach var="i" begin="1" end="${note.imageUrls.size() - 1}">
+                            <li data-target="#carousel-example-generic" data-slide-to="${i}"></li>
+<%--                            <li data-target="#carousel-example-generic" data-slide-to="1"></li>--%>
+<%--                            <li data-target="#carousel-example-generic" data-slide-to="2"></li>--%>
+                        </c:forEach>
                     </ol>
 
                     <!-- Wrapper for slides -->
                     <div class="carousel-inner">
                         <div class="item active ">
-                            <img src="${pageContext.request.contextPath}/images/p2.jpg" class="img-responsive" alt="First slide">
+                            <img src="${note.imageUrls[0]}" class="img-responsive" alt="First slide">
                         </div>
-                        <div class="item">
-                            <img src="${pageContext.request.contextPath}/images/p3.jpg" class="img-responsive" alt="Second slide">
-                        </div>
-                        <div class="item">
-                            <img src="${pageContext.request.contextPath}/images/p4.jpg" class="img-responsive" alt="Third slide">
-                        </div>
+                        <c:forEach var="i" begin="1" end="${note.imageUrls.size() - 1}">
+                            <div class="item">
+                                <img src="${note.imageUrls[i]}" class="img-responsive">
+                            </div>
+<%--                            <div class="item">--%>
+<%--                                <img src="${pageContext.request.contextPath}/images/p3.jpg" class="img-responsive" alt="Second slide">--%>
+<%--                            </div>--%>
+<%--                            <div class="item">--%>
+<%--                                <img src="${pageContext.request.contextPath}/images/p4.jpg" class="img-responsive" alt="Third slide">--%>
+<%--                            </div>--%>
+
+                        </c:forEach>
                     </div>
 
                     <!-- Controls -->
@@ -164,12 +175,12 @@
                     <div class="col-md-12">
                         <div class="ibox float-e-margins">
                             <div class="ibox-title">
-                                <h1>一只狐狸呀</h1>
+                                <h1>${note.title}</h1>
                             </div>
                             <div class="ibox-content">
                                 <div class="row">
                                     <p>
-                                        一只狐狸呀，它坐在沙丘上
+                                        ${note.content}
                                     </p>
                                 </div>
                             </div>

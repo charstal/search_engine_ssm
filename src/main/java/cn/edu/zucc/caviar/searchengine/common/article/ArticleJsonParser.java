@@ -62,7 +62,17 @@ public class ArticleJsonParser {
 
         System.out.println(docId);
 
-        String content = docData.get("content").getAsString();
+        String[] contentSplit = docData.get("content").getAsString().split("\\n", 2);
+
+        String title = contentSplit[0];
+        String content = "";
+        if (contentSplit.length == 2) {
+//            System.out.println("title:" + title);
+            content = contentSplit[1];
+//            System.out.println("content:" + content);
+        } else {
+            content = contentSplit[0];
+        }
 
         String favoriteCount = docData.get("favoriteCount").getAsJsonObject().get("$numberInt").getAsString();
         String likeCount = docData.get("likeCount").getAsJsonObject().get("$numberInt").getAsString();
@@ -70,6 +80,7 @@ public class ArticleJsonParser {
         String shareCount = docData.get("shareCount").getAsJsonObject().get("$numberInt").getAsString();
         JsonArray images = docData.get("imageUrls").getAsJsonArray();
         String publishDate = docData.get("publishDateStr").getAsString();
+
 //        System.out.println(publishDate);
 
         String imageUrls = "";
@@ -80,6 +91,7 @@ public class ArticleJsonParser {
             else
                 imageUrls += ("," + images.get(i).getAsString());
         }
+
         hbaseUtil.putIntoList(docId, "imageUrls", imageUrls);
         hbaseUtil.putIntoList(docId, "docId", docId);
         hbaseUtil.putIntoList(docId, "author", author);
@@ -89,6 +101,18 @@ public class ArticleJsonParser {
         hbaseUtil.putIntoList(docId, "commentCount", commentCount);
         hbaseUtil.putIntoList(docId, "shareCount", shareCount);
         hbaseUtil.putIntoList(docId, "publishDate", publishDate);
+
+//        hbaseUtil.put(docId, "imageUrls", imageUrls);
+//        hbaseUtil.put(docId, "docId", docId);
+//        hbaseUtil.put(docId, "author", author);
+//        hbaseUtil.put(docId, "title", title);
+//        hbaseUtil.put(docId, "content", content);
+//        hbaseUtil.put(docId, "favoriteCount", favoriteCount);
+//        hbaseUtil.put(docId, "likeCount", likeCount);
+//        hbaseUtil.put(docId, "commentCount", commentCount);
+//        hbaseUtil.put(docId, "shareCount", shareCount);
+//        hbaseUtil.put(docId, "publishDate", publishDate);
+
     }
 
     public static void createIndex(JsonObject keyWords) {
