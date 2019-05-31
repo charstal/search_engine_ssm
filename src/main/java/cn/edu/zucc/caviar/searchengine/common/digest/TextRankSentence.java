@@ -29,44 +29,44 @@ public class TextRankSentence {
     /**
      * 阻尼系数（ＤａｍｐｉｎｇＦａｃｔｏｒ），一般取值为0.85
      */
-    final static double d = 0.85;
+    private final static double d = 0.85;
     /**
      * 最大迭代次数
      */
-    final static int max_iter = 200;
-    final static double min_diff = 0.001;
+    private final static int max_iter = 200;
+    private final static double min_diff = 0.001;
 
-    final static String default_sentence_separator = "[，,。:：“”？?！!；;]";
+    private final static String default_sentence_separator = "[，,。:：“”？?！!；;]";
     /**
      * 文档句子的个数
      */
-    int D;
+    private int D;
     /**
      * 拆分为[句子[单词]]形式的文档
      */
-    List<List<String>> docs;
+    private List<List<String>> docs;
     /**
      * 排序后的最终结果 score <-> index
      */
-    TreeMap<Double, Integer> top;
+    private TreeMap<Double, Integer> top;
 
     /**
      * 句子和其他句子的相关程度
      */
-    double[][] weight;
+    private double[][] weight;
     /**
      * 该句子和其他句子相关程度之和
      */
-    double[] weight_sum;
+    private double[] weight_sum;
     /**
      * 迭代之后收敛的权重
      */
-    double[] vertex;
+    private double[] vertex;
 
     /**
      * BM25相似度
      */
-    BM25 bm25;
+    private BM25 bm25;
 
     public TextRankSentence(List<List<String>> docs) {
         this.docs = docs;

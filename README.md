@@ -62,3 +62,16 @@
     - 传入文章ID
     - 返回BeanDoc对象
 - 注：依赖于HbaseUtil
+
+
+
+### TOLIST
+
+- [ ] return note item number for page
+- [ ] recommend
+    - recommend tool
+    - based on user graph
+- [ ] note digest ang highlight
+- [ ] index page background unify
+- [ ] dynamic update search index 
+- [ ] main page redesign
