@@ -57,6 +57,9 @@
                             <script>
                                 var searchEvent = function () {
                                     var keyword = $('#searchContext').val();
+                                    if(keyword === null) {
+                                        return ;
+                                    }
                                     var search = "search/" + keyword;
                                     $.ajax({
                                         url: "/" + search,
@@ -64,11 +67,24 @@
                                         contentType: "application/json; charset=UTF-8",
                                         dataType: "json",
                                         success: function (res) {
-                                            render(res);
+                                            console.log("responce:" + res);
+                                            var data = res["documentSet"];
+                                            var noteCount = res["documentNumber"];
+                                            console.log("documentSet:" + data);
+                                            console.log("documentNumber:" + noteCount);
+
+                                            render(data);
                                             addEventForLikeAndCollect();
-                                            sessionStorage.setItem("lastJson", JSON.stringify(res));
+                                            sessionStorage.setItem("lastJson", JSON.stringify(data));
                                             sessionStorage.setItem("lastUrl", search);
                                             sessionStorage.setItem("keyword", keyword);
+                                            sessionStorage.setItem("searchResultCount", noteCount);
+
+                                            if(noteCount !== null) {
+                                                $("#page").Page({
+                                                    totalPages: noteCount / 10 //分页总数
+                                                })
+                                            }
                                         }
                                     });
                                 };
@@ -278,13 +294,13 @@
                                         contentType: "application/json; charset=UTF-8",
                                         dataType: "json",
                                         success: function (res) {
-                                            render(res);
+                                            var data = res["documentSet"];
+                                            render(data);
                                             addEventForLikeAndCollect();
-                                            sessionStorage.setItem("lastJson", JSON.stringify(res));
+                                            sessionStorage.setItem("lastJson", JSON.stringify(data));
                                             sessionStorage.setItem("lastUrl", path);
                                             sessionStorage.setItem("page", page);
                                             $(document).scrollTop(0);
-                                            this.totalPages = res.length / 10;
 
                                         }
                                     });
@@ -335,6 +351,8 @@
 
 <script>
 
+
+
     //滚动时保存滚动位置
     $(window).scroll(function(){
         if($(document).scrollTop()!==0){
@@ -346,11 +364,16 @@
         var data = JSON.parse(sessionStorage.getItem("lastJson"));
         var keyWord = sessionStorage.getItem("keyword");
         var offset = sessionStorage.getItem("offsetTop");
+        var resultCount = sessionStorage.getItem("searchResultCount");
+
         if(url !== null && data !== null) {
             render(data);
             addEventForLikeAndCollect();
             $('#searchContext').val(keyWord);
             $(document).scrollTop(offset);
+            $("#page").Page({
+                totalPages: resultCount / 10 //分页总数
+            })
         }
     });
 

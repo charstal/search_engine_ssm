@@ -7,6 +7,7 @@ import cn.edu.zucc.caviar.searchengine.common.query.synonym.Synonym;
 import cn.edu.zucc.caviar.searchengine.common.utils.HBaseTest;
 import cn.edu.zucc.caviar.searchengine.common.utils.RedisTest;
 import cn.edu.zucc.caviar.searchengine.core.pojo.Document;
+import cn.edu.zucc.caviar.searchengine.core.pojo.Response;
 import cn.edu.zucc.caviar.searchengine.core.service.SearchService;
 import com.hankcs.hanlp.HanLP;
 import com.hankcs.hanlp.dictionary.py.Pinyin;
@@ -31,13 +32,24 @@ public class SearchServiceImpl implements SearchService {
     private Synonym synonymUtil;
 
 
+    @Override
+    public Response keywordSearch(String keyword, Integer page) {
+        Response response = new Response();
+        if (page == 1) {
+            response.setDocumentNumber((int) documentPageCount(keyword));
+        }
+        response.setDocumentSet(documentsInPage(page, 10));
+
+        return response;
+    }
+
     /***
      * 查询，返回文章数
      * @param queryString
      * @return
      */
     @Override
-    public long keywordSearch(String queryString) {
+    public long documentPageCount(String queryString) {
 
         List<String> keywords = ChineseSegmentation.keywordsSegmentaion(queryString);
         Set<Document> documents = new HashSet<>();

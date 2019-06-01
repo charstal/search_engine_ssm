@@ -2,6 +2,7 @@ package cn.edu.zucc.caviar.searchengine.core.controller;
 
 
 import cn.edu.zucc.caviar.searchengine.core.pojo.Document;
+import cn.edu.zucc.caviar.searchengine.core.pojo.Response;
 import cn.edu.zucc.caviar.searchengine.core.service.SearchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,16 +22,16 @@ public class SearchController {
 
     @RequestMapping(value = "/search/{keyword}", method = RequestMethod.GET)
     @ResponseBody
-    public Set<Document> keywordSearch(@PathVariable("keyword") String keyword, Integer page) {
-
+    public Response keywordSearch(@PathVariable("keyword") String keyword, Integer page) {
 
         if(page == null) {
-            System.out.println(keyword);
-            service.keywordSearch(keyword);
             page = 1;
         }
 
-        return service.documentsInPage(page,10);
+        System.out.println(keyword);
+        Response response = service.keywordSearch(keyword, page);
+
+        return response;
     }
 
 }
