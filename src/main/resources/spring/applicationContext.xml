@@ -9,8 +9,8 @@
     <import resource="applicationContext-redis.xml"/>
     <import resource="applicationContext-hbase.xml"/>
     <import resource="applicationContext-utils.xml"/>
-<!--    <import resource="classpath:/kafka/consumer-kafka.xml"/>-->
-<!--    <import resource="classpath:/kafka/producer-kafka.xml"/>-->
+    <import resource="classpath:/kafka/consumer-kafka.xml"/>
+    <import resource="classpath:/kafka/producer-kafka.xml"/>
     <import resource="applicationContext-searchModel.xml"/>
 <!--    <import resource="classpath:/rabbitMQ/ApplicationContext-rabbitMQ.xml"/>-->
 
