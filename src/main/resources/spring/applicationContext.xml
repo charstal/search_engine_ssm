@@ -12,7 +12,7 @@
 <!--    <import resource="classpath:/kafka/consumer-kafka.xml"/>-->
 <!--    <import resource="classpath:/kafka/producer-kafka.xml"/>-->
     <import resource="applicationContext-searchModel.xml"/>
-    <import resource="classpath:/rabbitMQ/ApplicationContext-rabbitMQ.xml"/>
+<!--    <import resource="classpath:/rabbitMQ/ApplicationContext-rabbitMQ.xml"/>-->
 
 
 <!--    mysql-->
