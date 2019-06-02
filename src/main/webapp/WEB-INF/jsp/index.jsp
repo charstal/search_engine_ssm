@@ -54,6 +54,8 @@
                                 </div>
                             </div>
 
+
+
                             <script>
                                 var searchEvent = function () {
                                     var keyword = $('#searchContext').val();
@@ -67,10 +69,17 @@
                                         contentType: "application/json; charset=UTF-8",
                                         dataType: "json",
                                         success: function (res) {
-                                            console.log("responce:" + res);
+                                            var spellCheckView = document.getElementById("checkSpellView");
+                                            spellCheckView.style.display = "none";
+
                                             var data = res["documentSet"];
                                             var noteCount = res["documentNumber"];
-                                            console.log("documentSet:" + data);
+                                            var spellCheckList = res["spellCheckList"];
+
+                                            if(noteCount < 50) {
+                                                spellCheck(spellCheckList);
+                                                addEventForSpell();
+                                            }
                                             console.log("documentNumber:" + noteCount);
 
                                             render(data);
@@ -184,6 +193,37 @@
                                     }
                                 }
                             </script>
+
+                            <script>
+                                function spellCheck(data) {
+                                    var content = "";
+                                    content += "<span>";
+                                    content += "你要搜的是不是这个：";
+                                    content += "</span>";
+                                    for(var item in data) {
+                                        content += "&nbsp;";
+                                        content += "<a name=\"spellCheck\" href=\"" +
+                                            "${pageContext.request.contextPath}/search/" + data[item] + "\">" + data[item] + "</a>"
+                                    }
+                                    var spellCheckView = document.getElementById("checkSpellView");
+                                    spellCheckView.style.display="block";
+
+                                    spellCheckView.innerHTML = content;
+                                }
+                            </script>
+
+                            <script>
+                                function addEventForSpell() {
+                                    var spellCheckKeyWords = document.getElementsByName("spellCheck");
+                                    for (var i = 0; i < spellCheckKeyWords.length; ++i) {
+                                        spellCheckKeyWords[i].addEventListener("click", function (event) {
+                                            $('#searchContext').val(this.textContent);
+                                            searchEvent();
+                                            event.preventDefault();
+                                        });
+                                    }
+                                }
+                            </script>
                         </li>
                     </ul>
 
@@ -248,6 +288,7 @@
 
         <div class="wrapper wrapper-content ">
             <div class="container-fluid col-lg-8">
+                <div id="checkSpellView" class="display: none; row"></div>
                 <div id="content" class="row">
                     <div class="row">
                         <div class="col-md-2">

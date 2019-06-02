@@ -46,7 +46,7 @@ public class NoteServiceImpl implements NoteService {
         for(int i = 0; i < notes.size(); ++i) {
             String noteId = notes.get(i).getNoteId();
             Document document = hBaseTest.get(noteId);
-            notes.get(i).setTitle(TextRankSentence.getSummary(document.getTitle(), 10));
+            notes.get(i).setTitle(TextRankSentence.getSummary(document.getTitle(), 15));
             notes.get(i).setDescribe(TextRankSentence.getSummary(document.getContent(), 100));
         }
         // 查询客户列表总记录数

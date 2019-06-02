@@ -44,13 +44,19 @@ public class SearchServiceImpl implements SearchService {
 
         List<String> keywordsSegment = ChineseSegmentation.keywordsSegmentaion(keyword);
         List<String> keywordsList = new ArrayList<>();
+        List<String> spellCheckList = new ArrayList<>();
         for(String segment : keywordsSegment) {
             keywordsList.add(segment);
-            if(keyword.matches("[a-zA-Z]+"))
-                keywordsList.addAll(checkSpell(segment, true).keySet());
-            else {
-                keywordsList.addAll(synonymUtil.getSynonym(segment).keySet());
 
+            if(keyword.matches("[a-zA-Z]+")) {
+                Map<String, Double> checkList = checkSpell(segment, true);
+                spellCheckList.addAll(checkList.keySet());
+                keywordsList.addAll(checkList.keySet());
+            }
+            else {
+                Map<String, Double> checkList = checkSpell(segment, false);
+                spellCheckList.addAll(checkList.keySet());
+                keywordsList.addAll(synonymUtil.getSynonym(segment).keySet());
             }
         }
 
@@ -60,6 +66,7 @@ public class SearchServiceImpl implements SearchService {
             document.setTitle(this.generateSnippets(document.getTitle(), keywordsList));
         }
 
+        response.setSpellCheckList(spellCheckList);
         response.setDocumentSet(documents);
         return response;
     }
