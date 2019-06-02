@@ -1,4 +1,4 @@
-package cn.edu.zucc.caviar.searchengine.common.digest; /**
+package cn.edu.zucc.caviar.searchengine.common.utils.digest; /**
  *
  */
 import java.util.ArrayList;

@@ -12,4 +12,6 @@ public interface SearchService {
     public long documentPageCount(String keyword);
     public Set<Document> documentsInPage(long currentPage,long count);
     public Map<String, Double> checkSpell(String token, boolean isPinyin);
+    public String highlight(String src, List<String> keyword);
+    public String generateSnippets(String src, List<String> keyword);
 }

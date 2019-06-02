@@ -3,6 +3,8 @@ package cn.edu.zucc.caviar.searchengine.common.query.synonym;
 import cn.edu.zucc.caviar.searchengine.common.vec.Word2VEC;
 import cn.edu.zucc.caviar.searchengine.common.vec.domain.WordEntry;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -29,7 +31,10 @@ public class Synonym {
     }
 
     public static void main(String args[]) throws IOException {
-        new Synonym().getSynonym("甜点");
+        ApplicationContext applicationContext = new ClassPathXmlApplicationContext("spring/applicationContext.xml");
+        Synonym synonym = applicationContext.getBean(Synonym.class);
+        System.out.println("\n");
+        System.out.println(synonym.getSynonym("西湖").keySet().size());
     }
 }
 

@@ -1,4 +1,4 @@
-package cn.edu.zucc.caviar.searchengine.common.digest;/*
+package cn.edu.zucc.caviar.searchengine.common.utils.digest;/*
  * <summary></summary>
  * <author>He Han</author>
  * <email>hankcs.cn@gmail.com</email>
@@ -17,6 +17,7 @@ import com.hankcs.hanlp.suggest.Suggester;
 import com.hankcs.hanlp.summary.BM25;
 import com.hankcs.hanlp.tokenizer.StandardTokenizer;
 import com.hankcs.hanlp.utility.TextUtility;
+import org.springframework.stereotype.Component;
 
 import java.util.*;
 
@@ -25,6 +26,7 @@ import java.util.*;
  *
  * @author hankcs
  */
+
 public class TextRankSentence {
     /**
      * 阻尼系数（ＤａｍｐｉｎｇＦａｃｔｏｒ），一般取值为0.85

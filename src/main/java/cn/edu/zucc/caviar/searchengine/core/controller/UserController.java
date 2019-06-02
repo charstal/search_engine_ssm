@@ -48,8 +48,8 @@ public class UserController {
 
         Page<UserDocumentRecord> documentPages = noteService.findNoteList(id, page, rows);
 
-        System.out.println(documentPages.getRows().size());
-        System.out.println(documentPages.getRows().get(0).getDescribe());
+//        System.out.println(documentPages.getRows().size());
+//        System.out.println(documentPages.getRows().get(0).getDescribe());
         model.addAttribute("page", documentPages);
 
 

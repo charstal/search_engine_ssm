@@ -178,25 +178,25 @@
                 <div class="row">
                     <h2>收藏文章</h2>
                 </div>
-                <table class="table table-hover">
-                    <thead>
-                    <tr>
-                        <th>文章标题</th>
-                        <th>文章简介</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <th>标题</th>
-                        <th>&&简介</th>
-                    </tr>
-                    <tr>
-                        <th>标题</th>
-                        <th>&&简介</th>
-                    </tr>
-                    </tbody>
+<%--                <table class="table table-hover">--%>
+<%--                    <thead>--%>
+<%--                    <tr>--%>
+<%--                        <th>文章标题</th>--%>
+<%--                        <th>文章简介</th>--%>
+<%--                    </tr>--%>
+<%--                    </thead>--%>
+<%--                    <tbody>--%>
+<%--                    <tr>--%>
+<%--                        <th>标题</th>--%>
+<%--                        <th>&&简介</th>--%>
+<%--                    </tr>--%>
+<%--                    <tr>--%>
+<%--                        <th>标题</th>--%>
+<%--                        <th>&&简介</th>--%>
+<%--                    </tr>--%>
+<%--                    </tbody>--%>
 
-                </table>
+<%--                </table>--%>
 
                 <div class="row">
                     <div class="col-lg-12">
@@ -206,8 +206,8 @@
                             <table class="table table-bordered table-striped">
                                 <thead>
                                 <tr>
-                                    <th>title</th>
-                                    <th>content.describe</th>
+                                    <th>name</th>
+                                    <th>describe</th>
                                 </tr>
                                 </thead>
                                 <tbody>

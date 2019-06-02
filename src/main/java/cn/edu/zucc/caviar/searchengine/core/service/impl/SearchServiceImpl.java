@@ -6,14 +6,17 @@ import cn.edu.zucc.caviar.searchengine.common.query.spell.SoundexCoder;
 import cn.edu.zucc.caviar.searchengine.common.query.synonym.Synonym;
 import cn.edu.zucc.caviar.searchengine.common.utils.HBaseTest;
 import cn.edu.zucc.caviar.searchengine.common.utils.RedisTest;
+import cn.edu.zucc.caviar.searchengine.common.utils.digest.TextRankSentence;
 import cn.edu.zucc.caviar.searchengine.core.pojo.Document;
 import cn.edu.zucc.caviar.searchengine.core.pojo.Response;
 import cn.edu.zucc.caviar.searchengine.core.service.SearchService;
 import com.hankcs.hanlp.HanLP;
 import com.hankcs.hanlp.dictionary.py.Pinyin;
+import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.print.Doc;
 import java.util.*;
 
 @Service
@@ -38,8 +41,26 @@ public class SearchServiceImpl implements SearchService {
         if (page == 1) {
             response.setDocumentNumber((int) documentPageCount(keyword));
         }
-        response.setDocumentSet(documentsInPage(page, 10));
 
+        List<String> keywordsSegment = ChineseSegmentation.keywordsSegmentaion(keyword);
+        List<String> keywordsList = new ArrayList<>();
+        for(String segment : keywordsSegment) {
+            keywordsList.add(segment);
+            if(keyword.matches("[a-zA-Z]+"))
+                keywordsList.addAll(checkSpell(segment, true).keySet());
+            else {
+                keywordsList.addAll(synonymUtil.getSynonym(segment).keySet());
+
+            }
+        }
+
+        Set<Document> documents = documentsInPage(page, 10);
+        for(Document document: documents) {
+            document.setContent(this.generateSnippets(document.getContent(), keywordsList));
+            document.setTitle(this.generateSnippets(document.getTitle(), keywordsList));
+        }
+
+        response.setDocumentSet(documents);
         return response;
     }
 
@@ -82,6 +103,9 @@ public class SearchServiceImpl implements SearchService {
         for(Object docId:docIds){
             documents.add(hbaseUtil.get((String)docId));
         }
+
+
+
         return documents;
     }
 
@@ -150,5 +174,23 @@ public class SearchServiceImpl implements SearchService {
         }
 
         return checkMap;
+    }
+
+    @Override
+    public String highlight(String src, List<String> keyword) {
+        for (int i = 0;i < keyword.size(); ++i) {
+            src = src.replaceAll(keyword.get(i), "<em>" + keyword.get(i) + "</em>");
+        }
+
+        return src;
+    }
+
+    @Override
+    public String generateSnippets(String src, List<String> keyword) {
+
+        String dest = TextRankSentence.getSummary(src, 180);
+        System.out.println("Raw Snippets:" + dest);
+
+        return highlight(dest, keyword);
     }
 }
