@@ -10,21 +10,24 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 /**
  * rabbitMQ消费者
  * */
+
+
+
 public class MessageConsumer implements MessageListener {
 
-    private Logger logger = LoggerFactory.getLogger(MessageConsumer.class);
+private Logger logger = LoggerFactory.getLogger(MessageConsumer.class);
 
 
-    @Override
-    public void onMessage(Message message) {
+@Override
+public void onMessage(Message message) {
         logger.info("receive message:{}",message);
-    }
+        }
 
-    public static void main(String[] args) {
+public static void main(String[] args) {
         ApplicationContext applicationContext = new ClassPathXmlApplicationContext("spring/applicationContext.xml");
 
         MessageConsumer messageConsumer = applicationContext.getBean(MessageConsumer.class);
 
-    }
+        }
 
-}
+        }

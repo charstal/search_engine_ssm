@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page isELIgnored="false"%>
 <html>
 <head>
     <title>caviar</title>
@@ -23,13 +24,14 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/jquery-page.css">
     <script src="${pageContext.request.contextPath}/js/jquery-3.1.1.min.js"></script>
     <script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
-
+    <script src="${pageContext.request.contextPath}/js/jquery.slimscroll.min.js"></script>
 </head>
 
 <body class="top-navigation">
 
 <div id="wrapper">
-    <div id="page-wrapper" class="white-bg">
+<%--    slimScroll--%>
+    <div id="page-wrapper" class="white-bg slimScrollDiv">
         <div class="row border-bottom white-bg">
             <%
                 User user = (User) session.getAttribute("USER_SESSION");
@@ -419,5 +421,7 @@
     });
 
 </script>
+
+
 </body>
 </html>
