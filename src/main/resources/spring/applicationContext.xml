@@ -16,6 +16,9 @@
 
 
 <!--    mysql-->
+
+
+
     <context:property-placeholder location="classpath:properties/*.properties"/>
 
     <bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource">
@@ -69,7 +72,9 @@
 
 
 <!--    @Service-->
-    <context:component-scan base-package="cn.edu.zucc.caviar.searchengine.core.service"/>
+    <context:component-scan base-package="cn.edu.zucc.caviar.searchengine.core.service,cn.edu.zucc.caviar.searchengine.core.aspect,cn.edu.zucc.caviar.searchengine.core.controller"/>
+
+
 
 <!--    EncryptUtl-->
 <!--    <bean id="encryptUtil" class="cn.edu.zucc.caviar.searchengine.common.utils.EncryptUtil"/>-->

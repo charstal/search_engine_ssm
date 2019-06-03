@@ -13,10 +13,10 @@ public class KafkaProducerTest {
         ApplicationContext applicationContext = new ClassPathXmlApplicationContext("spring/applicationContext.xml");
 
         KafkaProducerServer kafkaProducer = applicationContext.getBean(KafkaProducerServer.class);
-        String topic = "orderTopic";
-        String value = "test";
+        String topic = "interactive";
+        String value = "31601149 1 杭州美食";
         String ifPartition = "1";
-        Integer partitionNum = 3;
+        Integer partitionNum = 2;
         String role = "test";//用来生成key
         Map<String,Object> res = kafkaProducer.sndMesForTemplate(topic, value, ifPartition, partitionNum, role);
 
