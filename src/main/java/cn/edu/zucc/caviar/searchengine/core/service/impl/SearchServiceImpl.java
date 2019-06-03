@@ -1,3 +1,4 @@
+
 package cn.edu.zucc.caviar.searchengine.core.service.impl;
 
 import cn.edu.zucc.caviar.searchengine.common.query.segment.ChineseSegmentation;
@@ -12,11 +13,10 @@ import cn.edu.zucc.caviar.searchengine.core.pojo.Response;
 import cn.edu.zucc.caviar.searchengine.core.service.SearchService;
 import com.hankcs.hanlp.HanLP;
 import com.hankcs.hanlp.dictionary.py.Pinyin;
-import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.print.Doc;
 import java.util.*;
 
 @Service
@@ -182,6 +182,7 @@ public class SearchServiceImpl implements SearchService {
 
         return checkMap;
     }
+
 
     @Override
     public String highlight(String src, List<String> keyword) {

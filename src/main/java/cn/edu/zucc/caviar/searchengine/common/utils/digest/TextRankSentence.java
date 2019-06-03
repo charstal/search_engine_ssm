@@ -44,6 +44,8 @@ public class TextRankSentence {
      */
     private int D;
     /**
+     *
+     *
      * 拆分为[句子[单词]]形式的文档
      */
     private List<List<String>> docs;
@@ -81,7 +83,8 @@ public class TextRankSentence {
         solve();
     }
 
-    private void solve() {
+
+    public void solve(){
         int cnt = 0;
         for (List<String> sentence : docs) {
             double[] scores = bm25.simAll(sentence);

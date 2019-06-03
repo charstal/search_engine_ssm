@@ -32,6 +32,8 @@ public class HbaseUtil {
     @Autowired
     private HbaseTemplate template;
 
+    public List<Put> puts = new ArrayList<>();
+
     public final static String COLUMNFAMILY_1_AUTHOR = "author";
     public final static String COLUMNFAMILY_1_CONTENT = "content";
     public final static String COLUMNFAMILY_1_DESCRIBE = "describe";
@@ -61,19 +63,27 @@ public class HbaseUtil {
      * @param column
      * @param data
      */
-    public void put(String row, String column, String data) {
-        Table table = null;
+    public void putIntoList(String row, String column, String data) {
+        Put putData = new Put(Bytes.toBytes(row));
+        putData.addColumn(COLUMNFAMILY_1.getBytes(), column.getBytes(), data.getBytes());
+        this.puts.add(putData);
+
+    }
+
+    public static void flushPutList(List<Put> puts) throws Exception {
+
+        HTable htable = (HTable) conn.getTable(TableName.valueOf(TABLE_NAME));
+        htable.setAutoFlushTo(false);
+        htable.setWriteBufferSize(5 * 1024 * 1024);
         try {
-
-            table = conn.getTable(TableName.valueOf(TABLE_NAME));
-            Put putData = new Put(Bytes.toBytes(row));
-            putData.addColumn(COLUMNFAMILY_1.getBytes(), column.getBytes(), data.getBytes());
-            table.put(putData);
-
-        } catch (IOException ex) {
-            System.out.println(ex.getMessage());
+            htable.put(puts);
+            htable.flushCommits();
+        } finally {
+            htable.close();
         }
     }
+
+
 
     /***
      * 建表
