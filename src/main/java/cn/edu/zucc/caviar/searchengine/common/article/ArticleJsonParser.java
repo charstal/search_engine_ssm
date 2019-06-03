@@ -126,7 +126,7 @@ public class ArticleJsonParser {
         redisUtil = new RedisUtil();
         hbaseUtil = new HbaseUtil();
 
-        readContentJSON("search_data/keywords.json", CREATE_INDEX);
+        readContentJSON("search_data/keywords2.json", CREATE_INDEX);
         readContentJSON("search_data/xhs_note_item_final.json", SAVE_CONTENT);
     }
 }

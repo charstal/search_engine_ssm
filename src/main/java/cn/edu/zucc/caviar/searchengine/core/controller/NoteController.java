@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import java.util.Set;
+
 @Controller
 public class NoteController {
 
@@ -27,11 +29,12 @@ public class NoteController {
             return "error";
         }
 
+        Set<Document> similarDocument = noteService.similarNoteRecommend(noteId);
+
+        model.addAttribute("similarNote", similarDocument);
         model.addAttribute("note", document);
         return "main";
     }
-
-
 
 
 }

@@ -1,5 +1,8 @@
 package cn.edu.zucc.caviar.searchengine.common.recommend;
 
+import cn.edu.zucc.caviar.searchengine.common.utils.HBaseTest;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import redis.clients.jedis.*;
 
 import java.util.*;
@@ -85,11 +88,28 @@ public class RedisJava {
     }
 
     public static void main(String args[]){
+
+        ApplicationContext applicationContext = new ClassPathXmlApplicationContext("spring/applicationContext.xml");
+
+        HBaseTest hBaseTest = applicationContext.getBean(HBaseTest.class);
+
         RedisJava redisJava=new RedisJava();
         Set<String> Ans=redisJava.searchByDocId("5b8c9b9607ef1c64a999dbda",0,1);
         System.out.println("数量："+Ans.size());
+
+        List<String> titleList = new ArrayList<>();
+        titleList.add(hBaseTest.get("5b8c9b9607ef1c64a999dbda").getTitle());
+
         for(String s:Ans){
             System.out.println(s);
+            titleList.add(hBaseTest.get(s).getTitle());
         }
+
+        for(String a: titleList) {
+            System.out.println(a);
+        }
+
+
+
     }
 }

@@ -5,6 +5,8 @@ import cn.edu.zucc.caviar.searchengine.core.pojo.Document;
 import cn.edu.zucc.caviar.searchengine.core.pojo.UserDocumentRecord;
 import org.springframework.stereotype.Service;
 
+import java.util.Set;
+
 
 public interface NoteService {
     public Document getNodeByNoteId(String noteId);
@@ -18,4 +20,6 @@ public interface NoteService {
     public boolean deleteCollectionNoteForUser(Integer userId, String noteId);
 
     public boolean deleteLikeNoteForUser(Integer userId, String noteId);
+
+    public Set<Document>  similarNoteRecommend(String docId);
 }

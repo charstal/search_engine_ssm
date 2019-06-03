@@ -1,14 +1,10 @@
 package cn.edu.zucc.caviar.searchengine.common.utils;
 
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.fasterxml.jackson.annotation.PropertyAccessor;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ZSetOperations;
-import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
@@ -599,6 +595,28 @@ public class RedisTest {
         return docSets;
     }
 
+
+    public  Set<String> searchSimilarDocId(String DocId,int low,int high){
+
+        Set<ZSetOperations.TypedTuple<Object>> RecommendDocId = zrevrangeByScoreWithScores(DocId,high,low);
+        List<String> RecommendDocIdlist=new ArrayList<String>();
+        Set<String> Answer=new HashSet<String>();
+        int number=0;
+        for(ZSetOperations.TypedTuple<Object> t:RecommendDocId){
+            if(number++<=10)
+                RecommendDocIdlist.add((String) t.getValue());
+            else break;
+//            System.out.println(t.getElement());
+//            System.out.println(t.getScore());
+        }
+        while (RecommendDocIdlist.size() != 0 && Answer.size()<=5) {
+            Random random = new Random();
+            int n = random.nextInt(RecommendDocIdlist.size());
+            Answer.add(RecommendDocIdlist.get(n));
+        }
+        return Answer;
+    }
+
     public void zunion(String key,String r1,String r2){
         redisTemplate.opsForZSet().unionAndStore(key, r1, r2);
     }
@@ -611,15 +629,33 @@ public class RedisTest {
         return redisTemplate.opsForZSet().size(SEARCH_RESULT);
     }
 
+    public Set<ZSetOperations.TypedTuple<Object>> zrevrangeByScoreWithScores(String docId, int low, int high) {
+        return redisTemplate.opsForZSet().reverseRangeByScoreWithScores(docId, high, low);
+    }
+
+
+
 
     public static void main(String args[]) {
         ApplicationContext applicationContext = new ClassPathXmlApplicationContext("spring/applicationContext.xml");
 
+        HBaseTest hBaseTest = applicationContext.getBean(HBaseTest.class);
         RedisTest redisTest = applicationContext.getBean(RedisTest.class);
-        Set<Object> set = redisTest.zrangebyscore();
-        for (Object o : set) {
-            System.out.println(o.toString());
+        Set<String> Ans=redisTest.searchSimilarDocId("5b8c9b9607ef1c64a999dbda",0, 1);
+        System.out.println("数量："+Ans.size());
+
+        List<String> titleList = new ArrayList<>();
+        titleList.add(hBaseTest.get("5b8c9b9607ef1c64a999dbda").getTitle());
+
+        for(String s:Ans){
+            System.out.println(s);
+            titleList.add(hBaseTest.get(s).getTitle());
         }
+
+        for(String a: titleList) {
+            System.out.println(a);
+        }
+
 
     }
 
