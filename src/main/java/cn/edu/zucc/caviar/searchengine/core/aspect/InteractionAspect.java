@@ -25,8 +25,12 @@ import java.util.Map;
 @Component
 public class InteractionAspect {
 
-    @Pointcut("execution(* cn.edu.zucc.caviar.searchengine.core.controller.SearchController.*(..))")
+    @Pointcut("execution(* cn.edu.zucc.caviar.searchengine.core.controller.SearchController.keywordSearch(..))")
     public void declearJoinPointExpression(){}
+
+
+    @Pointcut("execution(* cn.edu.zucc.caviar.searchengine.core.controller.NoteController.getNoteByNoteId(..))")
+    public void clickNoteJoinPointExpression() { }
 
     @Autowired
     KafkaProducerServer kafkaProducer;
@@ -36,6 +40,34 @@ public class InteractionAspect {
     private String ifPartition = "1";
     private Integer partitionNum = 2;
     private String role = "test";
+
+//    @Before("clickNoteJoinPointExpression()")
+//    public void clickNoteLog(JoinPoint joinPoint) {
+//        String methodName = joinPoint.getSignature().getName();
+//        List<Object> args = Arrays.asList(joinPoint.getArgs());
+//        if(methodName.equals("getNoteByNoteId")) {
+//            System.out.println("ASPECT Note click");
+//            String searchWords = (String) args.get(0);
+//            String type = " 1 ";
+//            String uid;
+//
+//            HttpServletRequest request =((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+//            HttpSession session =request.getSession();
+//            User user = (User) session.getAttribute("USER_SESSION");
+//            String lastSearchWord = (String) session.getAttribute("LAST_SEARCH_KEYWORD");
+//            if(searchWords.equals(lastSearchWord)) {
+//                return;
+//            }
+//            session.setAttribute("LAST_SEARCH_KEYWORD", searchWords);
+//
+//            if(user==null)
+//                uid = session.getId();
+//            else
+//                uid = String.valueOf(user.getUserId());
+//            value = uid+type+searchWords;
+//            System.out.println(value);
+//            Map<String,Object> res = kafkaProducer.sndMesForTemplate(topic, value, ifPartition, partitionNum, role);
+//    }
 
     @Before("declearJoinPointExpression()")
     public void beforeMethod(JoinPoint joinPoint){
@@ -51,7 +83,7 @@ public class InteractionAspect {
             HttpSession session =request.getSession();
             User user = (User) session.getAttribute("USER_SESSION");
             String lastSearchWord = (String) session.getAttribute("LAST_SEARCH_KEYWORD");
-            if(lastSearchWord.equals(searchWords)) {
+            if(searchWords.equals(lastSearchWord)) {
                 return;
             }
             session.setAttribute("LAST_SEARCH_KEYWORD", searchWords);
