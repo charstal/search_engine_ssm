@@ -38,6 +38,11 @@
             <mvc:mapping path="/like/**"/>
             <bean class="cn.edu.zucc.caviar.searchengine.core.interceptor.LoginInterceptor"/>
         </mvc:interceptor>
+        <mvc:interceptor>
+            <mvc:mapping path="/disable/**"/>
+            <mvc:mapping path="/enable/**"/>
+            <bean class="cn.edu.zucc.caviar.searchengine.core.interceptor.AdminInterceptor"/>
+        </mvc:interceptor>
     </mvc:interceptors>
 
 

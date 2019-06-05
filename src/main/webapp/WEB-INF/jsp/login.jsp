@@ -174,7 +174,7 @@
                     contentType: "application/json; charset=UTF-8",
                     dataType: "json",
                     success: function(res) {
-                        if (res.userId !== undefined) {
+                        if (res.userId !== undefined && res.valid === 1) {
                             if ($('#remember-me').is(':checked')) {
                                 $.cookie('username', username, {
                                     expires: 7
@@ -192,6 +192,9 @@
                                 $.removeCookie('password');
                                 $.removeCookie('bit');
                             }
+                        }
+                        else if(res.valid !== 1) {
+                            alert("登录失败：" + "验证不通过");
                         } else {
                             alert('登录失败：' + res.error !== undefined ? res.error : '未知错误！');
                         }

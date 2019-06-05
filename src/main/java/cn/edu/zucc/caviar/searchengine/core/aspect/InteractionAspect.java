@@ -38,7 +38,7 @@ public class InteractionAspect {
     private String role = "test";
 
     @Before("declearJoinPointExpression()")
-    public void beforMethod(JoinPoint joinPoint){
+    public void beforeMethod(JoinPoint joinPoint){
         String methodName = joinPoint.getSignature().getName();
         List<Object> args = Arrays.asList(joinPoint.getArgs());
         if(methodName.equals("keywordSearch"))

@@ -29,7 +29,8 @@ public class SessionController {
     @ResponseBody
     public User login(@RequestBody User user, HttpSession session, Model model) {
         user = userService.findUserByRegisterId(user);
-        if(user != null) {
+
+        if(user != null && user.getValid() == 1) {
             session.setAttribute("USER_SESSION", user);
         }
         else {

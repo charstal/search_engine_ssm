@@ -15,6 +15,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.sql.Timestamp;
+import java.util.List;
 
 @Service
 @Transactional
@@ -53,6 +54,11 @@ public class UserServiceImpl implements UserService {
             searchedUser = null;
 
         return searchedUser;
+    }
+
+    @Override
+    public List<User> loadAllUser() {
+        return userDao.loadAllUser();
     }
 
     @Override
@@ -120,6 +126,29 @@ public class UserServiceImpl implements UserService {
         return null;
     }
 
+    @Override
+    public Boolean enableUser(Integer userId) {
+        int rows = userDao.enableUser(userId);
+
+        if (rows <= 0) {
+            return false;
+        } else {
+            return true;
+        }
+
+    }
+
+    @Override
+    public Boolean disableUser(Integer userId) {
+        int rows = userDao.disableUser(userId);
+
+        if (rows <= 0) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
 
     private static String copy(String srcPathStr, String desPathStr) {
         //获取源文件的名称
@@ -156,6 +185,9 @@ public class UserServiceImpl implements UserService {
 
     public static void main(String[] args) {
         ApplicationContext applicationContext = new ClassPathXmlApplicationContext("spring/applicationContext.xml");
+        UserService userService = applicationContext.getBean(UserService.class);
+        System.out.println(userService.enableUser(1));
+
 
     }
 

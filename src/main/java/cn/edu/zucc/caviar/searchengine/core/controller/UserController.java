@@ -9,6 +9,7 @@ import cn.edu.zucc.caviar.searchengine.core.service.UserService;
 import org.apache.ibatis.annotations.Param;
 import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -59,7 +60,9 @@ public class UserController {
     @RequestMapping(value = "/user", method = RequestMethod.POST)
     @ResponseBody
     public User register(@RequestBody User user, HttpSession session) {
-
+        if("admin".equals(user.getRegisterId())) {
+            return null;
+        }
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
         user.setRegisterTime(timestamp);
         user.setLastLoginTime(timestamp);
@@ -160,5 +163,37 @@ public class UserController {
             return noteId + "delete Collection Fail";
         }
     }
+
+    @RequestMapping(value = "/enable", method = RequestMethod.POST)
+    @ResponseBody
+    public String enableUser(@RequestBody User user) {
+        Boolean success = userService.enableUser(user.getUserId());
+
+        if(success) {
+            return "success";
+        } else {
+            return "fail";
+        }
+
+    }
+
+    @RequestMapping(value = "/disable", method = RequestMethod.POST)
+    @ResponseBody
+    public String disableUser(@RequestBody User user) {
+
+//        System.out.println("-----------------------------" + user.getUserId());
+        Boolean success = userService.disableUser(user.getUserId());
+
+        if(success) {
+            return "success";
+        } else {
+            return "fail";
+        }
+    }
+
+
+
+
+
 
 }

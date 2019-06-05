@@ -11,6 +11,7 @@
         <result property="userName" column="user_name"/>
         <result property="avatar" column="avatar_url"/>
         <result property="describe" column="describe"/>
+        <result property="valid" column="valid"/>
     </resultMap>
 
     <select id="findUserByRegisterId" parameterType="String" resultMap="userResultMapper">
@@ -23,6 +24,12 @@
         select *
         from tb_user
         where user_id = #{id}
+    </select>
+
+    <select id="loadAllUser" resultMap="userResultMapper">
+        select *
+        from tb_user
+        where register_id != 'admin'
     </select>
 
     <insert id="createUser" parameterType="user"  keyProperty="userId" useGeneratedKeys="true">
@@ -69,6 +76,19 @@
                 `describe` = #{describe},
             </if>
         </set>
+        where user_id = #{userId}
+    </update>
+
+
+    <update id="enableUser" parameterType="Integer">
+        update tb_user
+        set valid = 1
+        where user_id = #{userId}
+    </update>
+
+    <update id="disableUser" parameterType="Integer">
+        update tb_user
+        set valid = 0
         where user_id = #{userId}
     </update>
 

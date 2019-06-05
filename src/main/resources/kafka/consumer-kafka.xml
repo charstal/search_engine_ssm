@@ -33,7 +33,6 @@
     </bean>
 
     <!-- 实际执行消息消费的类 -->
-
     <bean id="messageListernerConsumerService" class="cn.edu.zucc.caviar.searchengine.common.kafka.KafkaConsumerServer" />
 
     <!-- 消费者容器配置信息 -->

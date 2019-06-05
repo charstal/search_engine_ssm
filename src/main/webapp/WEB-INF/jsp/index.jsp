@@ -78,6 +78,7 @@
                                             var noteCount = res["documentNumber"];
                                             var spellCheckList = res["spellCheckList"];
 
+
                                             if(noteCount < 50) {
                                                 spellCheck(spellCheckList);
                                                 addEventForSpell();
@@ -96,6 +97,10 @@
                                                     totalPages: noteCount / 10 //分页总数
                                                 })
                                             }
+
+                                            var searchNumber = document.getElementById("searchNumber");
+                                            searchNumber.innerHTML = "搜到的当前相关页面约为：" + noteCount + "个";
+                                            searchNumber.style.display = "block";
                                         }
                                     });
                                 };
@@ -291,28 +296,29 @@
         <div class="wrapper wrapper-content ">
             <div class="container-fluid col-lg-8">
                 <div id="checkSpellView" class="display: none; row"></div>
+                <div id="searchNumber" class="display: none; row"></div>
                 <div id="content" class="row">
                     <div class="row">
-                        <div class="col-md-2">
-                            <div class="ibox float-e-margins">
-                                <a href="#">
-                                    <img src="${pageContext.request.contextPath}/images/avatar/p2.jpg" class="img-preview">
-                                </a>
-                            </div>
-                        </div>
-                        <div class="col-md-8">
-                            <div class="ibox float-e-margins">
-                                <h3><a href="#">西湖</a></h3>
-                                <span style="color:grey">2019年5月15日 - </span>
-                                西湖，位于浙江省杭州市西湖区龙井路1号，杭州市区西部，景区总面积49平方千米，汇水面积为21.22平方千米，湖面面积为6.38平方千米。
-                                西湖南、西、北三面环山，湖中白堤、苏堤、杨公堤、赵公堤将湖面分割成若干水面。西湖的湖体轮廓呈近椭圆形，湖底部较为平坦。湖泊天然地表水源是金沙涧、龙泓涧、赤山涧（慧因涧）、长桥溪四条溪流。西湖地处中国东南丘陵边缘和亚热带北缘
-                                ...
-                                <div>
-                                    <a href="#">收藏</a>
-                                    <a href="#">点赞</a>
-                                </div>
-                            </div>
-                        </div>
+<%--                        <div class="col-md-2">--%>
+<%--                            <div class="ibox float-e-margins">--%>
+<%--                                <a href="#">--%>
+<%--                                    <img src="${pageContext.request.contextPath}/images/avatar/p2.jpg" class="img-preview">--%>
+<%--                                </a>--%>
+<%--                            </div>--%>
+<%--                        </div>--%>
+<%--                        <div class="col-md-8">--%>
+<%--                            <div class="ibox float-e-margins">--%>
+<%--                                <h3><a href="#">西湖</a></h3>--%>
+<%--                                <span style="color:grey">2019年5月15日 - </span>--%>
+<%--                                西湖，位于浙江省杭州市西湖区龙井路1号，杭州市区西部，景区总面积49平方千米，汇水面积为21.22平方千米，湖面面积为6.38平方千米。--%>
+<%--                                西湖南、西、北三面环山，湖中白堤、苏堤、杨公堤、赵公堤将湖面分割成若干水面。西湖的湖体轮廓呈近椭圆形，湖底部较为平坦。湖泊天然地表水源是金沙涧、龙泓涧、赤山涧（慧因涧）、长桥溪四条溪流。西湖地处中国东南丘陵边缘和亚热带北缘--%>
+<%--                                ...--%>
+<%--                                <div>--%>
+<%--                                    <a href="#">收藏</a>--%>
+<%--                                    <a href="#">点赞</a>--%>
+<%--                                </div>--%>
+<%--                            </div>--%>
+<%--                        </div>--%>
                     </div>
                 </div>
                 <div id="page"></div>
@@ -356,34 +362,34 @@
             </div>
             <div class="container-fluid col-lg-4">
                 <div class="row">
-                    <div class="col-md-8">
-                        <div class="ibox float-e-margins">
-                            <div class="ibox-title">
-                                <h5>西湖</h5>
-                            </div>
-                            <div class="ibox-content">
-                                <div class="row">
-                                    <a href="#">
-                                        <img src="${pageContext.request.contextPath}/images/avatar/p3.jpg" class="img-preview">
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-8">
-                        <div class="ibox float-e-margins">
-                            <div class="ibox-title">
-                                <h5>西湖</h5>
-                            </div>
-                            <div class="ibox-content">
-                                <div class="row">
-                                    <a href="#">
-                                        <img src="${pageContext.request.contextPath}/images/avatar/p3.jpg" class="img-preview">
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+<%--                    <div class="col-md-8">--%>
+<%--                        <div class="ibox float-e-margins">--%>
+<%--                            <div class="ibox-title">--%>
+<%--                                <h5>西湖</h5>--%>
+<%--                            </div>--%>
+<%--                            <div class="ibox-content">--%>
+<%--                                <div class="row">--%>
+<%--                                    <a href="#">--%>
+<%--                                        <img src="${pageContext.request.contextPath}/images/avatar/p3.jpg" class="img-preview">--%>
+<%--                                    </a>--%>
+<%--                                </div>--%>
+<%--                            </div>--%>
+<%--                        </div>--%>
+<%--                    </div>--%>
+<%--                    <div class="col-md-8">--%>
+<%--                        <div class="ibox float-e-margins">--%>
+<%--                            <div class="ibox-title">--%>
+<%--                                <h5>西湖</h5>--%>
+<%--                            </div>--%>
+<%--                            <div class="ibox-content">--%>
+<%--                                <div class="row">--%>
+<%--                                    <a href="#">--%>
+<%--                                        <img src="${pageContext.request.contextPath}/images/avatar/p3.jpg" class="img-preview">--%>
+<%--                                    </a>--%>
+<%--                                </div>--%>
+<%--                            </div>--%>
+<%--                        </div>--%>
+<%--                    </div>--%>
                 </div>
             </div>
         </div>

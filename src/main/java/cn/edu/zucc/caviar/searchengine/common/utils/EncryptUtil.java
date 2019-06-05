@@ -33,4 +33,10 @@ public class EncryptUtil {
         }
         return ret.toString();
     }
+
+    public static void main(String[] args) {
+        EncryptUtil encryptUtil = new EncryptUtil();
+
+        System.out.println(encryptUtil.encrypt("admin"));
+    }
 }

@@ -10,7 +10,7 @@
     <import resource="applicationContext-hbase.xml"/>
     <import resource="applicationContext-utils.xml"/>
     <import resource="applicationContext-searchModel.xml"/>
-<!--    <import resource="applicationContext-mq.xml"/>-->
+    <import resource="applicationContext-mq.xml"/>
 
 
 <!--    mysql-->

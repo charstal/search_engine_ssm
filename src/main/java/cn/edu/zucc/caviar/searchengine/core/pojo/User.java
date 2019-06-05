@@ -12,6 +12,7 @@ public class User {
     private String describe;
     private Timestamp registerTime;
     private Timestamp lastLoginTime;
+    private Integer valid;
 
 
     public Integer getUserId() {
@@ -91,5 +92,13 @@ public class User {
         return "User [userId=" + userId + ", registerId=" +registerId + ", password=" + password + ", gender=" + gender +
                 ", registerTime=" + registerTime + ", lastLoginTime=" + lastLoginTime + "]";
 
+    }
+
+    public Integer getValid() {
+        return valid;
+    }
+
+    public void setValid(Integer valid) {
+        this.valid = valid;
     }
 }

@@ -9,7 +9,7 @@
     <!-- 配置zookeeper的信息，远程连接hbase时使用 -->
 
     <hdp:configuration id="hadoopConfiguration" resources="classpath:hbase-site.xml"/>
-    <hdp:hbase-configuration id="hbaseConfiguration" configuration-ref="hadoopConfiguration" />
+    <hdp:hbase-configuration id="hbaseConfiguration" configuration-ref="hadoopConfiguration" delete-connection="false"/>
 
     <!-- 配置HbaseTemplate -->
     <bean id="htemplate" class="org.springframework.data.hadoop.hbase.HbaseTemplate">
