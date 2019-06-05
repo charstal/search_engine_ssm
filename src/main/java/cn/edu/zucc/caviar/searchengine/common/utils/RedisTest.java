@@ -140,6 +140,19 @@ public class RedisTest {
         return Answer;
     }
 
+
+    public Set<String> recommendDocId(String recommendNumber) {
+        List<Object> res = redisTemplate.opsForList().range(recommendNumber, 0, -1);
+        Set<String> result = new HashSet<String>();
+
+        for(Object a: res) {
+            result.add(a.toString());
+        }
+
+        return result;
+
+    }
+
     public void zunion(String key,String r1,String r2){
         redisTemplate.opsForZSet().unionAndStore(key, r1, r2);
     }

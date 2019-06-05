@@ -3,6 +3,7 @@ package cn.edu.zucc.caviar.searchengine.core.controller;
 
 import cn.edu.zucc.caviar.searchengine.core.pojo.Document;
 import cn.edu.zucc.caviar.searchengine.core.pojo.Response;
+import cn.edu.zucc.caviar.searchengine.core.pojo.User;
 import cn.edu.zucc.caviar.searchengine.core.service.SearchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Set;
 
@@ -22,14 +24,27 @@ public class SearchController {
 
     @RequestMapping(value = "/search/{keyword}", method = RequestMethod.GET)
     @ResponseBody
-    public Response keywordSearch(@PathVariable("keyword") String keyword, Integer page) {
+    public Response keywordSearch(@PathVariable("keyword") String keyword, Integer page, HttpSession session) {
+
+        User user = (User) session.getAttribute("USER_SESSION");
+
+        String recommendNumber = "";
+
+        if(user != null) {
+            recommendNumber = user.getUserId().toString();
+        } else {
+            recommendNumber = session.getId();
+        }
+
 
         if(page == null) {
             page = 1;
         }
 
         System.out.println(keyword);
-        Response response = service.keywordSearch(keyword, page);
+
+        Response response = service.keywordSearch(keyword, page, recommendNumber);
+
 
         return response;
     }

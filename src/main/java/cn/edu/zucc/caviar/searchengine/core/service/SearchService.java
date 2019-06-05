@@ -8,7 +8,7 @@ import java.util.Map;
 import java.util.Set;
 
 public interface SearchService {
-    public Response keywordSearch(String keyword, Integer page);
+    public Response keywordSearch(String keyword, Integer page, String recommendNumber);
 
     public long documentPageCount(String keyword);
 
@@ -19,5 +19,7 @@ public interface SearchService {
     public String highlight(String src, List<String> keyword);
 
     public String generateSnippets(String src, List<String> keyword);
+
+    public Set<Document> recommendDocuments(String recommendNumber);
 
 }

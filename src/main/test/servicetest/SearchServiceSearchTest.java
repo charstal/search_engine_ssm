@@ -21,7 +21,7 @@ public class SearchServiceSearchTest {
 
         SearchService searchService = applicationContext.getBean(SearchService.class);
 
-        System.out.println(searchService.keywordSearch("meishi", 2));
+        System.out.println(searchService.keywordSearch("meishi", 2, ""));
         Set<Document> documents = searchService.documentsInPage(1,10);
 
         for(Document doc : documents){

@@ -41,15 +41,21 @@ public class InteractionAspect {
     public void beforeMethod(JoinPoint joinPoint){
         String methodName = joinPoint.getSignature().getName();
         List<Object> args = Arrays.asList(joinPoint.getArgs());
-        if(methodName.equals("keywordSearch"))
-        {
+        if(methodName.equals("keywordSearch")) {
             System.out.println("ASPECT search");
             String searchWords = (String) args.get(0);
             String type = " 1 ";
             String uid;
+
             HttpServletRequest request =((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
             HttpSession session =request.getSession();
             User user = (User) session.getAttribute("USER_SESSION");
+            String lastSearchWord = (String) session.getAttribute("LAST_SEARCH_KEYWORD");
+            if(lastSearchWord.equals(searchWords)) {
+                return;
+            }
+            session.setAttribute("LAST_SEARCH_KEYWORD", searchWords);
+
             if(user==null)
                 uid = session.getId();
             else

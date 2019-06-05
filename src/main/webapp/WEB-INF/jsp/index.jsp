@@ -74,33 +74,41 @@
                                             var spellCheckView = document.getElementById("checkSpellView");
                                             spellCheckView.style.display = "none";
 
-                                            var data = res["documentSet"];
+                                            var documentSet = res["documentSet"];
                                             var noteCount = res["documentNumber"];
                                             var spellCheckList = res["spellCheckList"];
+                                            var recommendDocumentSet = res["recommendDocumentSet"];
 
 
-                                            if(noteCount < 50) {
-                                                spellCheck(spellCheckList);
-                                                addEventForSpell();
-                                            }
-                                            console.log("documentNumber:" + noteCount);
-
-                                            render(data);
-                                            addEventForLikeAndCollect();
-                                            sessionStorage.setItem("lastJson", JSON.stringify(data));
-                                            sessionStorage.setItem("lastUrl", search);
-                                            sessionStorage.setItem("keyword", keyword);
-                                            sessionStorage.setItem("searchResultCount", noteCount);
 
                                             if(noteCount !== null) {
                                                 $("#page").Page({
                                                     totalPages: noteCount / 10 //分页总数
-                                                })
+                                                });
+                                                if(noteCount < 50) {
+                                                    spellCheck(spellCheckList);
+                                                    addEventForSpell();
+                                                }
                                             }
+
+
+                                            console.log("documentNumber:" + noteCount);
+                                            render(documentSet);
+                                            renderRecommend(recommendDocumentSet);
+                                            addEventForLikeAndCollect();
+
 
                                             var searchNumber = document.getElementById("searchNumber");
                                             searchNumber.innerHTML = "搜到的当前相关页面约为：" + noteCount + "个";
                                             searchNumber.style.display = "block";
+
+                                            sessionStorage.setItem("lastJson", JSON.stringify(documentSet));
+                                            sessionStorage.setItem("lastUrl", search);
+                                            sessionStorage.setItem("keyword", keyword);
+                                            sessionStorage.setItem("searchResultCount", noteCount);
+                                            sessionStorage.setItem("recommendDoc", JSON.stringify(recommendDocumentSet));
+
+
                                         }
                                     });
                                 };
@@ -231,6 +239,32 @@
                                     }
                                 }
                             </script>
+
+                            <script>
+                                function renderRecommend(res) {
+                                    var page = "";
+
+                                    for(var item in res) {
+                                        page += "<div class='col-md-8'>";
+                                        page += "<div class=\"ibox float-e-margins\">";
+                                        page += "<div class=\"ibox-title\">";
+                                        page += "<h5>" + "<a href=\"" + "${pageContext.request.contextPath}/note/" + res[item].docId + "\">" + res[item].title + "</a>" + "</h5>";
+                                        page += "</div>";
+                                        page += "<div class=\"ibox-content\">";
+                                        page += "<div class=\"row\">";
+                                        page += "<a href=\"" + "${pageContext.request.contextPath}/note/" + res[item].docId + "\">";
+                                        page += "<img src=\"" + res[item].imageUrls[0] + "\" class=\"img-preview\">";
+                                        page += "</a>";
+                                        page += "</div>";
+                                        page += "</div>";
+                                        page += "</div>";
+                                        page += "</div>";
+                                    }
+                                    var recommendView = document.getElementById("recommendView");
+                                    recommendView.innerHTML = page;
+
+                                }
+                            </script>
                         </li>
                     </ul>
 
@@ -344,11 +378,17 @@
                                         dataType: "json",
                                         success: function (res) {
                                             var data = res["documentSet"];
+                                            var recommendDocumentSet = res["recommendDocumentSet"];
+
                                             render(data);
+                                            renderRecommend(recommendDocumentSet);
                                             addEventForLikeAndCollect();
+
                                             sessionStorage.setItem("lastJson", JSON.stringify(data));
                                             sessionStorage.setItem("lastUrl", path);
                                             sessionStorage.setItem("page", page);
+                                            sessionStorage.setItem("recommendDoc", JSON.stringify(recommendDocumentSet));
+
                                             $(document).scrollTop(0);
 
                                         }
@@ -361,7 +401,7 @@
                 </script>
             </div>
             <div class="container-fluid col-lg-4">
-                <div class="row">
+                <div id="recommendView" class="row">
 <%--                    <div class="col-md-8">--%>
 <%--                        <div class="ibox float-e-margins">--%>
 <%--                            <div class="ibox-title">--%>
@@ -414,9 +454,11 @@
         var keyWord = sessionStorage.getItem("keyword");
         var offset = sessionStorage.getItem("offsetTop");
         var resultCount = sessionStorage.getItem("searchResultCount");
+        var recommendDoc = JSON.parse(sessionStorage.getItem("recommendDoc"));
 
         if(url !== null && data !== null) {
             render(data);
+            renderRecommend(recommendDoc);
             addEventForLikeAndCollect();
             $('#searchContext').val(keyWord);
             $(document).scrollTop(offset);

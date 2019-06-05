@@ -6,6 +6,7 @@ import cn.edu.zucc.caviar.searchengine.common.query.spell.PinyinUtil;
 import cn.edu.zucc.caviar.searchengine.common.query.spell.SoundexCoder;
 import cn.edu.zucc.caviar.searchengine.common.query.synonym.Synonym;
 import cn.edu.zucc.caviar.searchengine.common.utils.HBaseTest;
+import cn.edu.zucc.caviar.searchengine.common.utils.HbaseUtil;
 import cn.edu.zucc.caviar.searchengine.common.utils.RedisTest;
 import cn.edu.zucc.caviar.searchengine.common.utils.digest.TextRankSentence;
 import cn.edu.zucc.caviar.searchengine.core.pojo.Document;
@@ -36,7 +37,7 @@ public class SearchServiceImpl implements SearchService {
 
 
     @Override
-    public Response keywordSearch(String keyword, Integer page) {
+    public Response keywordSearch(String keyword, Integer page, String recommendNumber) {
         Response response = new Response();
         if (page == 1) {
             response.setDocumentNumber((int) documentPageCount(keyword));
@@ -68,6 +69,12 @@ public class SearchServiceImpl implements SearchService {
 
         response.setSpellCheckList(spellCheckList);
         response.setDocumentSet(documents);
+
+
+        Set<Document> recommendDocuments = recommendDocuments(recommendNumber);
+        response.setRecommendDocumentSet(recommendDocuments);
+
+
         return response;
     }
 
@@ -200,5 +207,21 @@ public class SearchServiceImpl implements SearchService {
         System.out.println("Raw Snippets:" + dest);
 
         return highlight(dest, keyword);
+    }
+
+    @Override
+    public Set<Document> recommendDocuments(String recommendNumber) {
+        System.out.println(recommendNumber);
+        recommendNumber += "_recommend";
+        Set<String> docId = redisUtil.recommendDocId(recommendNumber);
+
+        Set<Document> documentSet = new HashSet<>();
+        for(String a: docId) {
+            System.out.println("-------------------------" + a);
+            Document tmp = hbaseUtil.get(a);
+            documentSet.add(tmp);
+        }
+
+        return documentSet;
     }
 }
