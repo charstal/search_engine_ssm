@@ -40,8 +40,12 @@ public class HBaseTest {
                         String colName = Bytes.toString(cell.getQualifierArray(), cell.getQualifierOffset(), cell.getQualifierLength());
 
                         String value = Bytes.toString(cell.getValueArray(), cell.getValueOffset(), cell.getValueLength());
-                        if (colName.equals("content"))
-                            doc.setContent(value);
+                        if (colName.equals("content")) {
+                            String content = value;
+
+                            content = content.replaceAll("[\t\n\r]", "<br>");
+                            doc.setContent(content);
+                        }
                         else if (colName.equals("author"))
                             doc.setAuthor(value);
                         else if (colName.equals("title"))
