@@ -178,7 +178,7 @@
                                                         alert("success");
                                                     else {
                                                         alert(res);
-                                                        window.location.href = "http://localhost:8080/session";
+                                                        window.location.href = "/session";
                                                     }
                                                 }
 
@@ -199,7 +199,7 @@
                                                         alert("success");
                                                     else {
                                                         alert(res);
-                                                        window.location.href = "http://localhost:8080/session";
+                                                        window.location.href = "/session";
                                                     }
                                                 }
                                             });
