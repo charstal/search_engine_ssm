@@ -24,7 +24,9 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/jquery-page.css">
     <script src="${pageContext.request.contextPath}/js/jquery-3.1.1.min.js"></script>
     <script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
-    <script src="${pageContext.request.contextPath}/js/jquery.slimscroll.min.js"></script>
+<%--    <script src="${pageContext.request.contextPath}/js/jquery.slimscroll.min.js"></script>--%>
+
+    <script src="//cdn.bootcss.com/jQuery-slimScroll/1.3.6/jquery.slimscroll.min.js"></script>
 </head>
 
 <body class="top-navigation">

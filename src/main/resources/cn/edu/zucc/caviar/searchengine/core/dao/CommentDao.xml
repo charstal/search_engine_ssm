@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.edu.zucc.caviar.searchengine.core.dao.CommentDao">
+
+    <resultMap id="comment" type="cn.edu.zucc.caviar.searchengine.core.pojo.Comment">
+        <result property="commentId" column="comment_id"/>
+        <result property="userId" column="user_id"/>
+        <result property="userName" column="user_name"/>
+        <result property="avatarUrl" column="avatar_url"/>
+        <result property="content" column="content"/>
+        <result property="noteId" column="note_id"/>
+        <result property="date" column="date"/>
+        <result property="score" column="score"/>
+        <result property="star" column="star"/>
+    </resultMap>
+
+    <insert id="addComment" useGeneratedKeys="true">
+        insert into tb_comment(user_id, content, date, note_id, score)
+        values (#{userId}, #{content}, #{date}, #{noteId}, #{score})
+    </insert>
+
+    <delete id="deleteComment">
+        delete from tb_comment
+        where comment_id = #{commentId}
+    </delete>
+
+    <select id="getNoteComments" resultMap="comment">
+        select comment_id, a.user_id, user_name, avatar_url, content, b.date, note_id, score, star
+        from tb_user a, tb_comment b
+        where b.note_id = #{noteId} and a.user_id = b.user_id
+    </select>
+
+    <insert id="likeCommentRecord" useGeneratedKeys="true">
+        insert tb_comment_like_record(user_id, comment_id, date)
+        values (#{userId}, #{commentId}, #{date})
+    </insert>
+
+    <delete id="dislikeCommentRecord" >
+        delete from tb_comment_like_record
+        where comment_id = #{commentId} and user_id = #{userId}
+    </delete>
+
+    <update id="likeComment">
+        update tb_comment
+        set star = star + 1
+        where comment_id = #{commentId}
+    </update>
+
+
+
+    <update id="dislikeComment">
+        update tb_comment
+        set star = star - 1
+        where comment_id = #{commentId}
+    </update>
+</mapper>

@@ -95,6 +95,7 @@ public class ArticleJsonParser {
         hbaseUtil.putIntoList(docId, "imageUrls", imageUrls);
         hbaseUtil.putIntoList(docId, "docId", docId);
         hbaseUtil.putIntoList(docId, "author", author);
+        hbaseUtil.putIntoList(docId, "title", title);
         hbaseUtil.putIntoList(docId, "content", content);
         hbaseUtil.putIntoList(docId, "favoriteCount", favoriteCount);
         hbaseUtil.putIntoList(docId, "likeCount", likeCount);
