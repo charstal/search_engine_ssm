@@ -1,6 +1,8 @@
 package cn.edu.zucc.caviar.searchengine.core.aspect;
 
 import cn.edu.zucc.caviar.searchengine.common.kafka.KafkaProducerServer;
+import cn.edu.zucc.caviar.searchengine.common.query.segment.ChineseSegmentation;
+import cn.edu.zucc.caviar.searchengine.common.utils.RedisTest;
 import cn.edu.zucc.caviar.searchengine.core.pojo.User;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
@@ -35,11 +37,19 @@ public class InteractionAspect {
     @Autowired
     KafkaProducerServer kafkaProducer;
 
+
+
+    @Autowired
+    RedisTest redisTest;
+
+
     private String topic = "interactive";
     private String value = "";
     private String ifPartition = "1";
     private Integer partitionNum = 2;
     private String role = "test";
+
+    private String hotpotTopic = "hotpot";
 
     @Before("clickNoteJoinPointExpression()")
     public void clickNoteLog(JoinPoint joinPoint) {
@@ -91,6 +101,12 @@ public class InteractionAspect {
             value = uid+type+searchWords;
             System.out.println(value);
             Map<String,Object> res = kafkaProducer.sndMesForTemplate(topic, value, ifPartition, partitionNum, role);
+
+            List<String> keywordsSegmentaion = ChineseSegmentation.keywordsSegmentaion(searchWords);
+            for(String a: keywordsSegmentaion) {
+                redisTest.zincrby(hotpotTopic, a, 1.0);
+            }
+
         }
     }
 }

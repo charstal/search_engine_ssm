@@ -8,6 +8,7 @@ public class Response {
     private Integer documentNumber;
     private List<String> spellCheckList;
     private Set<Document> recommendDocumentSet;
+    private List<String> hotpotList;
 
     public Set<Document> getDocumentSet() {
         return documentSet;
@@ -39,5 +40,13 @@ public class Response {
 
     public void setRecommendDocumentSet(Set<Document> recommendDocumentSet) {
         this.recommendDocumentSet = recommendDocumentSet;
+    }
+
+    public List<String> getHotpotList() {
+        return hotpotList;
+    }
+
+    public void setHotpotList(List<String> hotpotList) {
+        this.hotpotList = hotpotList;
     }
 }

@@ -6,7 +6,6 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ZSetOperations;
 import org.springframework.stereotype.Component;
-import org.springframework.util.CollectionUtils;
 
 import java.util.*;
 import java.util.concurrent.TimeUnit;
@@ -165,34 +164,60 @@ public class RedisTest {
         return redisTemplate.opsForZSet().size(SEARCH_RESULT);
     }
 
-    public Set<ZSetOperations.TypedTuple<Object>> zrevrangeByScoreWithScores(String docId, int low, int high) {
-        return redisTemplate.opsForZSet().reverseRangeByScoreWithScores(docId, high, low);
+    public Set<ZSetOperations.TypedTuple<Object>> zrevrangeByScoreWithScores(String topic, int low, int high) {
+        return redisTemplate.opsForZSet().reverseRangeByScoreWithScores(topic, high, low);
+    }
+
+
+    public Set<ZSetOperations.TypedTuple<Object>> zrevrange(String topic, int low, int high) {
+        return redisTemplate.opsForZSet().reverseRangeWithScores(topic, low, high);
+    }
+
+    public Double zincrby(String topic, String keyword, Double offset) {
+        return redisTemplate.opsForZSet().incrementScore(topic, keyword, offset);
     }
 
 
 
 
+
+    public List<String> hotpotList() {
+        Set<ZSetOperations.TypedTuple<Object>> set = redisTemplate.opsForZSet().reverseRangeWithScores("hotpot", 0, 9);
+        List<String> list = new ArrayList<String>();
+
+        for(ZSetOperations.TypedTuple<Object> a: set) {
+            list.add((String) a.getValue());
+        }
+
+        return list;
+    }
+
+
     public static void main(String args[]) {
         ApplicationContext applicationContext = new ClassPathXmlApplicationContext("spring/applicationContext.xml");
 
-        HBaseTest hBaseTest = applicationContext.getBean(HBaseTest.class);
+//        HBaseTest hBaseTest = applicationContext.getBean(HBaseTest.class);
         RedisTest redisTest = applicationContext.getBean(RedisTest.class);
-        Set<String> Ans=redisTest.searchSimilarDocId("5b8c9b9607ef1c64a999dbda",0, 1);
-        System.out.println("数量："+Ans.size());
+//        Set<String> Ans=redisTest.searchSimilarDocId("5b8c9b9607ef1c64a999dbda",0, 1);
+//        System.out.println("数量："+Ans.size());
+//
+//        List<String> titleList = new ArrayList<>();
+//        titleList.add(hBaseTest.get("5b8c9b9607ef1c64a999dbda").getTitle());
+//
+//        for(String s:Ans){
+//            System.out.println(s);
+//            titleList.add(hBaseTest.get(s).getTitle());
+//        }
+//
+//        for(String a: titleList) {
+//            System.out.println(a);
+//        }
+//
+        Set<ZSetOperations.TypedTuple<Object>> set = redisTest.zrevrange("hotpot", 0, 9);
 
-        List<String> titleList = new ArrayList<>();
-        titleList.add(hBaseTest.get("5b8c9b9607ef1c64a999dbda").getTitle());
-
-        for(String s:Ans){
-            System.out.println(s);
-            titleList.add(hBaseTest.get(s).getTitle());
+        for(ZSetOperations.TypedTuple<Object> t: set) {
+            System.out.println(t.getValue() + ":" + t.getScore());
         }
-
-        for(String a: titleList) {
-            System.out.println(a);
-        }
-
-
     }
 
 }
