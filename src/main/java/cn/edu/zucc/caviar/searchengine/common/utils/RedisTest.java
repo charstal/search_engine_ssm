@@ -3,8 +3,11 @@ package cn.edu.zucc.caviar.searchengine.common.utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.data.redis.connection.RedisZSetCommands;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ZSetOperations;
+//import org.springframework.data.redis.connection.RedisZSetCommands.Weights;
+//import org.springframework.data.redis.core.script.RedisScript;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
@@ -117,6 +120,42 @@ public class RedisTest {
 
         return docSets;
     }
+
+    /***
+     * 包含交并weight操作，需要更新版本的spring-redis
+     * @param DocId
+     * @param low
+     * @param high
+     * @return
+     */
+//    public Collection<Object> searchTokensWithSynonym(Map<String, Map<String, Double>> queryMap) {
+//
+//        Collection<Object> docSets = new TreeSet<Object>();
+//        redisTemplate.opsForZSet().removeRangeByScore(SEARCH_RESULT, 0, 100);
+//
+//        boolean empty = true;
+//        for (String token : queryMap.keySet()) {
+//            redisTemplate.opsForZSet().removeRangeByScore("synonymResult", 0, 100);
+//            Set<String> tempKeySets = new HashSet<>();
+//            for (String synonym : queryMap.get(token).keySet()) {
+//                tempKeySets.clear();
+//                tempKeySets.add(synonym);
+//                Weights weights = Weights.of(queryMap.get(token).get(synonym),1);
+//                redisTemplate.opsForZSet().unionAndStore("synonymResult",tempKeySets,"synonymResult", RedisZSetCommands.Aggregate.MAX,weights);
+//                //redisTemplate.opsForZSet().unionAndStore("synonymResult",  synonym,"synonymResult");
+//            }
+//
+//            redisTemplate.opsForZSet().unionAndStore("synonymResult",  token , "synonymResult");
+//            if (empty) {
+//                redisTemplate.opsForZSet().unionAndStore(SEARCH_RESULT, "synonymResult", SEARCH_RESULT);
+//                empty = false;
+//            } else {
+//                redisTemplate.opsForZSet().intersectAndStore(SEARCH_RESULT, "synonymResult", SEARCH_RESULT); //intersectAndStore()
+//            }
+//        }
+//
+//        return docSets;
+//    }
 
 
     public  Set<String> searchSimilarDocId(String DocId,int low,int high){
