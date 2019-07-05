@@ -36,6 +36,7 @@
             <mvc:mapping path="/user/-1"/>
             <mvc:mapping path="/collect/**"/>
             <mvc:mapping path="/like/**"/>
+            <mvc:mapping path="/comment"/>
             <bean class="cn.edu.zucc.caviar.searchengine.core.interceptor.LoginInterceptor"/>
         </mvc:interceptor>
         <mvc:interceptor>

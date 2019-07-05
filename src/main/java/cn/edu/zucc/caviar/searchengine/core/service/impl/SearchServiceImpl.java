@@ -30,6 +30,9 @@ public class SearchServiceImpl implements SearchService {
     private RedisTest redisUtil;
 
     @Autowired
+    private RedisTest redisTest;
+
+    @Autowired
     private HBaseTest hbaseUtil;
 
     @Autowired
@@ -74,6 +77,9 @@ public class SearchServiceImpl implements SearchService {
         Set<Document> recommendDocuments = recommendDocuments(recommendNumber);
         response.setRecommendDocumentSet(recommendDocuments);
 
+
+        List<String> hotpotList = redisTest.hotpotList();
+        response.setHotpotList(hotpotList);
 
         return response;
     }

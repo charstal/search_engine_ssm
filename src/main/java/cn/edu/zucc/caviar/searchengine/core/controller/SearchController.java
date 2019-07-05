@@ -5,6 +5,7 @@ import cn.edu.zucc.caviar.searchengine.core.pojo.Document;
 import cn.edu.zucc.caviar.searchengine.core.pojo.Response;
 import cn.edu.zucc.caviar.searchengine.core.pojo.User;
 import cn.edu.zucc.caviar.searchengine.core.service.SearchService;
+import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -46,6 +47,10 @@ public class SearchController {
         Response response = service.keywordSearch(keyword, page, recommendNumber);
 
 
+        for(String a: response.getHotpotList()) {
+            System.out.println("----------------------");
+            System.out.println(a);
+        }
         return response;
     }
 

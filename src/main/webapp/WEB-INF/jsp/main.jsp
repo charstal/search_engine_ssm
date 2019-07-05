@@ -16,12 +16,13 @@
     <link href="${pageContext.request.contextPath}/font-awesome/css/font-awesome.css" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/css/animate.css" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/css/star-rating.css" media="all" rel="stylesheet" type="text/css"/>
 
     <!-- Mainly scripts -->
     <script src="${pageContext.request.contextPath}/js/carousel.js"></script>
     <script src="${pageContext.request.contextPath}/js/jquery-3.1.1.min.js"></script>
     <script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
-
+    <script src="${pageContext.request.contextPath}/js/star-rating.js" type="text/javascript"></script>
 
 </head>
 <body class="top-navigation">
@@ -30,6 +31,7 @@
         height: 350px;
         background-color: #777;
     }
+
     .carousel-inner > .item > img {
         position: absolute;
         top: 0;
@@ -158,11 +160,13 @@
                         </div>
 
                         <!-- Controls -->
-                        <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+                        <a class="left carousel-control" href="#carousel-example-generic" role="button"
+                           data-slide="prev">
                             <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
                             <span class="sr-only">Previous</span>
                         </a>
-                        <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+                        <a class="right carousel-control" href="#carousel-example-generic" role="button"
+                           data-slide="next">
                             <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
                             <span class="sr-only">Next</span>
                         </a>
@@ -191,6 +195,143 @@
                         </div>
                     </div>
 
+                    <div>
+
+                        <div class="ibox">
+                            <textarea id="content" class="form-control" style="width: 75%" rows="3"
+                                      placeholder="参与评论，即有现金红包大奖等你来拿"></textarea>
+
+                            <input id="input-id" type="text" class="rating" data-size="lg">
+                            <button id="comment-commit" class="btn btn-default" type="submit">提交</button>
+                        </div>
+
+                        <div id="comment">
+                            <h3>笔记评论</h3>
+                            <div class="row">
+                                <c:forEach items="${comments}" var="comment">
+                                    <%--                                    <div class="col-md-8">--%>
+                                    <%--                                        <div id="comment-info" class="row">--%>
+                                    <%--                                            <div id="comment-user" class="col-md-8">--%>
+                                    <%--                                                <div id="avatar" class="col-md-2">--%>
+                                    <%--                                                    <img src="${pageContext.request.contextPath}/images/avatar/avatar.jpeg" class="img-circle" height="60px" width="60px">--%>
+                                    <%--                                                </div>--%>
+                                    <%--                                                <div id="user-info" class="col-md-2">--%>
+                                    <%--                                                    <h4>--%>
+                                    <%--                                                        <a href="#">jiangDoor</a>--%>
+                                    <%--                                                    </h4>--%>
+                                    <%--                                                    <p>07-02</p>--%>
+                                    <%--                                                </div>--%>
+                                    <%--                                            </div>--%>
+                                    <%--                                            <div id="comment-star" class="col-md-4">--%>
+                                    <%--                                                <span id="like" class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>--%>
+                                    <%--                                                <span id="like-sum">277</span>--%>
+                                    <%--                                            </div>--%>
+                                    <%--                                        </div>--%>
+                                    <%--    --%>
+                                    <%--                                        <p class="col-md-12">--%>
+                                    <%--                                            这是一条评论，现在随便写一点当作评论，如果写的不好，自己改。--%>
+                                    <%--                                        </p>--%>
+                                    <%--    --%>
+                                    <%--                                    </div>--%>
+
+                                    <div class="col-md-8">
+                                        <div class="row comment-info">
+                                            <div class="col-md-8 comment-user">
+                                                <div class="col-md-2 avatar">
+                                                    <img src="${pageContext.request.contextPath}/${comment.avatarUrl}"
+                                                         class="img-circle" height="60px" width="60px">
+                                                </div>
+                                                <div class="col-md-2 user-info">
+                                                    <h4>
+                                                        <a href="/user/${comment.userId}">${comment.userName}</a>
+                                                    </h4>
+                                                    <p>${comment.date}</p>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4 comment-star">
+                                                <span class="glyphicon glyphicon-star-empty like"
+                                                      aria-hidden="true"></span>
+                                                <span class="like-sum">${comment.score}</span>
+                                            </div>
+                                        </div>
+
+                                        <p class="col-md-12">
+                                                ${comment.content}
+                                        </p>
+
+                                    </div>
+                                </c:forEach>
+
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <script>
+                        $("#input-id").rating({
+                            min: 0,
+                            max: 5,
+                            step: 0.5,
+                            size: 'lg',
+                            showClear: false,
+                            starCaptions: {
+                                0: "",
+                                0.5: '半星',
+                                1: '一星',
+                                1.5: '一星半',
+                                2: '两星',
+                                2.5: '两星半',
+                                3: '三星',
+                                3.5: '三星半',
+                                4: '四星',
+                                4.5: '四星半',
+                                5: '五星'
+                            }
+                        });
+                    </script>
+
+                    <script>
+                        $("#comment-commit").click(function () {
+                            var score = $("#input-id").val();
+                            var content = $("#content").val();
+                            if (score != null && (content != null || content != "")) {
+                                $.ajax({
+                                    async: false,
+                                    url: "/comment",
+                                    method: "post",
+                                    contentType: "application/json; charset=UTF-8",
+                                    data: JSON.stringify({score: score, content: content, noteId: "${note.docId}"}),
+                                    dataType: "text",
+                                    success: function (res) {
+                                        if (res == "success") {
+                                            alert("success！");
+                                        } else {
+                                            alert("login first！");
+                                            window.location.href = "/session";
+                                        }
+                                        window.location.reload();
+                                    }
+                                })
+                            }
+                        })
+                    </script>
+
+<%--                    <script>--%>
+<%--                        function like() {--%>
+<%--                            var like_sum = $("#like-sum").text();--%>
+<%--                            if ($(this).hasClass("glyphicon glyphicon-star")) {--%>
+<%--                                $(this).removeClass("glyphicon glyphicon-star");--%>
+<%--                                $(this).addClass("glyphicon glyphicon-star-empty");--%>
+<%--                                $('#like-sum').text(Number(like_sum) - 1)--%>
+<%--                            } else {--%>
+<%--                                $(this).removeClass("glyphicon glyphicon-star-empty");--%>
+<%--                                $(this).addClass("glyphicon glyphicon-star");--%>
+<%--                                $('#like-sum').text(Number(like_sum) + 1)--%>
+<%--                            }--%>
+
+<%--                        }--%>
+<%--                    </script>--%>
                 </div>
                 <div class="container-fluid col-lg-4">
                     <div class="col-md-4">
@@ -233,10 +374,6 @@
 
     </div>
 </div>
-
-
-
-
 
 
 </body>
