@@ -1,12 +1,16 @@
 package cn.edu.zucc.caviar.searchengine.common.utils;
 
+import com.mysql.jdbc.jdbc2.optional.SuspendableXAConnection;
+import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ZSetOperations;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Component;
 
+import java.nio.DoubleBuffer;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
@@ -117,6 +121,54 @@ public class RedisTest {
         return docSets;
     }
 
+    public Set<String> searchToken(List<String> tokenList) {
+        Set<String> docIdSet = new HashSet<>();
+
+        redisTemplate.opsForZSet().removeRange("cold-start-recommend", 0, -1);
+
+        for(String a: tokenList) {
+            Set<Object> set = redisTemplate.opsForZSet().reverseRangeByScore(a, 0, 100, 0, 10);
+
+
+            for(Object b: set) {
+                String docId = b.toString();
+//                System.out.println(b.toString());
+
+                Object clickObject = redisTemplate.opsForValue().get("click:" + b.toString());
+                double clickValue = 0;
+                if(clickObject != null && clickObject.toString() != null) {
+                    System.out.println(clickObject.toString());
+                    clickValue = Double.valueOf(clickObject.toString());
+                }
+//                System.out.println("clickValue:" + clickValue);
+                double baseScore = Double.valueOf(redisTemplate.opsForValue().get("cold-start-base-score:" + b.toString()).toString());
+//                System.out.println("baseScore:" + baseScore);
+
+
+                double sumScore = 0.0;
+                if(clickValue != 0) {
+                    sumScore = clickValue * 0.35 + baseScore / 5 * 0.65;
+                } else {
+                    sumScore = baseScore / 5 * 0.65;
+                }
+                this.zadd("cold-start-recommend", docId, sumScore);
+            }
+
+        }
+
+        Set<Object> coldStartRecommend = redisTemplate.opsForZSet().reverseRangeByScore("cold-start-recommend", 0, 1000000, 0, 6);
+
+        for(Object a: coldStartRecommend) {
+//            System.out.println(a.toString());
+
+            docIdSet.add(a.toString());
+        }
+
+
+
+        return docIdSet;
+    }
+
 
     public  Set<String> searchSimilarDocId(String DocId,int low,int high){
 
@@ -193,6 +245,13 @@ public class RedisTest {
     }
 
 
+    public void clickIncr(String docId) {
+        redisTemplate.opsForValue().increment("click:" + docId, 1);
+
+
+    }
+
+
     public static void main(String args[]) {
         ApplicationContext applicationContext = new ClassPathXmlApplicationContext("spring/applicationContext.xml");
 
@@ -213,11 +272,19 @@ public class RedisTest {
 //            System.out.println(a);
 //        }
 //
-        Set<ZSetOperations.TypedTuple<Object>> set = redisTest.zrevrange("hotpot", 0, 9);
+        List<String> list = new ArrayList<>();
+        list.add("西湖");
+//        list.add("杭州");
+        Set<String> strings = redisTest.searchToken(list);
 
-        for(ZSetOperations.TypedTuple<Object> t: set) {
-            System.out.println(t.getValue() + ":" + t.getScore());
+        for(String a: strings) {
+            System.out.println(a);
         }
+
+
     }
+
+
+
 
 }

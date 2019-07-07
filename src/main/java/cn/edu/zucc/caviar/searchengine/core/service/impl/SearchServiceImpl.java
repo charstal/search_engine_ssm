@@ -221,6 +221,11 @@ public class SearchServiceImpl implements SearchService {
         recommendNumber += "_recommend";
         Set<String> docId = redisUtil.recommendDocId(recommendNumber);
 
+        if(docId == null || docId.isEmpty()){
+            List<String> hotpotList = redisTest.hotpotList();
+            docId = redisUtil.searchToken(hotpotList);
+        }
+
         Set<Document> documentSet = new HashSet<>();
         for(String a: docId) {
             System.out.println("-------------------------" + a);

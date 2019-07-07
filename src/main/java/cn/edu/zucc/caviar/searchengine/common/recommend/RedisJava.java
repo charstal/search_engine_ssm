@@ -87,6 +87,13 @@ public class RedisJava {
         return Answer;
     }
 
+
+    public void docBaseScoreInsert(String docId, Double score) {
+        pipeline.append("cold-start-base-score:"+ docId, String.valueOf(score));
+    }
+
+
+
     public static void main(String args[]){
 
         ApplicationContext applicationContext = new ClassPathXmlApplicationContext("spring/applicationContext.xml");

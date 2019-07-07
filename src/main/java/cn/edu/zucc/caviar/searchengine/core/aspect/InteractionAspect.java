@@ -50,6 +50,7 @@ public class InteractionAspect {
     private String role = "test";
 
     private String hotpotTopic = "hotpot";
+//    private String clickTopic = "click";
 
     @Before("clickNoteJoinPointExpression()")
     public void clickNoteLog(JoinPoint joinPoint) {
@@ -72,6 +73,10 @@ public class InteractionAspect {
             value = uid + type + noteId;
             System.out.println(value);
             Map<String, Object> res = kafkaProducer.sndMesForTemplate(topic, value, ifPartition, partitionNum, role);
+
+
+            redisTest.clickIncr(noteId);
+//            redisTest.zincrby(clickTopic, noteId, 1.0);
         }
     }
 

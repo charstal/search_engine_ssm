@@ -47,10 +47,10 @@ public class SearchController {
         Response response = service.keywordSearch(keyword, page, recommendNumber);
 
 
-        for(String a: response.getHotpotList()) {
-            System.out.println("----------------------");
-            System.out.println(a);
-        }
+//        for(String a: response.getHotpotList()) {
+//            System.out.println("----------------------");
+//            System.out.println(a);
+//        }
         return response;
     }
 
