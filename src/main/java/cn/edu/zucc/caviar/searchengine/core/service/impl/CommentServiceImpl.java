@@ -4,6 +4,7 @@ import cn.edu.zucc.caviar.searchengine.core.dao.CommentDao;
 import cn.edu.zucc.caviar.searchengine.core.pojo.Comment;
 import cn.edu.zucc.caviar.searchengine.core.service.CommentService;
 import cn.edu.zucc.caviar.searchengine.core.service.UserService;
+import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -23,6 +24,9 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public boolean addComment(Comment comment) {
+        System.out.println("-----------------------------------");
+        System.out.println("Comment:");
+        System.out.println(comment.getContent());
         comment.setDate(new Timestamp(System.currentTimeMillis()));
         int row = this.commentDao.addComment(comment);
 
