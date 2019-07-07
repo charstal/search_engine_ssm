@@ -192,7 +192,6 @@ public class HbaseUtil {
      * @return
      */
     public String getCellData(String rowKey, String col) {
-
         try {
             Table table = conn.getTable(TableName.valueOf(TABLE_NAME));
             String result = null;
@@ -213,7 +212,7 @@ public class HbaseUtil {
 
     public static void main(String args[]) {
 //        new HbaseUtil().createTable();
-//        System.out.println(new HbaseUtil().getCellData("5c7d187f000000000f007b11", "content"));
+        System.out.println(new HbaseUtil().getCellData("5c7d187f000000000f007b11", "content"));
         new HbaseUtil().createTable();
     }
 

@@ -67,7 +67,7 @@ public class SearchServiceImpl implements SearchService {
         Set<Document> documents = documentsInPage(page, 10);
         for(Document document: documents) {
             document.setContent(this.generateSnippets(document.getContent(), keywordsList));
-            document.setTitle(this.generateSnippets(document.getTitle(), keywordsList));
+            //document.setTitle(this.generateSnippets(document.getTitle(), keywordsList));
         }
 
         response.setSpellCheckList(spellCheckList);
