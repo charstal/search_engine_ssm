@@ -41,8 +41,6 @@ public class InteractionAspect {
     @Autowired
     KafkaProducerServer kafkaProducer;
 
-
-
     @Autowired
     RedisTest redisTest;
 
@@ -162,10 +160,10 @@ public class InteractionAspect {
         else if(methodName.equals("addLikeNote")){
 
             System.out.println("ASPECT Note like");
-            Comment comment = (Comment) args.get(1);
+            String noteId = (String) args.get(1);
             String type = " 3 ";
 
-            value = uid + type + comment.getNoteId()+" "+comment.getScore();
+            value = uid + type + noteId;
             System.out.println(value);
             Map<String, Object> res = kafkaProducer.sndMesForTemplate(topic, value, ifPartition, partitionNum, role);
         }
