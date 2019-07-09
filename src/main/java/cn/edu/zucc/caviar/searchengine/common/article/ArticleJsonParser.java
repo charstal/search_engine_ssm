@@ -3,7 +3,9 @@ package cn.edu.zucc.caviar.searchengine.common.article;
 import cn.edu.zucc.caviar.searchengine.common.query.spell.PinyinUtil;
 import cn.edu.zucc.caviar.searchengine.common.query.spell.SoundexCoder;
 import cn.edu.zucc.caviar.searchengine.common.utils.HbaseUtil;
+import cn.edu.zucc.caviar.searchengine.common.utils.HighLeveRestClientUtil;
 import cn.edu.zucc.caviar.searchengine.common.utils.RedisUtil;
+import cn.edu.zucc.caviar.searchengine.core.pojo.Document;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -18,8 +20,11 @@ public class ArticleJsonParser {
 
     public static HbaseUtil hbaseUtil;
     public static RedisUtil redisUtil;
+    public static HighLeveRestClientUtil highLeveRestClientUtil;
     public static final String SAVE_CONTENT = "Content";
     public static final String CREATE_INDEX = "Index";
+    public static final String SAVE_CONTENT_IN_ES = "Es";
+
 
     /***
      * 按行读取doc Json数据并存入hbase
@@ -38,7 +43,9 @@ public class ArticleJsonParser {
             String line;
             while ((line = bfReader.readLine()) != null) {
                 object = (JsonObject) parser.parse(line);
-                if (operate.equals(SAVE_CONTENT))
+                if (operate.equals(SAVE_CONTENT_IN_ES))
+                    storeContentInEs(object);
+                else if (operate.equals(SAVE_CONTENT))
                     storeContentInHbase(object);
                 else if (operate.equals(CREATE_INDEX))
                     createIndex(object);
@@ -48,6 +55,31 @@ public class ArticleJsonParser {
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
+    }
+
+    /***
+     * 保存Json格式的doc入hbase
+     * @param article
+     */
+    public static void storeContentInEs(JsonObject article) {
+
+        JsonObject docData = article.getAsJsonObject().get("data").getAsJsonArray().get(0).getAsJsonObject();
+        String docId = docData.get("id").getAsString();
+
+        String[] contentSplit = docData.get("content").getAsString().split("\\n", 2);
+
+        String title = contentSplit[0];
+        String content = "";
+        if (contentSplit.length == 2) {
+            content = contentSplit[1];
+        } else {
+            content = contentSplit[0];
+        }
+        Document document=new Document();
+        document.setContent(content);
+        document.setDocId(docId);
+        document.setTitle(title);
+        highLeveRestClientUtil.puts.add(document);
     }
 
     /***
@@ -94,8 +126,8 @@ public class ArticleJsonParser {
 
         hbaseUtil.putIntoList(docId, "imageUrls", imageUrls);
         hbaseUtil.putIntoList(docId, "docId", docId);
-        hbaseUtil.putIntoList(docId, "author", author);
         hbaseUtil.putIntoList(docId, "title", title);
+        hbaseUtil.putIntoList(docId, "author", author);
         hbaseUtil.putIntoList(docId, "content", content);
         hbaseUtil.putIntoList(docId, "favoriteCount", favoriteCount);
         hbaseUtil.putIntoList(docId, "likeCount", likeCount);
@@ -136,11 +168,13 @@ public class ArticleJsonParser {
      * @param args
      */
     public static void main(String args[]) throws Exception {
-        redisUtil = new RedisUtil();
-        hbaseUtil = new HbaseUtil();
-
-        readContentJSON("search_data/keywords4.json", CREATE_INDEX);
-        readContentJSON("search_data/xhs_note_item_final.json", SAVE_CONTENT);
-        HbaseUtil.flushPutList(hbaseUtil.puts);
+//        redisUtil = new RedisUtil();
+//        hbaseUtil = new HbaseUtil();
+        highLeveRestClientUtil = new HighLeveRestClientUtil();
+//        readContentJSON("search_data/keywords4.json", CREATE_INDEX);
+//        readContentJSON("search_data/xhs_note_item_final.json", SAVE_CONTENT);
+        readContentJSON("search_data/xhs_note_item_final.json", SAVE_CONTENT_IN_ES);
+        highLeveRestClientUtil.createList(highLeveRestClientUtil.puts);
+//        HbaseUtil.flushPutList(hbaseUtil.puts);
     }
 }

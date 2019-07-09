@@ -7,6 +7,7 @@ import cn.edu.zucc.caviar.searchengine.common.query.spell.SoundexCoder;
 import cn.edu.zucc.caviar.searchengine.common.query.synonym.Synonym;
 import cn.edu.zucc.caviar.searchengine.common.utils.HBaseTest;
 import cn.edu.zucc.caviar.searchengine.common.utils.HbaseUtil;
+import cn.edu.zucc.caviar.searchengine.common.utils.HighLeveRestClientUtil;
 import cn.edu.zucc.caviar.searchengine.common.utils.RedisTest;
 import cn.edu.zucc.caviar.searchengine.common.utils.digest.TextRankSentence;
 import cn.edu.zucc.caviar.searchengine.core.pojo.Document;
@@ -19,6 +20,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+
+import static cn.edu.zucc.caviar.searchengine.common.utils.digest.TextRankSentence.snippets;
 
 @Service
 public class SearchServiceImpl implements SearchService {
@@ -39,16 +42,70 @@ public class SearchServiceImpl implements SearchService {
     private Synonym synonymUtil;
 
 
+    @Autowired
+    private HighLeveRestClientUtil esUtil;
+
+
+//    @Override
+//    public Response keywordSearch(String keyword, Integer page, String recommendNumber) {
+//        Response response = new Response();
+//        if (page == 1) {
+//            response.setDocumentNumber((int) documentPageCount(keyword));
+//        }
+//
+//        List<String> keywordsSegment = ChineseSegmentation.keywordsSegmentaion(keyword);
+//        List<String> keywordsList = new ArrayList<>();
+//        List<String> spellCheckList = new ArrayList<>();
+//        for(String segment : keywordsSegment) {
+//            keywordsList.add(segment);
+//
+//            if(keyword.matches("[a-zA-Z]+")) {
+//                Map<String, Double> checkList = checkSpell(segment, true);
+//                spellCheckList.addAll(checkList.keySet());
+//                keywordsList.addAll(checkList.keySet());
+//            }
+//            else {
+//                Map<String, Double> checkList = checkSpell(segment, false);
+//                spellCheckList.addAll(checkList.keySet());
+//                keywordsList.addAll(synonymUtil.getSynonym(segment).keySet());
+//            }
+//        }
+//
+//        Set<Document> documents = documentsInPage(page, 10);
+//        for(Document document: documents) {
+//            document.setContent(this.generateSnippets(document.getContent(), keywordsList));
+//            //document.setTitle(this.generateSnippets(document.getTitle(), keywordsList));
+//        }
+//
+//        response.setSpellCheckList(spellCheckList);
+//        response.setDocumentSet(documents);
+//
+//
+//        Set<Document> recommendDocuments = recommendDocuments(recommendNumber);
+//        response.setRecommendDocumentSet(recommendDocuments);
+//
+//
+//        List<String> hotpotList = redisTest.hotpotList();
+//        response.setHotpotList(hotpotList);
+//
+//        return response;
+//    }
+
+
     @Override
     public Response keywordSearch(String keyword, Integer page, String recommendNumber) {
         Response response = new Response();
-        if (page == 1) {
-            response.setDocumentNumber((int) documentPageCount(keyword));
-        }
-
         List<String> keywordsSegment = ChineseSegmentation.keywordsSegmentaion(keyword);
         List<String> keywordsList = new ArrayList<>();
         List<String> spellCheckList = new ArrayList<>();
+        esUtil=new HighLeveRestClientUtil();
+        List<Document> documentList=esUtil.search("doc","xhs",keyword,"title","content");
+        if (page == 1) {
+            response.setDocumentNumber(documentList.size());
+        }
+
+        //生成摘要
+
         for(String segment : keywordsSegment) {
             keywordsList.add(segment);
 
@@ -56,6 +113,7 @@ public class SearchServiceImpl implements SearchService {
                 Map<String, Double> checkList = checkSpell(segment, true);
                 spellCheckList.addAll(checkList.keySet());
                 keywordsList.addAll(checkList.keySet());
+                System.out.println(checkList.get(0));
             }
             else {
                 Map<String, Double> checkList = checkSpell(segment, false);
@@ -64,10 +122,10 @@ public class SearchServiceImpl implements SearchService {
             }
         }
 
-        Set<Document> documents = documentsInPage(page, 10);
+        Set<Document> documents = documentsInPage(page, 10,documentList);
         for(Document document: documents) {
-            document.setContent(this.generateSnippets(document.getContent(), keywordsList));
-            //document.setTitle(this.generateSnippets(document.getTitle(), keywordsList));
+            document.setContent(this.generateSnippets(document.getContent(), keywordsList,"CONTENT"));
+            document.setTitle(this.generateSnippets(document.getTitle(), keywordsList,"TITLE"));
         }
 
         response.setSpellCheckList(spellCheckList);
@@ -77,11 +135,12 @@ public class SearchServiceImpl implements SearchService {
         Set<Document> recommendDocuments = recommendDocuments(recommendNumber);
         response.setRecommendDocumentSet(recommendDocuments);
 
-
         List<String> hotpotList = redisTest.hotpotList();
         response.setHotpotList(hotpotList);
 
+
         return response;
+
     }
 
     /***
@@ -93,7 +152,7 @@ public class SearchServiceImpl implements SearchService {
     public long documentPageCount(String queryString) {
 
         List<String> keywords = ChineseSegmentation.keywordsSegmentaion(queryString);
-        Set<Document> documents = new HashSet<>();
+
 
         Map<String, Map<String,Double>> searchMap = new HashMap<>();
         for(String keyword : keywords)
@@ -116,18 +175,29 @@ public class SearchServiceImpl implements SearchService {
      * @param eachPageDocumentsCount 每页的内容数量
      * @return
      */
-    public Set<Document> documentsInPage(long currentPage,long eachPageDocumentsCount){
+
+    public Set<Document> documentsInPage(long currentPage,long eachPageDocumentsCount,List<Document>documentList){
         Set<Document> documents = new HashSet<>();
-
-        Set<Object> docIds = redisUtil.resultPagingWithScores(currentPage, eachPageDocumentsCount);
-        for(Object docId:docIds){
-            documents.add(hbaseUtil.get((String)docId));
-        }
-
-
-
+        List<Document>subList;
+        if(documentList.size()>10)
+            subList=documentList.subList((int)((currentPage -1)* eachPageDocumentsCount),(int)((currentPage -1)* eachPageDocumentsCount)+(int) eachPageDocumentsCount);
+        else subList=documentList;
+        for(Document document:subList)
+            documents.add(hbaseUtil.get(document.getDocId()));
         return documents;
     }
+//    public Set<Document> documentsInPage(long currentPage,long eachPageDocumentsCount){
+//        Set<Document> documents = new HashSet<>();
+//
+//        Set<Object> docIds = redisUtil.resultPagingWithScores(currentPage, eachPageDocumentsCount);
+//        for(Object docId:docIds){
+//            documents.add(hbaseUtil.get((String)docId));
+//        }
+//
+//
+//
+//        return documents;
+//    }
 
     /***
      * 查询相同SoundexCode的字符串
@@ -207,10 +277,21 @@ public class SearchServiceImpl implements SearchService {
     }
 
     @Override
-    public String generateSnippets(String src, List<String> keyword) {
+    public String generateSnippets(String src, List<String> keyword, String type) {
 
-        String dest = TextRankSentence.getSummary(src, 180);
-        System.out.println("Raw Snippets:" + dest);
+//        String dest = TextRankSentence.getSummary(src, 180);
+//        System.out.println("Raw Snippets:" + dest);
+//
+//        return highlight(dest, keyword);
+
+
+
+        String dest=src;
+        if(src.length()>=20) {
+            if(type.equals("TITLE"))
+                dest= snippets(keyword,src);
+            else dest = TextRankSentence.getSummary(src, 180);
+        }
 
         return highlight(dest, keyword);
     }

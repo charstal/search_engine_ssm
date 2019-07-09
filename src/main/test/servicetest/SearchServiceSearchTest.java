@@ -2,6 +2,7 @@ package servicetest;
 
 import cn.edu.zucc.caviar.searchengine.common.utils.RedisTest;
 import cn.edu.zucc.caviar.searchengine.core.pojo.Document;
+import cn.edu.zucc.caviar.searchengine.core.pojo.Response;
 import cn.edu.zucc.caviar.searchengine.core.service.SearchService;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
@@ -21,12 +22,16 @@ public class SearchServiceSearchTest {
 
         SearchService searchService = applicationContext.getBean(SearchService.class);
 
-        System.out.println(searchService.keywordSearch("杭州", 2, ""));
-        Set<Document> documents = searchService.documentsInPage(1,10);
 
-        for(Document doc : documents){
-            System.out.println(doc.getPublishDate());
+        Response response = searchService.keywordSearch("杭州", 2, "");
+
+        Set<Document> set = response.getDocumentSet();
+
+        for(Document a: set) {
+            System.out.println(a.getContent());
         }
+
+
     }
 
     @Test

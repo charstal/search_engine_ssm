@@ -12,13 +12,13 @@ public interface SearchService {
 
     public long documentPageCount(String keyword);
 
-    public Set<Document> documentsInPage(long currentPage,long count);
+    public Set<Document> documentsInPage(long currentPage,long count, List<Document>documentList);
 
     public Map<String, Double> checkSpell(String token, boolean isPinyin);
 
     public String highlight(String src, List<String> keyword);
 
-    public String generateSnippets(String src, List<String> keyword);
+    public String generateSnippets(String src, List<String> keyword, String type);
 
     public Set<Document> recommendDocuments(String recommendNumber);
 
