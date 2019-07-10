@@ -27,20 +27,20 @@
 
 </head>
 <body class="top-navigation">
-<style>
-    .carousel .item {
-        height: 350px;
-        background-color: #777;
-    }
+<%--<style>--%>
+<%--    .carousel .item {--%>
+<%--        height: 350px;--%>
+<%--        background-color: #777;--%>
+<%--    }--%>
 
-    .carousel-inner > .item > img {
-        position: absolute;
-        top: 0;
-        left: 0;
-        min-width: 100%;
-        height: 500px;
-    }
-</style>
+<%--    .carousel-inner > .item > img {--%>
+<%--        position: absolute;--%>
+<%--        top: 0;--%>
+<%--        left: 0;--%>
+<%--        min-width: 100%;--%>
+<%--        height: 500px;--%>
+<%--    }--%>
+<%--</style>--%>
 <div id="wrapper">
     <div id="page-wrapper" class="gray-bg">
         <div class="row border-bottom white-bg">
